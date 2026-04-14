@@ -142,7 +142,7 @@ const Hero = () => {
               {[
                 { value: '7+', label: 'Games Shipped' },
                 { value: '1yr+', label: 'Experience' },
-                { value: '4.4★', label: 'Avg Rating' },
+                { value: '∞', label: 'Bug Solved' },
               ].map(s => (
                 <motion.div key={s.label} whileHover={{ y: -3 }} transition={{ type: 'spring', stiffness: 300 }}>
                   <div style={{

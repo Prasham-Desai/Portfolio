@@ -187,16 +187,6 @@ const About = () => {
           {/* Right: Timeline */}
           <div>
             <div style={{ position: 'relative' }}>
-              {/* Vertical line */}
-              <div style={{
-                position: 'absolute',
-                left: 16,
-                top: 16, /* Centers the line start inside the 33px tall first dot */
-                bottom: 0,
-                width: 1,
-                background: 'linear-gradient(to bottom, rgba(0,212,255,0.4), rgba(0,212,255,0.05))',
-              }} />
-
               {timelineItems.map((item, i) => (
                 <motion.div
                   key={item.year}
@@ -211,6 +201,19 @@ const About = () => {
                     position: 'relative',
                   }}
                 >
+                  {/* Segment line to next node */}
+                  {i < timelineItems.length - 1 && (
+                    <div style={{
+                      position: 'absolute',
+                      left: 16,
+                      top: 16, /* Center of current dot */
+                      bottom: -48, /* Crosses 32px gap + arrives exactly at 16px center of next dot */
+                      width: 1,
+                      background: `linear-gradient(to bottom, ${item.color}80, ${timelineItems[i+1].color}80)`,
+                      zIndex: 0,
+                    }} />
+                  )}
+
                   {/* Dot */}
                   <div style={{
                     width: 33,

@@ -18,7 +18,7 @@ const Footer = () => {
           <div style={{
             fontFamily: "'Space Grotesk', sans-serif",
             fontWeight: 700,
-            fontSize: '1.1rem',
+            fontSize: '1.4rem',
             color: '#f0f0f8',
             marginBottom: 4,
           }}>
@@ -26,17 +26,17 @@ const Footer = () => {
           </div>
           <div style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: '0.7rem',
+            fontSize: '0.9rem',
             color: '#444460',
             letterSpacing: '0.1em',
           }}>
-            Game Developer
+            Game is game.
           </div>
         </div>
 
         <div style={{
           fontFamily: "'JetBrains Mono', monospace",
-          fontSize: '0.7rem',
+          fontSize: '0.9rem',
           color: '#444460',
           letterSpacing: '0.05em',
           textAlign: 'center',
@@ -58,7 +58,7 @@ const Footer = () => {
               whileHover={{ color: '#00d4ff', y: -2 }}
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: '0.82rem',
+                fontSize: '1.05rem',
                 fontWeight: 500,
                 color: '#8888aa',
                 transition: 'all 0.2s ease',
