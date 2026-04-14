@@ -63,7 +63,7 @@ const Projects = () => {
                 lineHeight: 1.65,
               }}
             >
-              Seven production games across mobile and web — real users, real metrics, real lessons.
+              Production games across mobile and web real users, real metrics, real lessons.
             </motion.p>
           </div>
         </motion.div>

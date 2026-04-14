@@ -2,44 +2,37 @@ import { motion } from 'framer-motion';
 
 const timelineItems = [
   {
-    year: '2021',
-    title: 'First Line of Code',
-    body: 'Discovered Unity while studying CS. Built a simple 2D platformer in a weekend — got hooked instantly.',
+    year: '2022',
+    title: 'CS Degree Begins',
+    body: 'Enrolled at LJ Institute of Engineering & Technology, Ahmedabad. Started combining CS fundamentals with game dev experiments.',
     color: '#00d4ff',
     icon: '▸',
   },
   {
-    year: '2022',
-    title: 'CS Degree Begins',
-    body: 'Enrolled at LJ Institute of Engineering & Technology, Ahmedabad. Started combining CS fundamentals with game dev experiments.',
-    color: '#ffd700',
-    icon: '▸',
-  },
-  {
     year: '2023',
-    title: 'First Shipped Game',
-    body: 'Published first mobile game (Road Runner) on Google Play. Learned the full pipeline: dev → QA → store listing → analytics.',
+    title: 'First game',
+    body: 'Discovered Unity while studying CS. Built a simple 2D platformer in a weekend and got hooked instantly.',
     color: '#b44fff',
     icon: '▸',
   },
   {
-    year: '2023–24',
+    year: '2024',
     title: 'Shipping Consistently',
-    body: 'Shipped 6 more games across puzzle, arcade, and multiplayer genres. Integrated Firebase, AdMob, Photon, and custom backend systems.',
+    body: 'Shipped games across puzzle, arcade, and multiplayer genres. Integrated Firebase, AdMob, Photon, and custom backend systems.',
     color: '#00ff88',
     icon: '▸',
   },
   {
     year: '2024',
-    title: 'Multiplayer & DOTS',
-    body: 'Built first real-time multiplayer game (Zyyngo). Adopted DOTS/ECS architecture for UFO.io. Started exploring AR/VR development.',
+    title: 'Addressables & DOTS',
+    body: 'Built first game (UFO.io) with addressables and remote scene loading. Adopted DOTS/ECS architecture Started exploring AR/VR development.',
     color: '#ff6b6b',
     icon: '▸',
   },
   {
     year: 'Now',
     title: 'Looking Forward',
-    body: 'Focused on large-scale multiplayer architecture, WebGL games, and AR/VR systems. Actively seeking studio roles.',
+    body: 'Focused on large-scale multiplayer architecture,   and AR/VR systems. Actively seeking studio roles.',
     color: '#00d4ff',
     icon: '◈',
   },
@@ -198,7 +191,7 @@ const About = () => {
               <div style={{
                 position: 'absolute',
                 left: 16,
-                top: 0,
+                top: 16, /* Centers the line start inside the 33px tall first dot */
                 bottom: 0,
                 width: 1,
                 background: 'linear-gradient(to bottom, rgba(0,212,255,0.4), rgba(0,212,255,0.05))',

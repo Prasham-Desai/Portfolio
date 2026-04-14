@@ -41,7 +41,7 @@ const Footer = () => {
           letterSpacing: '0.05em',
           textAlign: 'center',
         }}>
-          Crafted with React + Framer Motion
+          Systems. Gameplay. Performance.
         </div>
 
         <div style={{ display: 'flex', gap: 20 }}>

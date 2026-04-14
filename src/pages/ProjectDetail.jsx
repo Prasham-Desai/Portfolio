@@ -71,7 +71,7 @@ const ProjectDetail = () => {
           overflow: 'hidden',
           display: 'flex',
           alignItems: 'flex-end',
-          background: project.coverColor,
+          background: project.thumbnail ? `linear-gradient(to bottom, rgba(11,11,22,0.2) 0%, rgba(11,11,22,0.98) 100%), url(${project.thumbnail}) center/cover no-repeat` : project.coverColor,
         }}
       >
         {/* Parallax grid */}
@@ -137,7 +137,7 @@ const ProjectDetail = () => {
                 }}
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M13 7H1M7 13L1 7L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M13 7H1M7 13L1 7L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 All Projects
               </Link>
@@ -640,7 +640,7 @@ const ProjectDetail = () => {
                 flexShrink: 0,
               }}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8H13M8 3L13 8L8 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M3 8H13M8 3L13 8L8 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
             </motion.div>

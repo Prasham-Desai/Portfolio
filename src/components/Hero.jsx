@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import AvatarImg from '../assets/Avatar.jpeg';
 
 const TAGLINES = [
   'Building games that players remember.',
-  'Unity · Godot · Mobile · WebGL · AR/VR.',
-  'From prototype to shipped — end to end.',
+  'Unity · C# · Mobile · Multiplayer · AR/VR.',
+  'From prototype to product — end to end.',
 ];
 
 const Hero = () => {
@@ -77,7 +78,7 @@ const Hero = () => {
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gap: 64,
-          alignItems: 'stretch',
+          alignItems: 'center',
         }}>
 
           {/* ── LEFT: TEXT ── */}
@@ -139,9 +140,9 @@ const Hero = () => {
             {/* Stats */}
             <motion.div variants={fadeUp} style={{ display: 'flex', gap: 36, marginBottom: 48 }}>
               {[
-                { value: '7+',   label: 'Games Shipped' },
-                { value: '1yr+', label: 'Experience'    },
-                { value: '4.4★', label: 'Avg Rating'    },
+                { value: '7+', label: 'Games Shipped' },
+                { value: '1yr+', label: 'Experience' },
+                { value: '4.4★', label: 'Avg Rating' },
               ].map(s => (
                 <motion.div key={s.label} whileHover={{ y: -3 }} transition={{ type: 'spring', stiffness: 300 }}>
                   <div style={{
@@ -167,7 +168,7 @@ const Hero = () => {
               <MagneticButton primary onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
                 View Work
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M1 7H13M7 1L13 7L7 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M1 7H13M7 1L13 7L7 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </MagneticButton>
               <MagneticButton onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
@@ -178,7 +179,7 @@ const Hero = () => {
 
           {/* ── RIGHT: PROFILE CARD ── */}
           <motion.div
-            style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+            style={{ rotateX, rotateY, transformStyle: 'preserve-3d', marginTop: '40px' }}
             initial={{ opacity: 0, scale: 0.9, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.85, delay: 0.35, ease: [0.4, 0, 0.2, 1] }}
@@ -258,7 +259,7 @@ const ProfileCard = () => {
   return (
     <div style={{
       position: 'relative',
-      height: '100%',           /* fills grid row — matches left column height */
+      height: '550px',          /* explicitly taller overall card */
       display: 'flex',
       flexDirection: 'column',
     }}>
@@ -271,7 +272,7 @@ const ProfileCard = () => {
       }} />
 
       <motion.div
-        whileHover={{ 
+        whileHover={{
           boxShadow: '0 40px 90px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,212,255,0.3)',
           y: -5
         }}
@@ -290,101 +291,87 @@ const ProfileCard = () => {
           padding: '32px',
         }}
       >
-        {/* Animated Gradient Sweep Background */}
-        <motion.div 
-          animate={{ backgroundPosition: ['0% 0%', '200% 200%'] }}
-          transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-          style={{
-            position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', opacity: 0.15,
-            background: 'linear-gradient(135deg, transparent 20%, rgba(0,212,255,0.4) 40%, transparent 60%, rgba(180,79,255,0.3) 80%, transparent 100%)',
-            backgroundSize: '300% 300%',
-          }}
-        />
-
         {/* ── TOP SECTION (Empty Square Image) ── */}
         <div style={{
           position: 'relative',
           zIndex: 1,
-          flex: 1,
+          height: '50%',
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'stretch',
           justifyContent: 'center',
-          marginBottom: '24px',
-          minHeight: 0, /* Allows it to shrink properly in flexbox */
+          paddingBottom: '12px',
         }}>
-           <motion.div 
-               whileHover={{ scale: 1.02, borderColor: 'rgba(0, 212, 255, 0.8)' }}
-               style={{
-                   height: '100%',
-                   aspectRatio: '1',
-                   border: '2px dashed rgba(0, 212, 255, 0.3)',
-                   borderRadius: '16px',
-                   background: 'rgba(0, 0, 0, 0.4)',
-                   display: 'flex',
-                   alignItems: 'center',
-                   justifyContent: 'center',
-                   boxShadow: 'inset 0 0 30px rgba(0,0,0,0.8)',
-                   maxHeight: '360px', /* allow it to grow larger */
-               }}
-           >
-                <div style={{ textAlign: 'center', opacity: 0.6 }}>
-                   <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '16px' }}>
-                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                     <circle cx="8.5" cy="8.5" r="1.5" />
-                     <polyline points="21 15 16 10 5 21" />
-                   </svg>
-                   <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.9rem', color: '#00d4ff', letterSpacing: '0.05em' }}>
-                       AWAITING_AVATAR
-                   </div>
-                </div>
-           </motion.div>
+          <motion.div
+            whileHover={{ scale: 1.02, borderColor: 'rgba(0, 212, 255, 0.8)' }}
+            style={{
+              position: 'relative', /* For absolute overlay */
+              maxWidth: '100%',
+              height: '100%',
+              border: '2px solid rgba(0, 212, 255, 0.3)',
+              borderRadius: '16px',
+              overflow: 'hidden',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <img
+              src={AvatarImg}
+              alt="Avatar"
+              style={{ height: '100%', width: 'auto', objectFit: 'contain' }}
+            />
+            {/* Overlay to keep the inset shadow over the image */}
+            <div style={{ position: 'absolute', inset: 0, boxShadow: 'inset 0 0 30px rgba(0,0,0,0.8)', pointerEvents: 'none' }} />
+          </motion.div>
         </div>
 
         {/* ── BOTTOM SECTION (Game Dev Vibes) ── */}
-        <div style={{ 
-            position: 'relative', zIndex: 1,
-            display: 'flex', flexDirection: 'column', gap: '16px',
-            background: 'rgba(0,0,0,0.3)', padding: '24px', borderRadius: '16px',
-            border: '1px solid rgba(255,255,255,0.05)'
-         }}>
-             {/* HUD Header */}
-             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '12px', marginBottom: '4px' }}>
-                 <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', color: '#00d4ff', letterSpacing: '0.1em' }}>SYS.HUD_ACTIVE</span>
-                 <motion.span 
-                    animate={{ opacity: [1, 0, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
-                    style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', color: '#00ff88', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '6px' }}
-                 >
-                     <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88' }} />
-                     REC
-                 </motion.span>
-             </div>
+        <div style={{
+          position: 'relative', zIndex: 1,
+          height: '50%',
+          display: 'flex', flexDirection: 'column', gap: '8px',
+          justifyContent: 'center',
+          background: 'rgba(0,0,0,0.3)', padding: '16px', borderRadius: '16px',
+          border: '1px solid rgba(255,255,255,0.05)',
+          overflow: 'hidden'
+        }}>
+          {/* HUD Header */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '8px', marginBottom: '2px' }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: '#00d4ff', letterSpacing: '0.1em' }}>SYS.HUD_ACTIVE</span>
+            <motion.span
+              animate={{ opacity: [1, 0, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
+              style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: '#00ff88', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '6px' }}
+            >
+              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88' }} />
+              REC
+            </motion.span>
+          </div>
 
-             {/* Skills / Stats Bars */}
-             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                 {[{ label: 'CREATIVITY', val: '99', color: '#00d4ff' }, { label: 'LOGIC', val: '85', color: '#b44fff' }, { label: 'CAFFEINE', val: '100', color: '#00ff88' }].map((stat, i) => (
-                     <div key={i}>
-                         <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: "'Space Grotesk', sans-serif", color: '#fff', fontSize: '0.8rem', marginBottom: '8px', fontWeight: 600, letterSpacing: '0.05em' }}>
-                             <span>{stat.label}</span>
-                             <span>{stat.val}%</span>
-                         </div>
-                         <div style={{ height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
-                             <motion.div initial={{ width: 0 }} animate={{ width: `${stat.val}%` }} transition={{ duration: 1.5, delay: 0.2 + (i*0.2), ease: 'easeOut' }} style={{ height: '100%', background: stat.color, boxShadow: `0 0 10px ${stat.color}` }} />
-                         </div>
-                     </div>
-                 ))}
-             </div>
+          {/* Skills / Stats Bars */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {[{ label: 'CREATIVITY', val: '99', color: '#00d4ff' }, { label: 'LOGIC', val: '85', color: '#b44fff' }, { label: 'CAFFEINE', val: '100', color: '#00ff88' }].map((stat, i) => (
+              <div key={i}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: "'Space Grotesk', sans-serif", color: '#fff', fontSize: '0.75rem', marginBottom: '4px', fontWeight: 600, letterSpacing: '0.05em' }}>
+                  <span>{stat.label}</span>
+                  <span>{stat.val}%</span>
+                </div>
+                <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
+                  <motion.div initial={{ width: 0 }} animate={{ width: `${stat.val}%` }} transition={{ duration: 1.5, delay: 0.2 + (i * 0.2), ease: 'easeOut' }} style={{ height: '100%', background: stat.color, boxShadow: `0 0 10px ${stat.color}` }} />
+                </div>
+              </div>
+            ))}
+          </div>
 
-             {/* Setup / Terminal Line */}
-             <div style={{ marginTop: '8px', padding: '12px 14px', background: 'rgba(0, 212, 255, 0.05)', borderRadius: '8px', borderLeft: '2px solid #00d4ff' }}>
-                 <motion.div
-                    initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ duration: 2, delay: 1 }}
-                    style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}
-                 >
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem', color: '#8888aa' }}>
-                       <span style={{ color: '#00d4ff' }}>&gt;</span> CURRENT_QUEST: <span style={{ color: '#f0f0f8' }}>Build epic experiences.</span>
-                    </span>
-                 </motion.div>
-             </div>
+          {/* Setup / Terminal Line */}
+          <div style={{ marginTop: '4px', padding: '8px 12px', background: 'rgba(0, 212, 255, 0.05)', borderRadius: '8px', borderLeft: '2px solid #00d4ff' }}>
+            <motion.div
+              initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ duration: 2, delay: 1 }}
+              style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}
+            >
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', color: '#8888aa' }}>
+                <span style={{ color: '#00d4ff' }}>&gt;</span> CURRENT_QUEST: <span style={{ color: '#f0f0f8' }}>Build epic experiences.</span>
+              </span>
+            </motion.div>
+          </div>
         </div>
       </motion.div>
     </div>
