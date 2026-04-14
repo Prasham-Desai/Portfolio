@@ -1,0 +1,242 @@
+/* ============================
+   DESIGN TOKENS & RESET
+   ============================ */
+:root {
+  --color-bg: #08080f;
+  --color-bg-2: #0d0d1a;
+  --color-surface: #111120;
+  --color-surface-2: #161628;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-hover: rgba(0, 212, 255, 0.3);
+
+  --color-teal: #00d4ff;
+  --color-cyan: #00fff2;
+  --color-gold: #ffd700;
+  --color-red: #ff4757;
+  --color-purple: #b44fff;
+  --color-green: #00ff88;
+  --color-orange: #ff6b00;
+
+  --color-text-primary: #f0f0f8;
+  --color-text-secondary: #8888aa;
+  --color-text-muted: #444460;
+
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+
+  --shadow-glow-teal: 0 0 30px rgba(0, 212, 255, 0.15);
+  --shadow-glow-gold: 0 0 30px rgba(255, 215, 0, 0.15);
+  --shadow-card: 0 4px 40px rgba(0, 0, 0, 0.4);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  cursor: none;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: none;
+}
+
+button {
+  cursor: none;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+input, textarea {
+  font-family: inherit;
+  cursor: none;
+}
+
+/* ============================
+   SCROLLBAR
+   ============================ */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-teal);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+/* ============================
+   SELECTION
+   ============================ */
+::selection {
+  background: rgba(0, 212, 255, 0.2);
+  color: var(--color-teal);
+}
+
+/* ============================
+   TYPOGRAPHY UTILITIES
+   ============================ */
+.heading-xl {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+}
+
+.heading-lg {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.heading-md {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+.text-teal { color: var(--color-teal); }
+.text-gold { color: var(--color-gold); }
+.text-muted { color: var(--color-text-secondary); }
+
+/* ============================
+   LAYOUT UTILITIES
+   ============================ */
+.container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.section-padding {
+  padding: 120px 0;
+}
+
+/* ============================
+   GRID NOISE BACKGROUND
+   ============================ */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ============================
+   GRADIENT TEXT
+   ============================ */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-teal), var(--color-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-gold {
+  background: linear-gradient(135deg, var(--color-gold), #ffaa00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================
+   GLOW EFFECTS
+   ============================ */
+.glow-teal {
+  box-shadow: var(--shadow-glow-teal);
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+/* ============================
+   SECTION LABEL
+   ============================ */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-teal);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--color-teal);
+}
+
+/* ============================
+   NOISE OVERLAY
+   ============================ */
+.noise::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* ============================
+   PAGE WRAPPER
+   ============================ */
+.page-wrapper {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Smooth transition for page changes */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 400ms, transform 400ms;
+}
