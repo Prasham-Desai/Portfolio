@@ -72,7 +72,7 @@ const Navbar = () => {
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
                 fontWeight: 700,
-                fontSize: '1.25rem',
+                fontSize: '2.75rem',
                 letterSpacing: '-0.01em',
                 color: '#f0f0f8',
               }}

@@ -191,8 +191,11 @@ const Hero = () => {
 
       <style>{`
         @media (max-width: 768px) {
-          #hero .container > div { grid-template-columns: 1fr !important; }
-          #hero .container > div > div:last-child { display: none !important; }
+          #hero .container > div { 
+            grid-template-columns: 1fr !important; 
+            gap: 40px !important; 
+          }
+          /* Removed display: none for the profile card to meet stacking requirements */
         }
       `}</style>
     </section>
@@ -259,280 +262,133 @@ const ProfileCard = () => {
       display: 'flex',
       flexDirection: 'column',
     }}>
-      {/* Ambient glow behind card */}
+      {/* Ambient static background glow behind the card */}
       <div style={{
-        position: 'absolute', inset: -20, zIndex: -1,
-        background: 'radial-gradient(ellipse 70% 60% at 50% 40%, rgba(0,212,255,0.07) 0%, transparent 65%)',
+        position: 'absolute', inset: -30, zIndex: -1,
+        background: 'radial-gradient(ellipse 80% 80% at 50% 50%, rgba(0,212,255,0.08) 0%, transparent 60%)',
         pointerEvents: 'none',
+        borderRadius: 40,
       }} />
 
       <motion.div
-        whileHover={{ boxShadow: '0 40px 90px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,212,255,0.16)' }}
-        transition={{ duration: 0.3 }}
+        whileHover={{ 
+          boxShadow: '0 40px 90px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,212,255,0.3)',
+          y: -5
+        }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
         style={{
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
+          justifyContent: 'space-between',
           borderRadius: 24,
           overflow: 'hidden',
-          boxShadow: '0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.07)',
-          background: '#0d0d1a',
+          // Glassmorphism baseline & Neon border glow
+          background: 'rgba(13, 13, 26, 0.95)', // Increased opacity for clarity
+          boxShadow: '0 24px 64px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05), 0 0 20px rgba(0,212,255,0.1)',
+          border: '1px solid rgba(0, 212, 255, 0.15)',
+          padding: '32px',
         }}
       >
-        {/* ── VISUAL BANNER — tall vertical rectangle, ~58% of card height ── */}
+        {/* Animated Gradient Sweep Background */}
+        <motion.div 
+          animate={{ backgroundPosition: ['0% 0%', '200% 200%'] }}
+          transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+          style={{
+            position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', opacity: 0.15,
+            background: 'linear-gradient(135deg, transparent 20%, rgba(0,212,255,0.4) 40%, transparent 60%, rgba(180,79,255,0.3) 80%, transparent 100%)',
+            backgroundSize: '300% 300%',
+          }}
+        />
+
+        {/* ── TOP SECTION (Empty Square Image) ── */}
         <div style={{
-          flex: '0 0 58%',
           position: 'relative',
-          background: 'linear-gradient(170deg, #090f1e 0%, #0b0720 50%, #0e0e26 100%)',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 14,
-        }}>
-          {/* Hex grid */}
-          <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.09 }} xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="hxP" x="0" y="0" width="54" height="48" patternUnits="userSpaceOnUse">
-                <polygon points="27,2 50,14 50,36 27,48 4,36 4,14" fill="none" stroke="#00d4ff" strokeWidth="0.7"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#hxP)"/>
-          </svg>
-
-          {/* Radial glow */}
-          <div style={{
-            position: 'absolute',
-            width: 260, height: 260, borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(0,212,255,0.13) 0%, rgba(180,79,255,0.07) 45%, transparent 70%)',
-          }} />
-
-          {/* Corner brackets — game-UI style */}
-          {[
-            { top: 16, left: 16, borderTop: '2px solid rgba(0,212,255,0.4)', borderLeft: '2px solid rgba(0,212,255,0.4)' },
-            { top: 16, right: 16, borderTop: '2px solid rgba(0,212,255,0.4)', borderRight: '2px solid rgba(0,212,255,0.4)' },
-            { bottom: 16, left: 16, borderBottom: '2px solid rgba(0,212,255,0.4)', borderLeft: '2px solid rgba(0,212,255,0.4)' },
-            { bottom: 16, right: 16, borderBottom: '2px solid rgba(0,212,255,0.4)', borderRight: '2px solid rgba(0,212,255,0.4)' },
-          ].map((s, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 + i * 0.08, duration: 0.4 }}
-              style={{ position: 'absolute', width: 22, height: 22, ...s }}
-            />
-          ))}
-
-          {/* Outer orbit ring */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
-            style={{
-              position: 'absolute',
-              width: 160, height: 160, borderRadius: '50%',
-              border: '1px solid transparent',
-              borderTop: '1px solid rgba(0,212,255,0.5)',
-              borderRight: '1px solid rgba(0,212,255,0.15)',
-            }}
-          />
-          {/* Inner orbit ring */}
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-            style={{
-              position: 'absolute',
-              width: 112, height: 112, borderRadius: '50%',
-              border: '1px solid transparent',
-              borderBottom: '1px solid rgba(180,79,255,0.5)',
-              borderLeft: '1px solid rgba(180,79,255,0.15)',
-            }}
-          />
-
-          {/* Avatar circle */}
-          <motion.div
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.5, type: 'spring', stiffness: 160 }}
-            style={{
-              position: 'relative', zIndex: 2,
-              width: 84, height: 84, borderRadius: '50%',
-              background: 'linear-gradient(135deg, rgba(0,212,255,0.16), rgba(180,79,255,0.16))',
-              border: '2px solid rgba(0,212,255,0.45)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              boxShadow: '0 0 40px rgba(0,212,255,0.2), inset 0 0 28px rgba(0,212,255,0.06)',
-            }}
-          >
-            <span style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: '1.8rem', fontWeight: 800,
-              background: 'linear-gradient(135deg, #00d4ff, #b44fff)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              userSelect: 'none',
-            }}>
-              PD
-            </span>
-          </motion.div>
-
-          {/* Name + role — in banner */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}
-          >
-            <div style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: '1.3rem', fontWeight: 800,
-              color: '#f0f0f8', letterSpacing: '-0.025em', lineHeight: 1.1,
-            }}>
-              Prasham Desai
-            </div>
-            <div style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: '0.68rem', letterSpacing: '0.14em',
-              color: '#00d4ff', marginTop: 5,
-            }}>
-              GAME DEVELOPER
-            </div>
-          </motion.div>
-
-          {/* Scanline overlay — subtle texture */}
-          <div style={{
-            position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
-            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px)',
-          }} />
-        </div>
-
-        {/* ── INFO SECTION — bottom 42% of card ── */}
-        <div style={{
+          zIndex: 1,
           flex: 1,
           display: 'flex',
-          flexDirection: 'column',
-          padding: '20px 22px',
-          gap: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '24px',
+          minHeight: 0, /* Allows it to shrink properly in flexbox */
         }}>
-
-          {/* Row 1: Specialty */}
-          <InfoRow
-            delay={0.65}
-            label="Specialty"
-            accent="#00d4ff"
-            content={
-              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                {['Mobile', 'Multiplayer', 'AR/VR'].map(tag => (
-                  <span key={tag} style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: '0.82rem', fontWeight: 600,
-                    color: '#c8c8e0', padding: '2px 10px',
-                    borderRadius: 5,
-                    background: 'rgba(0,212,255,0.07)',
-                    border: '1px solid rgba(0,212,255,0.15)',
-                  }}>{tag}</span>
-                ))}
-              </div>
-            }
-          />
-
-          <Divider />
-
-          {/* Row 2: Engine stack */}
-          <InfoRow
-            delay={0.75}
-            label="Engine Stack"
-            accent="#ffd700"
-            content={
-              <div style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: '0.88rem', fontWeight: 600,
-                color: '#c8c8e0', letterSpacing: '-0.01em',
-              }}>
-                Unity 3D / 2D &nbsp;·&nbsp; DOTS/ECS &nbsp;·&nbsp; C#
-              </div>
-            }
-          />
-
-          <Divider />
-
-          {/* Row 3: Education */}
-          <InfoRow
-            delay={0.83}
-            label="Education"
-            accent="#b44fff"
-            content={
-              <div>
-                <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.88rem', fontWeight: 600, color: '#c8c8e0' }}>
-                  BE Computer Science
+           <motion.div 
+               whileHover={{ scale: 1.02, borderColor: 'rgba(0, 212, 255, 0.8)' }}
+               style={{
+                   height: '100%',
+                   aspectRatio: '1',
+                   border: '2px dashed rgba(0, 212, 255, 0.3)',
+                   borderRadius: '16px',
+                   background: 'rgba(0, 0, 0, 0.4)',
+                   display: 'flex',
+                   alignItems: 'center',
+                   justifyContent: 'center',
+                   boxShadow: 'inset 0 0 30px rgba(0,0,0,0.8)',
+                   maxHeight: '360px', /* allow it to grow larger */
+               }}
+           >
+                <div style={{ textAlign: 'center', opacity: 0.6 }}>
+                   <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '16px' }}>
+                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                     <circle cx="8.5" cy="8.5" r="1.5" />
+                     <polyline points="21 15 16 10 5 21" />
+                   </svg>
+                   <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.9rem', color: '#00d4ff', letterSpacing: '0.05em' }}>
+                       AWAITING_AVATAR
+                   </div>
                 </div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', color: '#555572', marginTop: 2 }}>
-                  LJIET · Ahmedabad · 2024
-                </div>
-              </div>
-            }
-          />
+           </motion.div>
+        </div>
 
-          <Divider />
+        {/* ── BOTTOM SECTION (Game Dev Vibes) ── */}
+        <div style={{ 
+            position: 'relative', zIndex: 1,
+            display: 'flex', flexDirection: 'column', gap: '16px',
+            background: 'rgba(0,0,0,0.3)', padding: '24px', borderRadius: '16px',
+            border: '1px solid rgba(255,255,255,0.05)'
+         }}>
+             {/* HUD Header */}
+             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '12px', marginBottom: '4px' }}>
+                 <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', color: '#00d4ff', letterSpacing: '0.1em' }}>SYS.HUD_ACTIVE</span>
+                 <motion.span 
+                    animate={{ opacity: [1, 0, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
+                    style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', color: '#00ff88', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '6px' }}
+                 >
+                     <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88' }} />
+                     REC
+                 </motion.span>
+             </div>
 
-          {/* Status bar — pinned to bottom */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.95 }}
-            style={{
-              marginTop: 'auto',
-              display: 'flex', alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '9px 13px',
-              background: 'rgba(0,255,136,0.05)',
-              borderRadius: 9,
-              border: '1px solid rgba(0,255,136,0.13)',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <motion.div
-                animate={{ scale: [1, 1.7, 1], opacity: [1, 0.35, 1] }}
-                transition={{ duration: 2.2, repeat: Infinity }}
-                style={{ width: 7, height: 7, borderRadius: '50%', background: '#00ff88', flexShrink: 0 }}
-              />
-              <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.83rem', fontWeight: 600, color: '#00ff88' }}>
-                Open to work
-              </span>
-            </div>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.64rem', color: '#444460' }}>
-              Ahmedabad, IN
-            </span>
-          </motion.div>
+             {/* Skills / Stats Bars */}
+             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                 {[{ label: 'CREATIVITY', val: '99', color: '#00d4ff' }, { label: 'LOGIC', val: '85', color: '#b44fff' }, { label: 'CAFFEINE', val: '100', color: '#00ff88' }].map((stat, i) => (
+                     <div key={i}>
+                         <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: "'Space Grotesk', sans-serif", color: '#fff', fontSize: '0.8rem', marginBottom: '8px', fontWeight: 600, letterSpacing: '0.05em' }}>
+                             <span>{stat.label}</span>
+                             <span>{stat.val}%</span>
+                         </div>
+                         <div style={{ height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
+                             <motion.div initial={{ width: 0 }} animate={{ width: `${stat.val}%` }} transition={{ duration: 1.5, delay: 0.2 + (i*0.2), ease: 'easeOut' }} style={{ height: '100%', background: stat.color, boxShadow: `0 0 10px ${stat.color}` }} />
+                         </div>
+                     </div>
+                 ))}
+             </div>
 
+             {/* Setup / Terminal Line */}
+             <div style={{ marginTop: '8px', padding: '12px 14px', background: 'rgba(0, 212, 255, 0.05)', borderRadius: '8px', borderLeft: '2px solid #00d4ff' }}>
+                 <motion.div
+                    initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ duration: 2, delay: 1 }}
+                    style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}
+                 >
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem', color: '#8888aa' }}>
+                       <span style={{ color: '#00d4ff' }}>&gt;</span> CURRENT_QUEST: <span style={{ color: '#f0f0f8' }}>Build epic experiences.</span>
+                    </span>
+                 </motion.div>
+             </div>
         </div>
       </motion.div>
     </div>
   );
 };
-
-/* Small reusable pieces inside the card */
-const InfoRow = ({ label, content, accent, delay }) => (
-  <motion.div
-    initial={{ opacity: 0, x: 10 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ delay, duration: 0.4 }}
-    style={{ padding: '12px 0', display: 'flex', flexDirection: 'column', gap: 6 }}
-  >
-    <div style={{
-      fontFamily: "'JetBrains Mono', monospace",
-      fontSize: '0.62rem', letterSpacing: '0.12em',
-      textTransform: 'uppercase',
-      color: accent, opacity: 0.7,
-    }}>
-      {label}
-    </div>
-    {content}
-  </motion.div>
-);
-
-const Divider = () => (
-  <div style={{ height: 1, background: 'rgba(255,255,255,0.05)' }} />
-);
 
 export default Hero;

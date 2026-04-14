@@ -91,27 +91,37 @@ const ProjectCard = ({ project, index }) => {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-            {/* Grid pattern */}
-            <div style={{
-              position: 'absolute', inset: 0,
-              backgroundImage: `linear-gradient(${project.accentColor}09 1px,transparent 1px),linear-gradient(90deg,${project.accentColor}09 1px,transparent 1px)`,
-              backgroundSize: '28px 28px',
-            }} />
+            {project.thumbnail ? (
+              <img 
+                src={project.thumbnail} 
+                alt={project.title} 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+              />
+            ) : (
+              <>
+                {/* Grid pattern */}
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  backgroundImage: `linear-gradient(${project.accentColor}09 1px,transparent 1px),linear-gradient(90deg,${project.accentColor}09 1px,transparent 1px)`,
+                  backgroundSize: '28px 28px',
+                }} />
 
-            {/* Ghost title */}
-            <div style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: 'clamp(2.2rem, 5vw, 3rem)',
-              fontWeight: 800,
-              letterSpacing: '-0.04em',
-              color: 'rgba(255,255,255,0.1)',
-              textTransform: 'uppercase',
-              userSelect: 'none',
-              position: 'relative',
-              zIndex: 1,
-            }}>
-              {project.title}
-            </div>
+                {/* Ghost title */}
+                <div style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: 'clamp(2.2rem, 5vw, 3rem)',
+                  fontWeight: 800,
+                  letterSpacing: '-0.04em',
+                  color: 'rgba(255,255,255,0.1)',
+                  textTransform: 'uppercase',
+                  userSelect: 'none',
+                  position: 'relative',
+                  zIndex: 1,
+                }}>
+                  {project.title}
+                </div>
+              </>
+            )}
 
             {/* Project index */}
             <div style={{
