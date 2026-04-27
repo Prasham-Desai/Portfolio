@@ -8,14 +8,33 @@ const TAGLINES = [
   'From prototype to product, end to end.',
 ];
 
+const SHAPES = [
+  { id: 'cube',  kind: 'cube',  top: '14%', left: '4%',  size: 78, depth: 1.6, color: '#00d4ff', spin: 22 },
+  { id: 'tri',   kind: 'tri',   top: '8%',  left: '46%', size: 44, depth: 2.0, color: '#ffd700', spin: 0  },
+  { id: 'octa',  kind: 'octa',  top: '20%', left: '68%', size: 60, depth: 1.4, color: '#b44fff', spin: 26 },
+  { id: 'ring',  kind: 'ring',  top: '40%', left: '2%',  size: 70, depth: 0.9, color: '#00fff2', spin: 0  },
+  { id: 'pixel', kind: 'pixel', top: '52%', left: '94%', size: 42, depth: 2.4, color: '#00d4ff', spin: 32 },
+  { id: 'dpad',  kind: 'dpad',  top: '74%', left: '8%',  size: 64, depth: 1.2, color: '#00ff88', spin: 0  },
+  { id: 'plus',  kind: 'plus',  top: '86%', left: '46%', size: 38, depth: 2.2, color: '#ff4757', spin: 0  },
+  { id: 'coin',  kind: 'coin',  top: '80%', left: '88%', size: 54, depth: 1.5, color: '#ffd700', spin: 14 },
+];
+
 const Hero = () => {
   const [taglineIndex, setTaglineIndex] = useState(0);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const containerRef = useRef(null);
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const rotateX = useSpring(useTransform(mouseY, [-400, 400], [6, -6]), { stiffness: 70, damping: 22 });
-  const rotateY = useSpring(useTransform(mouseX, [-400, 400], [-6, 6]), { stiffness: 70, damping: 22 });
+  // Cursor position normalised to [-1, 1]
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+
+  // Portrait card 3D tilt — deeper than before
+  const tiltX = useSpring(useTransform(my, [-1, 1], [12, -12]), { stiffness: 80, damping: 22 });
+  const tiltY = useSpring(useTransform(mx, [-1, 1], [-14, 14]), { stiffness: 80, damping: 22 });
+
+  // Centre glow drifts gently with cursor
+  const glowX = useSpring(useTransform(mx, [-1, 1], [-40, 40]), { stiffness: 50, damping: 22 });
+  const glowY = useSpring(useTransform(my, [-1, 1], [-40, 40]), { stiffness: 50, damping: 22 });
 
   useEffect(() => {
     const id = setInterval(() => setTaglineIndex(p => (p + 1) % TAGLINES.length), 3500);
@@ -26,21 +45,12 @@ const Hero = () => {
     const onMove = (e) => {
       if (!containerRef.current) return;
       const r = containerRef.current.getBoundingClientRect();
-      mouseX.set(e.clientX - (r.left + r.width / 2));
-      mouseY.set(e.clientY - (r.top + r.height / 2));
+      mx.set(((e.clientX - r.left) / r.width) * 2 - 1);
+      my.set(((e.clientY - r.top) / r.height) * 2 - 1);
     };
     window.addEventListener('mousemove', onMove);
     return () => window.removeEventListener('mousemove', onMove);
-  }, [mouseX, mouseY]);
-
-  const stagger = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.11, delayChildren: 0.12 } },
-  };
-  const fadeUp = {
-    hidden: { opacity: 0, y: 26 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] } },
-  };
+  }, [mx, my]);
 
   return (
     <section
@@ -48,11 +58,13 @@ const Hero = () => {
       id="hero"
       style={{
         height: '100vh',
+        minHeight: 720,
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
         overflow: 'hidden',
         background: 'var(--color-bg)',
+        perspective: 1400,
       }}
     >
       {/* Subtle grid */}
@@ -61,151 +73,477 @@ const Hero = () => {
         backgroundImage: 'linear-gradient(rgba(0,212,255,0.028) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.028) 1px,transparent 1px)',
         backgroundSize: '64px 64px',
         maskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%,black 10%,transparent 100%)',
+        WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%,black 10%,transparent 100%)',
       }} />
 
-      {/* Centre glow */}
-      <div style={{
-        position: 'absolute', top: '45%', left: '50%',
-        transform: 'translate(-50%,-50%)',
-        width: 800, height: 800, borderRadius: '50%',
-        background: 'radial-gradient(circle,rgba(0,212,255,0.05) 0%,transparent 65%)',
+      {/* Centre glow with cursor drift */}
+      <motion.div style={{
+        position: 'absolute',
+        top: 'calc(50% - 450px)',
+        left: 'calc(50% - 450px)',
+        width: 900, height: 900,
+        borderRadius: '50%',
+        x: glowX, y: glowY,
+        background: 'radial-gradient(circle,rgba(0,212,255,0.07) 0%,transparent 65%)',
         pointerEvents: 'none',
       }} />
 
-      {/* ── MAIN LAYOUT ── */}
+      {/* Floating shapes — sit between background and content */}
+      {SHAPES.map(shape => (
+        <FloatingShape
+          key={shape.id}
+          {...shape}
+          mx={mx}
+          my={my}
+          onInteract={() => setHasInteracted(true)}
+        />
+      ))}
+
+      {/* Drag-me hint, fades after first interaction */}
+      <AnimatePresence>
+        {!hasInteracted && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ delay: 1.4, duration: 0.5 }}
+            style={{
+              position: 'absolute',
+              top: 32, right: 48,
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.7rem',
+              color: '#8888aa',
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              display: 'flex', alignItems: 'center', gap: 10,
+              zIndex: 4,
+              pointerEvents: 'none',
+            }}
+          >
+            <motion.span
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 1.8, repeat: Infinity }}
+              style={{ width: 6, height: 6, background: '#00d4ff', borderRadius: '50%', boxShadow: '0 0 8px #00d4ff' }}
+            />
+            drag the shapes
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Content layer */}
       <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
-        <div style={{
+        <div className="hero-grid" style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: '1.2fr 1fr',
           gap: 64,
           alignItems: 'center',
         }}>
-
-          {/* ── LEFT: TEXT ── */}
-          <motion.div variants={stagger} initial="hidden" animate="show"
-            style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+          {/* LEFT: text */}
+          <motion.div
+            initial="hidden"
+            animate="show"
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.10, delayChildren: 0.1 } } }}
           >
+            <FadeUp>
+              <div className="section-label" style={{ marginBottom: 24 }}>Game Developer</div>
+            </FadeUp>
 
-            <motion.div variants={fadeUp} className="section-label" style={{ marginBottom: 28 }}>
-              Game Developer
-            </motion.div>
-
-            <motion.h1 variants={fadeUp} style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: 'clamp(3.8rem, 7.5vw, 6rem)',
-              fontWeight: 800,
-              letterSpacing: '-0.04em',
-              lineHeight: 0.95,
-              color: '#f0f0f8',
-              marginBottom: 28,
-            }}>
-              Prasham
-              <br />
-              <span style={{
-                display: 'inline-block',
-                background: 'linear-gradient(135deg,#00d4ff 30%,#00fff2)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
+            <FadeUp>
+              <h1 style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 'clamp(3.6rem, 7.5vw, 6rem)',
+                fontWeight: 800,
+                letterSpacing: '-0.045em',
+                lineHeight: 0.92,
+                color: '#f0f0f8',
+                marginBottom: 24,
               }}>
-                Desai
-              </span>
-              <span style={{ color: '#00d4ff', WebkitTextFillColor: '#00d4ff' }}>.</span>
-            </motion.h1>
+                Prasham<br />
+                <span style={{
+                  background: 'linear-gradient(135deg,#00d4ff 30%,#00fff2)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}>
+                  Desai
+                </span>
+                <span style={{ color: '#00d4ff' }}>.</span>
+              </h1>
+            </FadeUp>
 
-            {/* Rotating tagline */}
-            <motion.div variants={fadeUp} style={{ height: 36, marginBottom: 40, overflow: 'hidden', position: 'relative' }}>
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={taglineIndex}
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -18 }}
-                  transition={{ duration: 0.36 }}
-                  style={{
-                    position: 'absolute',
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: 'clamp(1.05rem, 2vw, 1.25rem)',
-                    fontWeight: 400,
-                    color: '#8888aa',
-                    letterSpacing: '-0.01em',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {TAGLINES[taglineIndex]}
-                </motion.p>
-              </AnimatePresence>
-            </motion.div>
+            <FadeUp>
+              <div style={{ height: 36, marginBottom: 36, position: 'relative', overflow: 'hidden' }}>
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={taglineIndex}
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -18 }}
+                    transition={{ duration: 0.36 }}
+                    style={{
+                      position: 'absolute',
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontSize: 'clamp(1.05rem, 2vw, 1.25rem)',
+                      fontWeight: 400,
+                      color: '#8888aa',
+                      letterSpacing: '-0.01em',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {TAGLINES[taglineIndex]}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
+            </FadeUp>
 
-            {/* Stats */}
-            <motion.div variants={fadeUp} style={{ display: 'flex', gap: 36, marginBottom: 48 }}>
-              {[
-                { value: '7+', label: 'Games Shipped' },
-                { value: '1yr+', label: 'Experience' },
-                { value: '∞', label: 'Bug Solved' },
-              ].map(s => (
-                <motion.div key={s.label} whileHover={{ y: -3 }} transition={{ type: 'spring', stiffness: 300 }}>
-                  <div style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: '1.9rem', fontWeight: 800,
-                    color: '#00d4ff', letterSpacing: '-0.03em', lineHeight: 1,
-                  }}>
-                    {s.value}
-                  </div>
-                  <div style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: '0.68rem', color: '#444460',
-                    letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 5,
-                  }}>
-                    {s.label}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
+            <FadeUp>
+              <div style={{ display: 'flex', gap: 36, marginBottom: 44 }}>
+                {[
+                  { v: '7+',   l: 'Games Shipped' },
+                  { v: '1yr+', l: 'Experience' },
+                  { v: '∞',    l: 'Bugs Solved' },
+                ].map(s => (
+                  <motion.div key={s.l} whileHover={{ y: -3 }} transition={{ type: 'spring', stiffness: 300 }}>
+                    <div style={{
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontSize: '1.9rem', fontWeight: 800,
+                      color: '#00d4ff', letterSpacing: '-0.03em', lineHeight: 1,
+                    }}>{s.v}</div>
+                    <div style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: '0.65rem', color: '#444460',
+                      letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 6,
+                    }}>{s.l}</div>
+                  </motion.div>
+                ))}
+              </div>
+            </FadeUp>
 
-            {/* CTAs */}
-            <motion.div variants={fadeUp} style={{ display: 'flex', gap: 14 }}>
-              <MagneticButton primary onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
-                View Work
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M1 7H13M7 1L13 7L7 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </MagneticButton>
-              <MagneticButton onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
-                Contact
-              </MagneticButton>
-            </motion.div>
+            <FadeUp>
+              <div style={{ display: 'flex', gap: 14 }}>
+                <MagneticButton primary onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
+                  View Work
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M1 7H13M7 1L13 7L7 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </MagneticButton>
+                <MagneticButton onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
+                  Contact
+                </MagneticButton>
+              </div>
+            </FadeUp>
           </motion.div>
 
-          {/* ── RIGHT: PROFILE CARD ── */}
+          {/* RIGHT: portrait card with deeper 3D tilt */}
           <motion.div
-            style={{ rotateX, rotateY, transformStyle: 'preserve-3d', marginTop: '40px' }}
-            initial={{ opacity: 0, scale: 0.9, y: 24 }}
+            initial={{ opacity: 0, scale: 0.92, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.85, delay: 0.35, ease: [0.4, 0, 0.2, 1] }}
+            style={{
+              rotateX: tiltX,
+              rotateY: tiltY,
+              transformPerspective: 1200,
+              transformStyle: 'preserve-3d',
+            }}
           >
-            <ProfileCard />
+            <PortraitCard />
           </motion.div>
-
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          #hero .container > div { 
-            grid-template-columns: 1fr !important; 
-            gap: 40px !important; 
+        @media (max-width: 880px) {
+          #hero .hero-grid {
+            grid-template-columns: 1fr !important;
+            gap: 36px !important;
           }
-          /* Removed display: none for the profile card to meet stacking requirements */
+          #hero .hero-shape { display: none !important; }
         }
       `}</style>
     </section>
   );
 };
 
+const FadeUp = ({ children }) => (
+  <motion.div
+    variants={{
+      hidden: { opacity: 0, y: 24 },
+      show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] } },
+    }}
+  >
+    {children}
+  </motion.div>
+);
+
+/* ──────────────────────────────────────────────────────────────
+   FloatingShape — three layers:
+     outer  → cursor parallax (depth-weighted)
+     middle → drag + spring back to origin
+     inner  → idle float + spin (so drag never fights animate)
+────────────────────────────────────────────────────────────── */
+const FloatingShape = ({ kind, top, left, size, depth, color, spin, mx, my, onInteract }) => {
+  const px = useTransform(mx, [-1, 1], [-30 * depth, 30 * depth]);
+  const py = useTransform(my, [-1, 1], [-30 * depth, 30 * depth]);
+  const sx = useSpring(px, { stiffness: 60, damping: 18 });
+  const sy = useSpring(py, { stiffness: 60, damping: 18 });
+
+  const floatRange = 14 + depth * 4;
+  const floatDuration = 4 + depth;
+
+  return (
+    <motion.div
+      className="hero-shape"
+      style={{
+        position: 'absolute',
+        top, left,
+        width: size, height: size,
+        x: sx, y: sy,
+        zIndex: 1,
+        opacity: Math.min(0.95, 0.7 + 1 / depth * 0.18),
+        filter: depth > 1.9 ? 'blur(0.4px)' : 'none',
+      }}
+    >
+      <motion.div
+        drag
+        dragSnapToOrigin
+        dragElastic={0.7}
+        dragTransition={{ bounceStiffness: 220, bounceDamping: 16 }}
+        onDragStart={onInteract}
+        onTap={onInteract}
+        whileHover={{ scale: 1.18 }}
+        whileDrag={{ scale: 1.28, zIndex: 10 }}
+        style={{ width: '100%', height: '100%' }}
+      >
+        <motion.div
+          animate={{
+            y: [0, -floatRange, 0],
+            rotate: spin > 0 ? 360 : 0,
+          }}
+          transition={{
+            y: { duration: floatDuration, repeat: Infinity, ease: 'easeInOut' },
+            rotate: spin > 0
+              ? { duration: spin, repeat: Infinity, ease: 'linear' }
+              : { duration: 0 },
+          }}
+          style={{ width: '100%', height: '100%' }}
+        >
+          <ShapeGraphic kind={kind} size={size} color={color} />
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const ShapeGraphic = ({ kind, size, color }) => {
+  const stroke = 2;
+  const glow = `drop-shadow(0 0 12px ${color}66)`;
+
+  switch (kind) {
+    case 'cube':
+      return (
+        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
+          <polygon points="50,8 90,30 90,70 50,92 10,70 10,30" fill="none" stroke={color} strokeWidth={stroke} />
+          <polygon points="50,8 50,50 10,30" fill={color} opacity="0.18" />
+          <polygon points="50,8 50,50 90,30" fill={color} opacity="0.32" />
+          <polygon points="50,50 10,30 10,70 50,92" fill={color} opacity="0.10" />
+          <line x1="50" y1="8"  x2="50" y2="50" stroke={color} strokeWidth={stroke} opacity="0.7" />
+          <line x1="50" y1="50" x2="10" y2="30" stroke={color} strokeWidth={stroke} opacity="0.7" />
+          <line x1="50" y1="50" x2="90" y2="30" stroke={color} strokeWidth={stroke} opacity="0.7" />
+          <line x1="50" y1="50" x2="50" y2="92" stroke={color} strokeWidth={stroke} opacity="0.7" />
+        </svg>
+      );
+    case 'octa':
+      return (
+        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
+          <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke={color} strokeWidth={stroke} />
+          <polygon points="50,5 50,95 5,50" fill={color} opacity="0.14" />
+          <polygon points="50,5 50,95 95,50" fill={color} opacity="0.28" />
+          <line x1="5" y1="50" x2="95" y2="50" stroke={color} strokeWidth={stroke} opacity="0.7" />
+          <line x1="50" y1="5" x2="50" y2="95" stroke={color} strokeWidth={stroke} opacity="0.7" />
+        </svg>
+      );
+    case 'dpad':
+      return (
+        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
+          <path d="M35 12 H65 V35 H88 V65 H65 V88 H35 V65 H12 V35 H35 Z" fill={color} opacity="0.16" stroke={color} strokeWidth={stroke} strokeLinejoin="round" />
+          <circle cx="50" cy="50" r="6" fill={color} opacity="0.7" />
+        </svg>
+      );
+    case 'coin':
+      return (
+        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
+          <circle cx="50" cy="50" r="42" fill={color} opacity="0.12" stroke={color} strokeWidth={stroke} />
+          <circle cx="50" cy="50" r="34" fill="none" stroke={color} strokeWidth="1" opacity="0.5" />
+          <text x="50" y="63" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="800" fontSize="36" fill={color} opacity="0.95">$</text>
+        </svg>
+      );
+    case 'pixel':
+      return (
+        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
+          <rect x="8"  y="8"  width="38" height="38" fill={color} opacity="0.85" />
+          <rect x="54" y="8"  width="38" height="38" fill="none" stroke={color} strokeWidth="3" opacity="0.7" />
+          <rect x="8"  y="54" width="38" height="38" fill="none" stroke={color} strokeWidth="3" opacity="0.7" />
+          <rect x="54" y="54" width="38" height="38" fill={color} opacity="0.5" />
+        </svg>
+      );
+    case 'tri':
+      return (
+        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
+          <polygon points="20,15 90,50 20,85" fill={color} opacity="0.20" stroke={color} strokeWidth={stroke} strokeLinejoin="round" />
+        </svg>
+      );
+    case 'plus':
+      return (
+        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
+          <path d="M40 10 H60 V40 H90 V60 H60 V90 H40 V60 H10 V40 H40 Z" fill={color} opacity="0.22" stroke={color} strokeWidth={stroke} strokeLinejoin="round" />
+        </svg>
+      );
+    case 'ring':
+    default:
+      return (
+        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
+          <circle cx="50" cy="50" r="42" fill="none" stroke={color} strokeWidth={stroke} />
+          <circle cx="50" cy="50" r="32" fill="none" stroke={color} strokeWidth="1" opacity="0.5" />
+          <circle cx="50" cy="50" r="6"  fill={color} />
+        </svg>
+      );
+  }
+};
+
 /* ──────────────────────────────────────
-   MAGNETIC BUTTON
+   PORTRAIT CARD — slimmer, deeper tilt,
+   scanlines + corner brackets
 ────────────────────────────────────── */
+const PortraitCard = () => {
+  return (
+    <div style={{
+      position: 'relative',
+      maxWidth: 420,
+      marginLeft: 'auto',
+      transformStyle: 'preserve-3d',
+    }}>
+      {/* Ambient glow behind card */}
+      <div style={{
+        position: 'absolute', inset: -40, zIndex: -1,
+        background: 'radial-gradient(ellipse 80% 80% at 50% 50%, rgba(0,212,255,0.10) 0%, transparent 60%)',
+        pointerEvents: 'none',
+        borderRadius: 40,
+      }} />
+
+      <div style={{
+        background: 'rgba(13,13,26,0.92)',
+        border: '1px solid rgba(0,212,255,0.18)',
+        borderRadius: 24,
+        padding: 22,
+        boxShadow: '0 30px 80px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.04), 0 0 32px rgba(0,212,255,0.08)',
+        transformStyle: 'preserve-3d',
+      }}>
+        {/* HUD top bar — sits forward in 3D */}
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          marginBottom: 14,
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: '0.66rem',
+          letterSpacing: '0.14em',
+          transform: 'translateZ(20px)',
+        }}>
+          <span style={{ color: '#00d4ff' }}>PLAYER_01</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#00ff88' }}>
+            <motion.span
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 1.6, repeat: Infinity }}
+              style={{ width: 6, height: 6, borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88' }}
+            />
+            ONLINE
+          </span>
+        </div>
+
+        {/* Avatar — pushed forward in Z */}
+        <div style={{
+          position: 'relative',
+          aspectRatio: '4/5',
+          borderRadius: 16,
+          overflow: 'hidden',
+          border: '1px solid rgba(0,212,255,0.22)',
+          background: '#0a0a14',
+          marginBottom: 14,
+          transform: 'translateZ(40px)',
+        }}>
+          <img
+            src={AvatarImg}
+            alt="Prasham Desai"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+          {/* scanlines */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            backgroundImage: 'repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,212,255,0.04) 2px 3px)',
+            pointerEvents: 'none',
+          }} />
+          {/* inset darkening */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            boxShadow: 'inset 0 0 50px rgba(0,0,0,0.7)',
+            pointerEvents: 'none',
+          }} />
+          {/* corner brackets */}
+          <Bracket pos="tl" />
+          <Bracket pos="tr" />
+          <Bracket pos="bl" />
+          <Bracket pos="br" />
+        </div>
+
+        {/* Identity strip — pushed forward in Z */}
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          padding: '10px 14px',
+          background: 'rgba(0,212,255,0.05)',
+          borderRadius: 10,
+          borderLeft: '2px solid #00d4ff',
+          transform: 'translateZ(20px)',
+        }}>
+          <div>
+            <div style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.6rem',
+              color: '#444460',
+              letterSpacing: '0.12em',
+              marginBottom: 2,
+            }}>CLASS</div>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.92rem', fontWeight: 700, color: '#f0f0f8' }}>
+              Game Developer
+            </div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.6rem',
+              color: '#444460',
+              letterSpacing: '0.12em',
+              marginBottom: 2,
+            }}>BASE</div>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.92rem', fontWeight: 700, color: '#f0f0f8' }}>
+              Ahmedabad
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Bracket = ({ pos }) => {
+  const base = { position: 'absolute', width: 14, height: 14 };
+  const styles = {
+    tl: { ...base, top: 8,    left: 8,    borderTop:    '2px solid #00d4ff', borderLeft:  '2px solid #00d4ff' },
+    tr: { ...base, top: 8,    right: 8,   borderTop:    '2px solid #00d4ff', borderRight: '2px solid #00d4ff' },
+    bl: { ...base, bottom: 8, left: 8,    borderBottom: '2px solid #00d4ff', borderLeft:  '2px solid #00d4ff' },
+    br: { ...base, bottom: 8, right: 8,   borderBottom: '2px solid #00d4ff', borderRight: '2px solid #00d4ff' },
+  };
+  return <div style={styles[pos]} />;
+};
+
+/* MagneticButton — unchanged behaviour, kept inline */
 const MagneticButton = ({ children, primary, onClick }) => {
   const ref = useRef(null);
   const x = useMotionValue(0);
@@ -246,135 +584,6 @@ const MagneticButton = ({ children, primary, onClick }) => {
     >
       {children}
     </motion.button>
-  );
-};
-
-/* ──────────────────────────────────────
-   PROFILE CARD — tall vertical rectangle,
-   height matches the left text column.
-   Content differs from left side.
-────────────────────────────────────── */
-
-const ProfileCard = () => {
-  return (
-    <div style={{
-      position: 'relative',
-      height: '550px',          /* explicitly taller overall card */
-      display: 'flex',
-      flexDirection: 'column',
-    }}>
-      {/* Ambient static background glow behind the card */}
-      <div style={{
-        position: 'absolute', inset: -30, zIndex: -1,
-        background: 'radial-gradient(ellipse 80% 80% at 50% 50%, rgba(0,212,255,0.08) 0%, transparent 60%)',
-        pointerEvents: 'none',
-        borderRadius: 40,
-      }} />
-
-      <motion.div
-        whileHover={{
-          boxShadow: '0 40px 90px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,212,255,0.3)',
-          y: -5
-        }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          borderRadius: 24,
-          overflow: 'hidden',
-          // Glassmorphism baseline & Neon border glow
-          background: 'rgba(13, 13, 26, 0.95)', // Increased opacity for clarity
-          boxShadow: '0 24px 64px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05), 0 0 20px rgba(0,212,255,0.1)',
-          border: '1px solid rgba(0, 212, 255, 0.15)',
-          padding: '32px',
-        }}
-      >
-        {/* ── TOP SECTION (Empty Square Image) ── */}
-        <div style={{
-          position: 'relative',
-          zIndex: 1,
-          height: '50%',
-          display: 'flex',
-          alignItems: 'stretch',
-          justifyContent: 'center',
-          paddingBottom: '12px',
-        }}>
-          <motion.div
-            whileHover={{ scale: 1.02, borderColor: 'rgba(0, 212, 255, 0.8)' }}
-            style={{
-              position: 'relative', /* For absolute overlay */
-              maxWidth: '100%',
-              height: '100%',
-              border: '2px solid rgba(0, 212, 255, 0.3)',
-              borderRadius: '16px',
-              overflow: 'hidden',
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <img
-              src={AvatarImg}
-              alt="Avatar"
-              style={{ height: '100%', width: 'auto', objectFit: 'contain' }}
-            />
-            {/* Overlay to keep the inset shadow over the image */}
-            <div style={{ position: 'absolute', inset: 0, boxShadow: 'inset 0 0 30px rgba(0,0,0,0.8)', pointerEvents: 'none' }} />
-          </motion.div>
-        </div>
-
-        {/* ── BOTTOM SECTION (Game Dev Vibes) ── */}
-        <div style={{
-          position: 'relative', zIndex: 1,
-          height: '50%',
-          display: 'flex', flexDirection: 'column', gap: '8px',
-          justifyContent: 'center',
-          background: 'rgba(0,0,0,0.3)', padding: '16px', borderRadius: '16px',
-          border: '1px solid rgba(255,255,255,0.05)',
-          overflow: 'hidden'
-        }}>
-          {/* HUD Header */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '8px', marginBottom: '2px' }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: '#00d4ff', letterSpacing: '0.1em' }}>SYS.HUD_ACTIVE</span>
-            <motion.span
-              animate={{ opacity: [1, 0, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
-              style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: '#00ff88', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '6px' }}
-            >
-              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88' }} />
-              REC
-            </motion.span>
-          </div>
-
-          {/* Skills / Stats Bars */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {[{ label: 'CREATIVITY', val: '99', color: '#00d4ff' }, { label: 'LOGIC', val: '85', color: '#b44fff' }, { label: 'CAFFEINE', val: '100', color: '#00ff88' }].map((stat, i) => (
-              <div key={i}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: "'Space Grotesk', sans-serif", color: '#fff', fontSize: '0.75rem', marginBottom: '4px', fontWeight: 600, letterSpacing: '0.05em' }}>
-                  <span>{stat.label}</span>
-                  <span>{stat.val}%</span>
-                </div>
-                <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
-                  <motion.div initial={{ width: 0 }} animate={{ width: `${stat.val}%` }} transition={{ duration: 1.5, delay: 0.2 + (i * 0.2), ease: 'easeOut' }} style={{ height: '100%', background: stat.color, boxShadow: `0 0 10px ${stat.color}` }} />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Setup / Terminal Line */}
-          <div style={{ marginTop: '4px', padding: '8px 12px', background: 'rgba(0, 212, 255, 0.05)', borderRadius: '8px', borderLeft: '2px solid #00d4ff' }}>
-            <motion.div
-              initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ duration: 2, delay: 1 }}
-              style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}
-            >
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', color: '#8888aa' }}>
-                <span style={{ color: '#00d4ff' }}>&gt;</span> CURRENT_QUEST: <span style={{ color: '#f0f0f8' }}>Build epic experiences.</span>
-              </span>
-            </motion.div>
-          </div>
-        </div>
-      </motion.div>
-    </div>
   );
 };
 
