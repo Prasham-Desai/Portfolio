@@ -3,6 +3,61 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { skillGroups } from '../data/skills';
 
+const SkillGroupIcon = ({ id }) => {
+  const iconStyle = {
+    width: 16,
+    height: 16,
+    display: 'block',
+  };
+
+  switch (id) {
+    case 'core':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" style={iconStyle} aria-hidden="true">
+          <path d="M8 5h8l4 7-4 7H8l-4-7 4-7Z" />
+          <circle cx="12" cy="12" r="2.3" />
+        </svg>
+      );
+    case 'networking':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" style={iconStyle} aria-hidden="true">
+          <circle cx="6" cy="12" r="2.2" />
+          <circle cx="18" cy="7" r="2.2" />
+          <circle cx="18" cy="17" r="2.2" />
+          <path d="M8.1 11 15.9 7.9M8.1 13 15.9 16.1" />
+        </svg>
+      );
+    case 'mobile':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" style={iconStyle} aria-hidden="true">
+          <rect x="7" y="3.5" width="10" height="17" rx="2.5" />
+          <path d="M10 6h4" />
+          <circle cx="12" cy="17.5" r="1" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case 'backend':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" style={iconStyle} aria-hidden="true">
+          <ellipse cx="12" cy="6.5" rx="6" ry="2.5" />
+          <path d="M6 6.5v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5" />
+          <path d="M6 11.5v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5" />
+        </svg>
+      );
+    case 'emerging':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" style={iconStyle} aria-hidden="true">
+          <path d="M12 3 14.4 9.6 21 12 14.4 14.4 12 21 9.6 14.4 3 12 9.6 9.6 12 3Z" />
+        </svg>
+      );
+    default:
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" style={iconStyle} aria-hidden="true">
+          <circle cx="12" cy="12" r="6" />
+        </svg>
+      );
+  }
+};
+
 const SkillBar = ({ name, level, color, inView, delay }) => (
   <div style={{ marginBottom: 16 }}>
     <div style={{
@@ -142,11 +197,11 @@ const Skills = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontSize: '1rem',
+                      color: activeGroup === group.id ? group.color : '#9a9ac0',
                       border: `1px solid ${activeGroup === group.id ? `${group.color}40` : 'rgba(255,255,255,0.06)'}`,
                       transition: 'all 0.25s ease',
                     }}>
-                      {group.icon}
+                      <SkillGroupIcon id={group.id} />
                     </div>
                     {activeGroup === group.id && (
                       <motion.div
@@ -167,7 +222,7 @@ const Skills = () => {
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontSize: '1rem',
                       fontWeight: 600,
-                      color: activeGroup === group.id ? group.color : '#8888aa',
+                      color: activeGroup === group.id ? group.color : '#9a9ac0',
                       transition: 'color 0.25s ease',
                       marginBottom: 2,
                     }}>
@@ -176,7 +231,7 @@ const Skills = () => {
                     <div style={{
                       fontFamily: "'JetBrains Mono', monospace",
                       fontSize: '0.7rem',
-                      color: '#444460',
+                      color: '#61618a',
                     }}>
                       {group.skills.length} skills
                     </div>
@@ -206,7 +261,7 @@ const Skills = () => {
               <div style={{
                 fontFamily: "'JetBrains Mono', monospace",
                 fontSize: '0.7rem',
-                color: '#444460',
+                color: '#6a6a92',
                 letterSpacing: '0.1em',
                 marginBottom: 12,
               }}>
@@ -217,11 +272,11 @@ const Skills = () => {
                   <span key={tech} style={{
                     fontFamily: "'JetBrains Mono', monospace",
                     fontSize: '0.75rem',
-                    color: '#666688',
+                    color: '#9090b5',
                     padding: '5px 12px',
                     borderRadius: 4,
-                    border: '1px solid rgba(255,255,255,0.05)',
-                    background: 'rgba(255,255,255,0.02)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: 'rgba(255,255,255,0.03)',
                   }}>
                     {tech}
                   </span>
@@ -267,9 +322,9 @@ const Skills = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1.2rem',
+                    color: currentGroup.color,
                   }}>
-                    {currentGroup.icon}
+                    <SkillGroupIcon id={currentGroup.id} />
                   </div>
                   <div>
                     <div style={{

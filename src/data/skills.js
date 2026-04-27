@@ -55,8 +55,8 @@ export const skillGroups = [
     skills: [
       { name: "AR / VR / MR", level: 78, years: "1+" },
       { name: "Analytics Integration", level: 82, years: "2+" },
-      { name: "C++", level: 65, years: "1+" },
-      { name: "Java (Android)", level: 68, years: "1+" }
+      { name: "Procedural level generation", level: 65, years: "1+" },
+      { name: "Smart NPCs using LLM-like systems", level: 68, years: "1+" }
     ]
   }
 ];

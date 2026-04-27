@@ -1,11 +1,3 @@
-import ChesstrixImg from "../assets/Chesstrix-Banner.png";
-import XOQuestImg from "../assets/XOQuest-Banne.png";
-import ThinkSudokuImg from "../assets/ThinkSudoku-Banner.png";
-import SpinShotProImg from "../assets/SpinShotPro-Banner.png";
-import ZyyngoImg from "../assets/Zyyngo-Banner.png";
-import UFOImg from "../assets/UFO-Banner.png";
-import RoadRunnerImg from "../assets/RoadRunner-Banner.png";
-
 export const projects = [
   {
     id: "chesstrix",
@@ -18,7 +10,7 @@ export const projects = [
     coverColor: "#1a2a3a",
     accentColor: "#00d4ff",
     tags: ["Unity", "Multiplayer", "AI", "Mobile"],
-    thumbnail: ChesstrixImg,
+    thumbnail: null,
     overview: "Chesstrix is a premium mobile chess experience combining classic strategy with modern UX. Built from scratch in Unity, it features a custom chess engine, ELO-based matchmaking, and an adaptive AI opponent.",
     problem: "Most chess apps feel either too casual or overly complex. Chesstrix targets the middle ground — a polished, intuitive experience for players who want to improve while enjoying a beautifully crafted game.",
     goal: "Build a cross-platform chess game with offline AI and real-time online multiplayer, optimized for mobile performance and minimal battery drain.",
@@ -54,7 +46,7 @@ export const projects = [
     coverColor: "#1a1a2e",
     accentColor: "#ff6b6b",
     tags: ["Unity", "Multiplayer", "Casual", "AdMob"],
-    thumbnail: XOQuestImg,
+    thumbnail: null,
     overview: "X-O Quest reinvents the classic 3x3 grid game with strategic depth — expandable boards, power-up tiles, timed rounds, and global leaderboards.",
     problem: "Classic Tic-Tac-Toe has zero depth after age 10. The goal was to reintroduce strategy and replayability for casual mobile players.",
     goal: "Create an infinitely replayable casual game with monetization through rewarded ads, not pay-to-win.",
@@ -89,7 +81,7 @@ export const projects = [
     coverColor: "#0f1923",
     accentColor: "#ffd700",
     tags: ["Unity", "Puzzle", "Firebase", "Mobile"],
-    thumbnail: ThinkSudokuImg,
+    thumbnail: null,
     overview: "Think Sudoku is a handcrafted Sudoku experience focused on depth of play over quantity. Features a proprietary puzzle generator, smart mistake analysis, and a daily challenge system with social sharing.",
     problem: "Most Sudoku apps are visually cluttered and rely on tedious hint systems. Players want to feel smart, not assisted.",
     goal: "Build a Sudoku app that teaches logical deduction instead of just highlighting mistakes — for both beginners and speed-solvers.",
@@ -123,7 +115,7 @@ export const projects = [
     coverColor: "#050520",
     accentColor: "#00d4ff",
     tags: ["Unity", "Hyper-Casual", "Physics", "AdMob"],
-    thumbnail: SpinShotProImg,
+    thumbnail: null,
     overview: "Spin Shot Pro is a one-touch arcade game where players control a rotating shooter to clear incoming waves. Deceptively simple, deeply satisfying.",
     problem: "Hyper-casual games often sacrifice depth for accessibility. Spin Shot Pro needed to feel instantly playable but hide meaningful skill progression.",
     goal: "Design a game where 5-minute sessions feel complete but players naturally come back — through mastery curve and daily content, not dark patterns.",
@@ -158,7 +150,7 @@ export const projects = [
     coverColor: "#1a0a2e",
     accentColor: "#b44fff",
     tags: ["Unity", "Multiplayer", "Real-time", "Firebase"],
-    thumbnail: ZyyngoImg,
+    thumbnail: null,
     overview: "Zyyngo is a fast-paced connection puzzle game with real-time PvP. Players race to find the optimal path through color-coded nodes on a dynamically generated board.",
     problem: "Most puzzle games are async — Zyyngo makes puzzles feel like a sport by adding real-time competition and a live opponent overlay.",
     goal: "Create a puzzle game where skill is visibly rewarded and competitive pressure enhances the experience rather than creating frustration.",
@@ -192,7 +184,7 @@ export const projects = [
     coverColor: "#0a1a0a",
     accentColor: "#00ff88",
     tags: ["Unity", "Multiplayer", "WebGL", "DOTS"],
-    thumbnail: UFOImg,
+    thumbnail: null,
     overview: "UFO.io is a massively multiplayer .io game inspired by Agar.io mechanics — but with a UFO abduction twist. Players grow by abducting humans and smaller objects while avoiding larger UFOs.",
     problem: ".io games on mobile often suffer from poor controls and server-side lag making them feel unresponsive. UFO.io needed to feel instant at scale.",
     goal: "Build a fluid, scalable .io game that supports 50+ concurrent players per room with smooth client-side prediction and minimal perceived lag.",
@@ -227,7 +219,7 @@ export const projects = [
     coverColor: "#1a0a00",
     accentColor: "#ff6b00",
     tags: ["Unity", "Procedural", "Mobile", "Firebase"],
-    thumbnail: RoadRunnerImg,
+    thumbnail: null,
     overview: "Road Runner is a high-polish endless runner featuring a custom momentum system, procedurally generated track segments, and a risk/reward lane structure that creates genuine tension.",
     problem: "Endless runners feel samey after the first few sessions. Road Runner needed a movement system that creates skill expression, not just reflex testing.",
     goal: "Design an endless runner where skilled players feel genuinely faster and more in control — where mastery is visible, not just implied by score.",

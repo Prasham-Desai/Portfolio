@@ -1,13 +1,47 @@
 {
   "files": {
     "main.css": "/static/css/main.04a892e6.css",
-    "main.js": "/static/js/main.e7943830.js",
+    "main.js": "/static/js/main.eb56809b.js",
+    "static/media/Loading.png": "/static/media/Loading.84c64c55137ed02d17bd.png",
+    "static/media/Home.png": "/static/media/Home.0f6a10ede0f8492d1c1c.png",
+    "static/media/Zyyngo.png": "/static/media/Zyyngo.1fe2edde53a7abc9381b.png",
+    "static/media/Game_Over.png": "/static/media/Game_Over.bba8f92aa7d7dcfda61b.png",
+    "static/media/RoadRunner.png": "/static/media/RoadRunner.9c8891afc2cb001b6067.png",
+    "static/media/Setting.png": "/static/media/Setting.8f254f52f96a7e04c49e.png",
+    "static/media/UFO-Banner.png": "/static/media/UFO-Banner.0ee45baf1ae0ceedf95b.png",
+    "static/media/UFO Banner.png": "/static/media/UFO Banner.b15f799d85e96d2fa91f.png",
+    "static/media/RoadRunner-Banner.png": "/static/media/RoadRunner-Banner.545a2d40373329550ea4.png",
+    "static/media/SpinShotPro-Banner.png": "/static/media/SpinShotPro-Banner.419dd6fce9f60f5cd1ad.png",
+    "static/media/SpinShot Banner.png": "/static/media/SpinShot Banner.9f38673feb07b6328432.png",
+    "static/media/SpinShot.jpg": "/static/media/SpinShot.0e9b47ba7ebf340ba408.jpg",
+    "static/media/Zyyngo-Banner.png": "/static/media/Zyyngo-Banner.f4ae0c5a703fcded3e59.png",
+    "static/media/SS_05.png": "/static/media/SS_05.fae76edeb560d2209c1a.png",
+    "static/media/Zyyngo Banner.png": "/static/media/Zyyngo Banner.c5e6500897fc0ea817c1.png",
+    "static/media/UFO.png": "/static/media/UFO.162d95d5c1829c4f67ac.png",
+    "static/media/SS_07.png": "/static/media/SS_07.2809522504c6f1ed503c.png",
+    "static/media/SS_06.png": "/static/media/SS_06.2cc2fb3d2fe92548224e.png",
+    "static/media/SS_04.png": "/static/media/SS_04.3873b4d192d78c0676a7.png",
+    "static/media/SS_01.png": "/static/media/SS_01.89b43413334ee5742f5e.png",
+    "static/media/XOQuest Banner.png": "/static/media/XOQuest Banner.044dfc3319eb8b4707f4.png",
+    "static/media/SS_02.png": "/static/media/SS_02.ff4e8cd7789f14b6d72e.png",
+    "static/media/SS_03.png": "/static/media/SS_03.b745c526294a66cf6f12.png",
+    "static/media/XOQuest-Banne.png": "/static/media/XOQuest-Banne.9afd7ac3475869215797.png",
+    "static/media/XOQuest.png": "/static/media/XOQuest.e42ac8952e877246b71e.png",
+    "static/media/SS_03-1.png": "/static/media/SS_03-1.ace49acd64c141645070.png",
+    "static/media/SS_06-1.png": "/static/media/SS_06-1.360bbf2b5d8965579558.png",
+    "static/media/Avatar.jpeg": "/static/media/Avatar.440ccb1ffe4570dc5b20.jpeg",
+    "static/media/Chesstrix.png": "/static/media/Chesstrix.67efdb72367072bca80f.png",
+    "static/media/Chess Banner.png": "/static/media/Chess Banner.11f35c55d3576be61ea5.png",
+    "static/media/Chesstrix-Banner.png": "/static/media/Chesstrix-Banner.57b7a0cfbd523d61c843.png",
+    "static/media/ThinkSudoku-Banner.png": "/static/media/ThinkSudoku-Banner.b78ba5e65933367d9bcf.png",
+    "static/media/Sudoku.png": "/static/media/Sudoku.c3591982eaa40c3d643f.png",
+    "static/media/Sudoku Banner.png": "/static/media/Sudoku Banner.88d25b7b82157d30b916.png",
     "index.html": "/index.html",
     "main.04a892e6.css.map": "/static/css/main.04a892e6.css.map",
-    "main.e7943830.js.map": "/static/js/main.e7943830.js.map"
+    "main.eb56809b.js.map": "/static/js/main.eb56809b.js.map"
   },
   "entrypoints": [
     "static/css/main.04a892e6.css",
-    "static/js/main.e7943830.js"
+    "static/js/main.eb56809b.js"
   ]
 }

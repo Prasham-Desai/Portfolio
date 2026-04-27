@@ -111,7 +111,7 @@ const LoadingScreen = ({ onComplete }) => {
                 color: '#f0f0f8',
                 lineHeight: 1,
               }}>
-                PRASHAM<span style={{ color: '#00d4ff' }}>.</span>DEV
+                PRASHAM<span style={{ color: '#00d4ff' }}> DESAI</span>
               </div>
               <div style={{
                 fontFamily: "'JetBrains Mono', monospace",

@@ -5,7 +5,7 @@ import AvatarImg from '../assets/Avatar.jpeg';
 const TAGLINES = [
   'Building games that players remember.',
   'Unity · C# · Mobile · Multiplayer · AR/VR.',
-  'From prototype to product — end to end.',
+  'From prototype to product, end to end.',
 ];
 
 const Hero = () => {

@@ -138,8 +138,8 @@ const Contact = () => {
             {[
               {
                 label: 'Email',
-                value: 'prashamdesai.dev@gmail.com',
-                href: 'mailto:prashamdesai.dev@gmail.com',
+                value: 'prashamdesai9114@gmail.com',
+                href: 'mailto:prashamdesai9114@gmail.com',
                 color: '#00d4ff',
                 icon: '✉',
               },

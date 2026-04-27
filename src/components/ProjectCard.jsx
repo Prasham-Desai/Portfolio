@@ -1,6 +1,7 @@
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { getProjectAssets } from '../data/projectAssets';
 
 const TAG_COLORS = {
   'Unity':      '#00d4ff',
@@ -21,8 +22,29 @@ const TAG_COLORS = {
 const CARD_HEIGHT   = 420;   // total card height — fixed for all cards
 const THUMB_HEIGHT  = 188;   // thumbnail zone
 
+let homeBannerContext = null;
+try {
+  homeBannerContext = require.context('../assets/home-banners', false, /\.(png|jpe?g|webp)$/i);
+} catch {
+  homeBannerContext = null;
+}
+
+const getHomeBanner = (project) => {
+  if (!homeBannerContext || !project) return null;
+
+  const assets = getProjectAssets(project.id);
+  if (!assets?.homeBanner) return null;
+
+  const targetKey = `./${assets.homeBanner}`;
+  if (!homeBannerContext.keys().includes(targetKey)) return null;
+
+  return homeBannerContext(targetKey);
+};
+
 const ProjectCard = ({ project, index }) => {
   const cardRef = useRef(null);
+  const homeBanner = useMemo(() => getHomeBanner(project), [project]);
+  const cardBanner = homeBanner;
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -92,9 +114,9 @@ const ProjectCard = ({ project, index }) => {
             justifyContent: 'center',
             borderBottom: '1px solid rgba(255,255,255,0.08)',
           }}>
-            {project.thumbnail ? (
+            {cardBanner ? (
               <img 
-                src={project.thumbnail} 
+                src={cardBanner} 
                 alt={project.title} 
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
               />
