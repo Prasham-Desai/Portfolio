@@ -82,7 +82,7 @@ const Hero = () => {
       className="home-hero"
       style={{
         minHeight: '100svh',
-        padding: '120px 0 64px',
+        padding: 'clamp(104px, 10vw, 120px) 0 clamp(64px, 8vw, 84px)',
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
@@ -158,7 +158,7 @@ const Hero = () => {
         <div className="hero-grid" style={{
           display: 'grid',
           gridTemplateColumns: '1.05fr 1fr',
-          gap: 56,
+          gap: 'clamp(36px, 4vw, 56px)',
           alignItems: 'center',
         }}>
           {/* LEFT: text */}
@@ -173,9 +173,9 @@ const Hero = () => {
             </FadeUp>
 
             <FadeUp>
-              <h1 style={{
+              <h1 className="hero-title" style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: 'clamp(3.6rem, 7.5vw, 6rem)',
+                fontSize: 'clamp(3rem, 7.5vw, 6rem)',
                 fontWeight: 800,
                 letterSpacing: '-0.045em',
                 lineHeight: 0.92,
@@ -196,7 +196,7 @@ const Hero = () => {
             </FadeUp>
 
             <FadeUp>
-              <div className="hero-tagline-wrap" style={{ height: 36, marginBottom: 36, position: 'relative', overflow: 'hidden' }}>
+              <div className="hero-tagline-wrap" style={{ minHeight: 44, marginBottom: 36, position: 'relative', overflow: 'hidden' }}>
                 <AnimatePresence mode="wait">
                   <motion.p
                     className="hero-tagline"
@@ -222,7 +222,7 @@ const Hero = () => {
             </FadeUp>
 
             <FadeUp>
-              <div className="hero-stats" style={{ display: 'flex', gap: 36, marginBottom: 44 }}>
+              <div className="hero-stats" style={{ display: 'flex', flexWrap: 'wrap', gap: 36, marginBottom: 44 }}>
                 {[
                   { v: '7+',   l: 'Games Shipped' },
                   { v: '1yr+', l: 'Experience' },
@@ -245,7 +245,7 @@ const Hero = () => {
             </FadeUp>
 
             <FadeUp>
-              <div className="hero-actions" style={{ display: 'flex', gap: 14 }}>
+              <div className="hero-actions" style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
                 <MagneticButton primary onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
                   View Work
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -287,9 +287,24 @@ const Hero = () => {
             gap: 40px !important;
           }
 
+          .home-hero .hero-title {
+            font-size: clamp(2.7rem, 8.4vw, 4.9rem) !important;
+          }
+
+          .home-hero .hero-tagline-wrap {
+            min-height: 64px !important;
+            margin-bottom: 30px !important;
+          }
+
           .home-hero .hero-tagline {
             white-space: normal !important;
-            max-width: 34ch;
+            max-width: min(38ch, 100%);
+            line-height: 1.4 !important;
+          }
+
+          .home-hero .hero-stats {
+            gap: 22px !important;
+            margin-bottom: 36px !important;
           }
         }
 
@@ -309,6 +324,14 @@ const Hero = () => {
             margin: 0 auto;
           }
 
+          .home-hero .hero-copy {
+            max-width: 700px;
+          }
+
+          .home-hero .hero-tagline-wrap {
+            min-height: 68px !important;
+          }
+
           .home-hero .hero-shape,
           .home-hero .hero-drag-hint {
             display: none !important;
@@ -320,14 +343,21 @@ const Hero = () => {
             padding: 112px 0 72px !important;
           }
 
+          .home-hero .hero-title {
+            font-size: clamp(2.35rem, 12vw, 3.3rem) !important;
+            line-height: 0.95 !important;
+            margin-bottom: 18px !important;
+          }
+
           .home-hero .hero-tagline-wrap {
-            height: 58px !important;
+            min-height: 84px !important;
             margin-bottom: 28px !important;
           }
 
           .home-hero .hero-tagline {
             white-space: normal !important;
             line-height: 1.45 !important;
+            font-size: 1rem !important;
           }
 
           .home-hero .hero-stats {
@@ -366,8 +396,35 @@ const Hero = () => {
             grid-template-columns: repeat(2, minmax(0, 1fr));
           }
 
+          .home-hero .hero-visual {
+            max-width: 100%;
+          }
+
           .home-hero .hero-stat:last-child {
             grid-column: 1 / -1;
+          }
+
+          .home-hero .hero-actions {
+            gap: 10px !important;
+          }
+
+          .home-hero .hero-button {
+            width: 100%;
+          }
+        }
+
+        @media (max-width: 420px) {
+          .home-hero .hero-tagline-wrap {
+            min-height: 102px !important;
+          }
+
+          .home-hero .hero-stats {
+            grid-template-columns: 1fr;
+            gap: 14px !important;
+          }
+
+          .home-hero .hero-stat:last-child {
+            grid-column: auto;
           }
         }
       `}</style>
