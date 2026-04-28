@@ -8,16 +8,39 @@ const TAGLINES = [
   'From prototype to product, end to end.',
 ];
 
+/* Shapes scattered in free pockets that never sit behind the text
+   column (left 0-46%, top 26-78%) or the portrait card
+   (left 54-92%, top 22-82%). Each one has a unique top/left so no
+   two land on the same horizontal line. */
+/* Free zones (won't collide with text/portrait):
+     · Top band:    top  6-18%, any left
+     · Bottom band: top 82-95%, any left
+     · Far-left:    left 2-6%,  middle rows
+     · Far-right:   left 94-97%, middle rows
+     · Centre seam: left 48-52%, narrow vertical strip between columns
+   Each shape gets a unique top/left so none share a row. */
 const SHAPES = [
-  { id: 'cube',  kind: 'cube',  top: '14%', left: '4%',  size: 78, depth: 1.6, color: '#00d4ff', spin: 22 },
-  { id: 'tri',   kind: 'tri',   top: '8%',  left: '46%', size: 44, depth: 2.0, color: '#ffd700', spin: 0  },
-  { id: 'octa',  kind: 'octa',  top: '20%', left: '68%', size: 60, depth: 1.4, color: '#b44fff', spin: 26 },
-  { id: 'ring',  kind: 'ring',  top: '40%', left: '2%',  size: 70, depth: 0.9, color: '#00fff2', spin: 0  },
-  { id: 'pixel', kind: 'pixel', top: '52%', left: '94%', size: 42, depth: 2.4, color: '#00d4ff', spin: 32 },
-  { id: 'dpad',  kind: 'dpad',  top: '74%', left: '8%',  size: 64, depth: 1.2, color: '#00ff88', spin: 0  },
-  { id: 'plus',  kind: 'plus',  top: '86%', left: '46%', size: 38, depth: 2.2, color: '#ff4757', spin: 0  },
-  { id: 'coin',  kind: 'coin',  top: '80%', left: '88%', size: 54, depth: 1.5, color: '#ffd700', spin: 14 },
+  // Top band — 4 across, evenly spaced
+  { id: 'cube',     kind: 'cube',  top: '8%',  left: '8%',  size: 50, color: '#00d4ff', spin: 22 },
+  { id: 'pixel-1',  kind: 'pixel', top: '12%', left: '32%', size: 26, color: '#00d4ff', spin: 32 },
+  { id: 'plus-1',   kind: 'plus',  top: '10%', left: '64%', size: 26, color: '#ff4757', spin: 0  },
+  { id: 'tri-1',    kind: 'tri',   top: '14%', left: '90%', size: 32, color: '#ffd700', spin: 0  },
+
+  // Mid-row edges — left/right rails only, never centre
+  { id: 'ring',     kind: 'ring',  top: '42%', left: '3%',  size: 42, color: '#00fff2', spin: 0  },
+  { id: 'octa',     kind: 'octa',  top: '50%', left: '95%', size: 38, color: '#b44fff', spin: 26 },
+
+  // Bottom band — 4 across, evenly spaced
+  { id: 'plus-2',   kind: 'plus',  top: '86%', left: '6%',  size: 24, color: '#ff4757', spin: 0  },
+  { id: 'dpad',     kind: 'dpad',  top: '90%', left: '30%', size: 38, color: '#00ff88', spin: 0  },
+  { id: 'coin',     kind: 'coin',  top: '88%', left: '60%', size: 34, color: '#ffd700', spin: 14 },
+  { id: 'tri-2',    kind: 'tri',   top: '92%', left: '92%', size: 30, color: '#00ff88', spin: 0  },
+
+  // Centre seam — single accent between the columns
+  { id: 'pixel-2',  kind: 'pixel', top: '54%', left: '50%', size: 22, color: '#b44fff', spin: 32 },
 ];
+
+const PROXIMITY_RADIUS = 140; // px — shapes only react inside this radius
 
 const Hero = () => {
   const [taglineIndex, setTaglineIndex] = useState(0);
@@ -28,9 +51,9 @@ const Hero = () => {
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
 
-  // Portrait card 3D tilt — deeper than before
-  const tiltX = useSpring(useTransform(my, [-1, 1], [12, -12]), { stiffness: 80, damping: 22 });
-  const tiltY = useSpring(useTransform(mx, [-1, 1], [-14, 14]), { stiffness: 80, damping: 22 });
+  // Portrait card 3D tilt — subtle
+  const tiltX = useSpring(useTransform(my, [-1, 1], [4, -4]), { stiffness: 80, damping: 22 });
+  const tiltY = useSpring(useTransform(mx, [-1, 1], [-5, 5]), { stiffness: 80, damping: 22 });
 
   // Centre glow drifts gently with cursor
   const glowX = useSpring(useTransform(mx, [-1, 1], [-40, 40]), { stiffness: 50, damping: 22 });
@@ -88,13 +111,11 @@ const Hero = () => {
         pointerEvents: 'none',
       }} />
 
-      {/* Floating shapes — sit between background and content */}
+      {/* Floating shapes — only react when cursor is close to each shape */}
       {SHAPES.map(shape => (
         <FloatingShape
           key={shape.id}
           {...shape}
-          mx={mx}
-          my={my}
           onInteract={() => setHasInteracted(true)}
         />
       ))}
@@ -109,7 +130,7 @@ const Hero = () => {
             transition={{ delay: 1.4, duration: 0.5 }}
             style={{
               position: 'absolute',
-              top: 32, right: 48,
+              top: 110, right: 48,
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: '0.7rem',
               color: '#8888aa',
@@ -134,8 +155,8 @@ const Hero = () => {
       <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
         <div className="hero-grid" style={{
           display: 'grid',
-          gridTemplateColumns: '1.2fr 1fr',
-          gap: 64,
+          gridTemplateColumns: '1.05fr 1fr',
+          gap: 56,
           alignItems: 'center',
         }}>
           {/* LEFT: text */}
@@ -276,22 +297,54 @@ const FadeUp = ({ children }) => (
 );
 
 /* ──────────────────────────────────────────────────────────────
-   FloatingShape — three layers:
-     outer  → cursor parallax (depth-weighted)
-     middle → drag + spring back to origin
-     inner  → idle float + spin (so drag never fights animate)
+   FloatingShape — proximity-reactive:
+     · stays still while the cursor is far away
+     · gently pushes away from the cursor only when within
+       PROXIMITY_RADIUS, so the entire hero doesn't shift on
+       every mouse move
+     · still draggable (springs back to origin)
+     · still idle-floats and spins
 ────────────────────────────────────────────────────────────── */
-const FloatingShape = ({ kind, top, left, size, depth, color, spin, mx, my, onInteract }) => {
-  const px = useTransform(mx, [-1, 1], [-30 * depth, 30 * depth]);
-  const py = useTransform(my, [-1, 1], [-30 * depth, 30 * depth]);
-  const sx = useSpring(px, { stiffness: 60, damping: 18 });
-  const sy = useSpring(py, { stiffness: 60, damping: 18 });
+const FloatingShape = ({ kind, top, left, size, color, spin, onInteract }) => {
+  const ref = useRef(null);
+  const px = useMotionValue(0);
+  const py = useMotionValue(0);
+  const sx = useSpring(px, { stiffness: 90, damping: 20, mass: 0.5 });
+  const sy = useSpring(py, { stiffness: 90, damping: 20, mass: 0.5 });
 
-  const floatRange = 14 + depth * 4;
-  const floatDuration = 4 + depth;
+  useEffect(() => {
+    const onMove = (e) => {
+      if (!ref.current) return;
+      const r = ref.current.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist < PROXIMITY_RADIUS) {
+        // Falloff: 1 at center, 0 at edge of radius
+        const falloff = 1 - dist / PROXIMITY_RADIUS;
+        // Push AWAY from cursor — feels like the shape is shy
+        const strength = 26 * falloff;
+        const angle = Math.atan2(dy, dx);
+        px.set(-Math.cos(angle) * strength);
+        py.set(-Math.sin(angle) * strength);
+      } else {
+        px.set(0);
+        py.set(0);
+      }
+    };
+    window.addEventListener('mousemove', onMove);
+    return () => window.removeEventListener('mousemove', onMove);
+  }, [px, py]);
+
+  const floatRange = 14;
+  const floatDuration = 5;
 
   return (
     <motion.div
+      ref={ref}
       className="hero-shape"
       style={{
         position: 'absolute',
@@ -299,8 +352,7 @@ const FloatingShape = ({ kind, top, left, size, depth, color, spin, mx, my, onIn
         width: size, height: size,
         x: sx, y: sy,
         zIndex: 1,
-        opacity: Math.min(0.95, 0.7 + 1 / depth * 0.18),
-        filter: depth > 1.9 ? 'blur(0.4px)' : 'none',
+        opacity: 0.92,
       }}
     >
       <motion.div
@@ -418,8 +470,9 @@ const PortraitCard = () => {
   return (
     <div style={{
       position: 'relative',
-      maxWidth: 420,
-      marginLeft: 'auto',
+      maxWidth: 520,
+      width: '100%',
+      margin: '0 auto',
       transformStyle: 'preserve-3d',
     }}>
       {/* Ambient glow behind card */}
@@ -433,9 +486,9 @@ const PortraitCard = () => {
       <div style={{
         background: 'rgba(13,13,26,0.92)',
         border: '1px solid rgba(0,212,255,0.18)',
-        borderRadius: 24,
-        padding: 22,
-        boxShadow: '0 30px 80px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.04), 0 0 32px rgba(0,212,255,0.08)',
+        borderRadius: 28,
+        padding: 26,
+        boxShadow: '0 40px 100px rgba(0,0,0,0.75), inset 0 0 0 1px rgba(255,255,255,0.04), 0 0 44px rgba(0,212,255,0.10)',
         transformStyle: 'preserve-3d',
       }}>
         {/* HUD top bar — sits forward in 3D */}
@@ -445,7 +498,7 @@ const PortraitCard = () => {
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: '0.66rem',
           letterSpacing: '0.14em',
-          transform: 'translateZ(20px)',
+          transform: 'translateZ(10px)',
         }}>
           <span style={{ color: '#00d4ff' }}>PLAYER_01</span>
           <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#00ff88' }}>
@@ -458,16 +511,16 @@ const PortraitCard = () => {
           </span>
         </div>
 
-        {/* Avatar — pushed forward in Z */}
+        {/* Avatar — landscape, pushed forward in Z */}
         <div style={{
           position: 'relative',
-          aspectRatio: '4/5',
+          aspectRatio: '16/10',
           borderRadius: 16,
           overflow: 'hidden',
           border: '1px solid rgba(0,212,255,0.22)',
           background: '#0a0a14',
           marginBottom: 14,
-          transform: 'translateZ(40px)',
+          transform: 'translateZ(10px)',
         }}>
           <img
             src={AvatarImg}
@@ -500,7 +553,7 @@ const PortraitCard = () => {
           background: 'rgba(0,212,255,0.05)',
           borderRadius: 10,
           borderLeft: '2px solid #00d4ff',
-          transform: 'translateZ(20px)',
+          transform: 'translateZ(10px)',
         }}>
           <div>
             <div style={{

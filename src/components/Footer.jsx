@@ -1,4 +1,29 @@
 import { motion } from 'framer-motion';
+import { GitHubIcon, LinkedInIcon, MailIcon } from './SocialIcons';
+
+const socialLinks = [
+  {
+    label: 'GitHub',
+    href: 'https://github.com/prashamdesai',
+    color: 'var(--color-teal)',
+    hover: '#5fe7ff',
+    Icon: GitHubIcon,
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/prashamdesai',
+    color: 'var(--color-purple)',
+    hover: '#d6a3ff',
+    Icon: LinkedInIcon,
+  },
+  {
+    label: 'Email',
+    href: 'mailto:prashamdesai9114@gmail.com',
+    color: 'var(--color-gold)',
+    hover: '#ffe566',
+    Icon: MailIcon,
+  },
+];
 
 const Footer = () => {
   return (
@@ -27,7 +52,7 @@ const Footer = () => {
           <div style={{
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: '0.9rem',
-            color: '#444460',
+            color: 'var(--color-gold)',
             letterSpacing: '0.1em',
           }}>
             Game is game.
@@ -37,34 +62,37 @@ const Footer = () => {
         <div style={{
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: '0.9rem',
-          color: '#444460',
           letterSpacing: '0.05em',
           textAlign: 'center',
+          display: 'flex',
+          gap: 8,
         }}>
-          Systems. Gameplay. Performance.
+          <span style={{ color: 'var(--color-teal)' }}>Systems.</span>
+          <span style={{ color: 'var(--color-purple)' }}>Gameplay.</span>
+          <span style={{ color: 'var(--color-green)' }}>Performance.</span>
         </div>
 
-        <div style={{ display: 'flex', gap: 20 }}>
-          {[
-            { label: 'GitHub', href: 'https://github.com' },
-            { label: 'LinkedIn', href: 'https://linkedin.com' },
-            { label: 'Email', href: 'mailto:prashamdesai@example.com' },
-          ].map(link => (
+        <div style={{ display: 'flex', gap: 18, alignItems: 'center' }}>
+          {socialLinks.map(({ label, href, color, hover, Icon }) => (
             <motion.a
-              key={link.label}
-              href={link.href}
-              target={link.href.startsWith('http') ? '_blank' : undefined}
+              key={label}
+              href={href}
+              target={href.startsWith('http') ? '_blank' : undefined}
               rel="noopener noreferrer"
-              whileHover={{ color: '#00d4ff', y: -2 }}
+              aria-label={label}
+              title={label}
+              whileHover={{ color: hover, y: -2, scale: 1.08 }}
               style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: '1.05rem',
-                fontWeight: 500,
-                color: '#8888aa',
+                width: 42,
+                height: 42,
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color,
                 transition: 'all 0.2s ease',
               }}
             >
-              {link.label}
+              <Icon size={22} />
             </motion.a>
           ))}
         </div>

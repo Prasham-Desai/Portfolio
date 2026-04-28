@@ -64,16 +64,18 @@ const getCaseStudyBanner = (project) => {
   return caseStudyBannerContext(targetKey);
 };
 
-const StickyLabel = ({ children }) => (
+const StickyLabel = ({ children, color }) => (
   <div style={{
     position: 'sticky',
     top: 100,
     fontFamily: "'JetBrains Mono', monospace",
-    fontSize: '0.74rem',
-    color: '#444460',
-    letterSpacing: '0.15em',
+    fontSize: '0.88rem',
+    color: color || '#6a6a92',
+    letterSpacing: '0.18em',
     textTransform: 'uppercase',
     marginBottom: 16,
+    fontWeight: 500,
+    textShadow: color ? `0 0 16px ${color}22` : 'none',
   }}>
     {children}
   </div>
@@ -86,6 +88,14 @@ const SectionDivider = ({ color }) => (
     margin: '80px 0',
   }} />
 );
+
+const defaultAssociation = {
+  type: 'company',
+  name: 'Indianic Infotech Ltd',
+  description: 'This project was built as part of my work at Indianic Infotech Ltd, contributing to the studio\'s mobile game portfolio.',
+  badge: 'Studio Project',
+  color: '#00d4ff',
+};
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -119,6 +129,25 @@ const ProjectDetail = () => {
     });
   };
 
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.target && ['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+      if (!carouselRef.current) return;
+      const rect = carouselRef.current.getBoundingClientRect();
+      const visible = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!visible) return;
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        scrollCarousel('next');
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        scrollCarousel('prev');
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   if (!project) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -136,6 +165,7 @@ const ProjectDetail = () => {
 
   const currentIndex = projects.findIndex(p => p.id === id);
   const nextProject = projects[(currentIndex + 1) % projects.length];
+  const associatedWith = project.associatedWith || defaultAssociation;
 
   return (
     <div style={{ background: 'var(--color-bg)', minHeight: '100vh' }}>
@@ -260,12 +290,16 @@ const ProjectDetail = () => {
                 transition={{ delay: 0.4, duration: 0.7 }}
                 style={{
                   fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: 'clamp(3rem, 7vw, 5.5rem)',
+                  fontSize: 'clamp(4rem, 9vw, 7.5rem)',
                   fontWeight: 800,
-                  letterSpacing: '-0.04em',
-                  lineHeight: 1.0,
-                  color: '#f0f0f8',
+                  letterSpacing: '-0.045em',
+                  lineHeight: 0.96,
+                  background: `linear-gradient(135deg, ${project.accentColor} 0%, #f0f0f8 55%, ${project.accentColor}cc 100%)`,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
                   marginBottom: 0,
+                  filter: `drop-shadow(0 4px 24px ${project.accentColor}33)`,
                 }}
               >
                 {project.title}
@@ -307,11 +341,12 @@ const ProjectDetail = () => {
               transition={{ delay: 0.5 }}
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: 'clamp(1.15rem, 2.7vw, 1.65rem)',
-                color: 'rgba(255,255,255,0.5)',
+                fontSize: 'clamp(1.35rem, 3.1vw, 2rem)',
+                color: 'rgba(255,255,255,0.62)',
                 fontWeight: 400,
                 letterSpacing: '-0.01em',
-                maxWidth: 600,
+                maxWidth: 720,
+                marginTop: 18,
               }}
             >
               {project.tagline}
@@ -334,8 +369,8 @@ const ProjectDetail = () => {
       {/* Content Sections */}
       <div className="container" style={{ paddingTop: 80, paddingBottom: 120 }}>
         {/* Overview + Problem/Goal */}
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80 }}>
-          <StickyLabel>Overview</StickyLabel>
+        <div id="overview" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+          <StickyLabel color={project.accentColor}>Overview</StickyLabel>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -344,9 +379,9 @@ const ProjectDetail = () => {
           >
             <p style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: '1.15rem',
-              color: '#c0c0d0',
-              lineHeight: 1.8,
+              fontSize: 'clamp(1.15rem, 1.5vw, 1.32rem)',
+              color: '#d4d4e2',
+              lineHeight: 1.78,
               marginBottom: 32,
             }}>
               {project.overview}
@@ -360,10 +395,10 @@ const ProjectDetail = () => {
                 border: '1px solid rgba(255,255,255,0.05)',
                 borderLeft: `3px solid ${project.accentColor}`,
               }}>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: project.accentColor, marginBottom: 10, letterSpacing: '0.1em' }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: project.accentColor, marginBottom: 12, letterSpacing: '0.14em', fontWeight: 600 }}>
                   PROBLEM
                 </div>
-                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.96rem', color: '#8888aa', lineHeight: 1.72 }}>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '1.08rem', color: '#b0b0c8', lineHeight: 1.72 }}>
                   {project.problem}
                 </p>
               </div>
@@ -374,10 +409,10 @@ const ProjectDetail = () => {
                 border: '1px solid rgba(255,255,255,0.05)',
                 borderLeft: '3px solid #ffd700',
               }}>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: '#ffd700', marginBottom: 10, letterSpacing: '0.1em' }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: '#ffd700', marginBottom: 12, letterSpacing: '0.14em', fontWeight: 600 }}>
                   GOAL
                 </div>
-                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.96rem', color: '#8888aa', lineHeight: 1.72 }}>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '1.08rem', color: '#b0b0c8', lineHeight: 1.72 }}>
                   {project.goal}
                 </p>
               </div>
@@ -388,8 +423,8 @@ const ProjectDetail = () => {
         <SectionDivider color={`${project.accentColor}20`} />
 
         {/* Gameplay Systems */}
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80 }}>
-          <StickyLabel>Systems</StickyLabel>
+        <div id="systems" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+          <StickyLabel color={project.accentColor}>Systems</StickyLabel>
           <div>
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
@@ -397,10 +432,10 @@ const ProjectDetail = () => {
               viewport={{ once: true }}
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: '1.75rem',
+                fontSize: 'clamp(1.9rem, 3vw, 2.4rem)',
                 fontWeight: 700,
                 color: '#f0f0f8',
-                letterSpacing: '-0.02em',
+                letterSpacing: '-0.025em',
                 marginBottom: 32,
               }}
             >
@@ -458,8 +493,8 @@ const ProjectDetail = () => {
         <SectionDivider color="rgba(255,215,0,0.15)" />
 
         {/* Tech Stack */}
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80 }}>
-          <StickyLabel>Tech Stack</StickyLabel>
+        <div id="tech-stack" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+          <StickyLabel color={project.accentColor}>Tech Stack</StickyLabel>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -515,8 +550,8 @@ const ProjectDetail = () => {
         <SectionDivider color="rgba(180,79,255,0.15)" />
 
         {/* Challenges & Solutions */}
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80 }}>
-          <StickyLabel>Challenges</StickyLabel>
+        <div id="challenges" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+          <StickyLabel color={project.accentColor}>Challenges</StickyLabel>
           <div>
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
@@ -524,10 +559,10 @@ const ProjectDetail = () => {
               viewport={{ once: true }}
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: '1.5rem',
+                fontSize: 'clamp(1.9rem, 3vw, 2.4rem)',
                 fontWeight: 700,
                 color: '#f0f0f8',
-                letterSpacing: '-0.02em',
+                letterSpacing: '-0.025em',
                 marginBottom: 32,
               }}
             >
@@ -556,18 +591,18 @@ const ProjectDetail = () => {
                   background: 'rgba(255,71,87,0.05)',
                   borderRight: '1px solid rgba(255,255,255,0.05)',
                 }}>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', color: '#ff4757', letterSpacing: '0.1em', marginBottom: 8 }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: '#ff4757', letterSpacing: '0.14em', marginBottom: 10, fontWeight: 600 }}>
                     CHALLENGE
                   </div>
-                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.96rem', color: '#c0c0d0', lineHeight: 1.65 }}>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '1.08rem', color: '#d4d4e2', lineHeight: 1.7 }}>
                     {item.challenge}
                   </p>
                 </div>
                 <div style={{ padding: '20px 24px', background: 'rgba(0,212,255,0.04)' }}>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', color: '#00d4ff', letterSpacing: '0.1em', marginBottom: 8 }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: '#00d4ff', letterSpacing: '0.14em', marginBottom: 10, fontWeight: 600 }}>
                     SOLUTION
                   </div>
-                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.96rem', color: '#8888aa', lineHeight: 1.65 }}>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '1.08rem', color: '#b0b0c8', lineHeight: 1.7 }}>
                     {item.solution}
                   </p>
                 </div>
@@ -579,8 +614,8 @@ const ProjectDetail = () => {
         <SectionDivider color="rgba(0,255,136,0.1)" />
 
         {/* Features */}
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80 }}>
-          <StickyLabel>Features</StickyLabel>
+        <div id="features" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+          <StickyLabel color={project.accentColor}>Features</StickyLabel>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -619,12 +654,13 @@ const ProjectDetail = () => {
         </div>
 
         {/* Visual Showcase */}
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80 }}>
-          <StickyLabel>Gallery</StickyLabel>
+        <div id="gallery" style={{ display: 'grid', gridTemplateColumns: '200px minmax(0, 1fr)', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+          <StickyLabel color={project.accentColor}>Gallery</StickyLabel>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            style={{ minWidth: 0 }}
           >
             {projectScreenshots.length > 0 ? (
               <>
@@ -635,8 +671,12 @@ const ProjectDetail = () => {
                     alignItems: 'center',
                     marginBottom: 14,
                   }}>
-                    <button
+                    <motion.button
                       onClick={() => scrollCarousel('prev')}
+                      whileHover={{ scale: 1.08, background: `${project.accentColor}22`, boxShadow: `0 0 20px ${project.accentColor}33` }}
+                      whileTap={{ scale: 0.92 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                      aria-label="Previous screenshot"
                       style={{
                         width: 38,
                         height: 38,
@@ -650,7 +690,7 @@ const ProjectDetail = () => {
                       }}
                     >
                       {'<'}
-                    </button>
+                    </motion.button>
 
                     <div style={{
                       fontFamily: "'JetBrains Mono', monospace",
@@ -662,8 +702,12 @@ const ProjectDetail = () => {
                       IN-GAME SCREENSHOTS ({projectScreenshots.length})
                     </div>
 
-                    <button
+                    <motion.button
                       onClick={() => scrollCarousel('next')}
+                      whileHover={{ scale: 1.08, background: `${project.accentColor}22`, boxShadow: `0 0 20px ${project.accentColor}33` }}
+                      whileTap={{ scale: 0.92 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                      aria-label="Next screenshot"
                       style={{
                         width: 38,
                         height: 38,
@@ -677,25 +721,32 @@ const ProjectDetail = () => {
                       }}
                     >
                       {'>'}
-                    </button>
+                    </motion.button>
                   </div>
 
-                  <div style={{ position: 'relative' }}>
+                  <div style={{ position: 'relative', width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
                     <div
                       ref={carouselRef}
+                      tabIndex={0}
                       style={{
                         display: 'flex',
                         gap: 14,
                         overflowX: 'auto',
+                        overflowY: 'hidden',
                         paddingBottom: 8,
                         scrollSnapType: 'x mandatory',
-                        WebkitMaskImage: 'linear-gradient(to right, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%)',
-                        maskImage: 'linear-gradient(to right, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%)',
+                        width: '100%',
+                        maxWidth: '100%',
+                        WebkitMaskImage: 'linear-gradient(to right, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%)',
+                        maskImage: 'linear-gradient(to right, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%)',
+                        outline: 'none',
                       }}
                     >
                       {projectScreenshots.map((src, i) => {
                         const orientation = imageOrientation[src] || 'landscape';
-                        const cardWidth = orientation === 'portrait' ? 220 : 380;
+                        // Landscape: 16:9 (605×340) so 1920×1080/736×414 sources fit without cropping.
+                        // Portrait: 9:16-ish (220×340) for phone screenshots.
+                        const cardWidth = orientation === 'portrait' ? 220 : 605;
 
                         return (
                           <motion.div
@@ -722,7 +773,12 @@ const ProjectDetail = () => {
                                   [src]: isPortrait ? 'portrait' : 'landscape',
                                 }));
                               }}
-                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: orientation === 'landscape' ? 'contain' : 'cover',
+                                background: '#0a0a14',
+                              }}
                             />
                           </motion.div>
                         );
@@ -754,8 +810,8 @@ const ProjectDetail = () => {
         <SectionDivider color={`${project.accentColor}15`} />
 
         {/* Outcome & Learnings */}
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80 }}>
-          <StickyLabel>Outcome</StickyLabel>
+        <div id="outcome" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+          <StickyLabel color={project.accentColor}>Outcome</StickyLabel>
           <div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -769,10 +825,10 @@ const ProjectDetail = () => {
                 marginBottom: 20,
               }}
             >
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: project.accentColor, letterSpacing: '0.1em', marginBottom: 12 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: project.accentColor, letterSpacing: '0.14em', marginBottom: 14, fontWeight: 600 }}>
                 RESULTS
               </div>
-              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '1.06rem', color: '#c0c0d0', lineHeight: 1.82 }}>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '1.2rem', color: '#d4d4e2', lineHeight: 1.78 }}>
                 {project.outcome}
               </p>
             </motion.div>
@@ -789,14 +845,70 @@ const ProjectDetail = () => {
                 borderRadius: 16,
               }}
             >
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: '#ffd700', letterSpacing: '0.1em', marginBottom: 12 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: '#ffd700', letterSpacing: '0.14em', marginBottom: 14, fontWeight: 600 }}>
                 KEY LEARNINGS
               </div>
-              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '1.06rem', color: '#8888aa', lineHeight: 1.82, fontStyle: 'italic' }}>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '1.2rem', color: '#b0b0c8', lineHeight: 1.78, fontStyle: 'italic' }}>
                 "{project.learnings}"
               </p>
             </motion.div>
           </div>
+        </div>
+
+        <SectionDivider color={`${associatedWith.color || project.accentColor}18`} />
+
+        <div id="associated-with" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+          <StickyLabel color={associatedWith.color || project.accentColor}>Associated With</StickyLabel>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            style={{
+              padding: '28px 32px',
+              background: 'rgba(13,13,26,0.72)',
+              border: '1px solid rgba(255,255,255,0.06)',
+              borderRadius: 16,
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                gap: 20,
+                marginBottom: 18,
+                flexWrap: 'wrap',
+              }}
+            >
+              <div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.78rem', color: associatedWith.color || project.accentColor, letterSpacing: '0.14em', marginBottom: 10, fontWeight: 600 }}>
+                  {associatedWith.type === 'self' ? 'INDEPENDENT WORK' : 'COMPANY'}
+                </div>
+                <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '1.4rem', fontWeight: 700, color: '#f0f0f8', letterSpacing: '-0.02em' }}>
+                  {associatedWith.name}
+                </div>
+              </div>
+
+              <div
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: 999,
+                  border: `1px solid ${(associatedWith.color || project.accentColor)}30`,
+                  background: `${associatedWith.color || project.accentColor}10`,
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: '0.72rem',
+                  color: '#d8d8e8',
+                  letterSpacing: '0.06em',
+                }}
+              >
+                {associatedWith.badge}
+              </div>
+            </div>
+
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '1.02rem', color: '#b0b0c8', lineHeight: 1.82 }}>
+              {associatedWith.description}
+            </p>
+          </motion.div>
         </div>
 
         {/* Next project */}

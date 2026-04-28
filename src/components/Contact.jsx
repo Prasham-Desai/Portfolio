@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { GitHubIcon, LinkedInIcon, MailIcon } from './SocialIcons';
 
 const InputField = ({ label, type = 'text', value, onChange, placeholder, multiline }) => {
   const [focused, setFocused] = useState(false);
@@ -59,6 +60,30 @@ const InputField = ({ label, type = 'text', value, onChange, placeholder, multil
   );
 };
 
+const contactLinks = [
+  {
+    label: 'Email',
+    value: 'prashamdesai9114@gmail.com',
+    href: 'mailto:prashamdesai9114@gmail.com',
+    color: '#00d4ff',
+    Icon: MailIcon,
+  },
+  {
+    label: 'GitHub',
+    value: 'github.com/prashamdesai',
+    href: 'https://github.com/prashamdesai',
+    color: '#ffd700',
+    Icon: GitHubIcon,
+  },
+  {
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/prashamdesai',
+    href: 'https://www.linkedin.com/in/prashamdesai',
+    color: '#b44fff',
+    Icon: LinkedInIcon,
+  },
+];
+
 const Contact = () => {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [status, setStatus] = useState('idle'); // idle | sending | sent
@@ -72,11 +97,10 @@ const Contact = () => {
   return (
     <section id="contact" style={{
       padding: '120px 0',
-      background: 'var(--color-bg-2)',
+      background: 'var(--color-bg)',
       position: 'relative',
       overflow: 'hidden',
     }}>
-      {/* Decorative glow */}
       <div style={{
         position: 'absolute',
         right: -200,
@@ -89,84 +113,66 @@ const Contact = () => {
       }} />
 
       <div className="container" style={{ position: 'relative' }}>
-        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 60, scale: 0.96, filter: 'blur(8px)' }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           style={{ marginBottom: 64 }}
         >
           <div className="section-label">Get In Touch</div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 24 }}>
-            <h2 style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: 'clamp(2rem, 5vw, 3rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.03em',
-              color: '#f0f0f8',
-              lineHeight: 1.1,
+          <h2 style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontSize: 'clamp(2.6rem, 6.4vw, 4.4rem)',
+            fontWeight: 800,
+            letterSpacing: '-0.035em',
+            color: '#ffffff',
+            lineHeight: 1.06,
+            marginBottom: 20,
+            maxWidth: 880,
+          }}>
+            Let's Build{' '}
+            <span style={{
+              display: 'inline-block',
+              color: '#7fefff',
+              background: 'linear-gradient(135deg, #5fe7ff, #d6a3ff)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              paddingBottom: '0.06em',
             }}>
-              Let's Build
-              <br />
-              <span style={{
-                background: 'linear-gradient(135deg, #00d4ff, #b44fff)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}>
-                Something Great
-              </span>
-            </h2>
+              Something Great
+            </span>
+          </h2>
 
-            <div style={{ maxWidth: 320 }}>
-              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.9rem', color: '#8888aa', lineHeight: 1.7 }}>
-                Open to studio roles, freelance projects, and collaborations. Let's talk.
-              </p>
-            </div>
-          </div>
+          <p style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '1.05rem',
+            color: '#c8c8dc',
+            lineHeight: 1.7,
+            maxWidth: 560,
+          }}>
+            Open to studio roles, freelance projects, and collaborations. Let's talk.
+          </p>
         </motion.div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 48, alignItems: 'start' }}>
-          {/* Left: Contact info */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, x: -28, filter: 'blur(6px)' }}
+            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           >
-            {[
-              {
-                label: 'Email',
-                value: 'prashamdesai9114@gmail.com',
-                href: 'mailto:prashamdesai9114@gmail.com',
-                color: '#00d4ff',
-                icon: '✉',
-              },
-              {
-                label: 'GitHub',
-                value: 'github.com/prashamdesai',
-                href: 'https://github.com',
-                color: '#ffd700',
-                icon: '◈',
-              },
-              {
-                label: 'LinkedIn',
-                value: 'linkedin.com/in/prashamdesai',
-                href: 'https://linkedin.com',
-                color: '#b44fff',
-                icon: '◉',
-              },
-            ].map((item, i) => (
+            {contactLinks.map((item, i) => (
               <motion.a
                 key={item.label}
                 href={item.href}
                 target={item.href.startsWith('http') ? '_blank' : undefined}
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 + 0.1 }}
                 whileHover={{ x: 4, borderColor: `${item.color}40` }}
                 style={{
                   display: 'flex',
@@ -182,32 +188,43 @@ const Contact = () => {
                 }}
               >
                 <div style={{
-                  width: 40,
-                  height: 40,
+                  width: 52,
+                  height: 52,
                   borderRadius: 10,
                   background: `${item.color}10`,
                   border: `1px solid ${item.color}25`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '0.9rem',
                   color: item.color,
                   flexShrink: 0,
                 }}>
-                  {item.icon}
+                  <item.Icon size={24} />
                 </div>
                 <div>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', color: '#444460', marginBottom: 3, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                  <div style={{
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.7rem',
+                    color: item.color,
+                    marginBottom: 5,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.14em',
+                  }}>
                     {item.label}
                   </div>
-                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.82rem', color: '#c0c0d0', fontWeight: 500 }}>
+                  <div style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: '1.02rem',
+                    color: '#e5e5f2',
+                    fontWeight: 600,
+                    letterSpacing: '-0.01em',
+                  }}>
                     {item.value}
                   </div>
                 </div>
               </motion.a>
             ))}
 
-            {/* Location */}
             <div style={{
               marginTop: 24,
               padding: '16px 20px',
@@ -227,12 +244,11 @@ const Contact = () => {
             </div>
           </motion.div>
 
-          {/* Right: Form */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, x: 28, filter: 'blur(6px)' }}
+            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           >
             <div style={{
               background: 'rgba(17,17,32,0.7)',
@@ -268,11 +284,13 @@ const Contact = () => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '1.5rem',
+                        color: '#00ff88',
                         marginBottom: 8,
                       }}
                     >
-                      ✓
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12.5 9.5 17 19 7.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
                     </motion.div>
                     <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '1.2rem', fontWeight: 700, color: '#f0f0f8' }}>
                       Message Sent!
@@ -393,8 +411,9 @@ const Contact = () => {
             grid-template-columns: 1fr !important;
           }
         }
-        input::placeholder, textarea::placeholder {
-          color: #333348;
+        #contact input::placeholder, #contact textarea::placeholder {
+          color: #8a8aa8;
+          opacity: 1;
         }
       `}</style>
     </section>

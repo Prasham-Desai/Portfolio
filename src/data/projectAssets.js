@@ -32,7 +32,7 @@ export const projectAssets = {
   'ufo-io': {
     icon: 'UFO.png',
     homeBanner: 'UFO-Banner.png',
-    caseStudyBanner: 'UFO Banner.png',
+    caseStudyBanner: 'UFO-Banner.png',
     screenshotsFolder: 'UFO',
   },
   'road-runner': {

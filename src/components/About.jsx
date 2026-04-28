@@ -61,10 +61,10 @@ const About = () => {
       <div className="container">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 60, scale: 0.96, filter: 'blur(8px)' }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           style={{ marginBottom: 80 }}
         >
           <div className="section-label">The Story</div>
@@ -99,10 +99,10 @@ const About = () => {
           {/* Left: Bio cards */}
           <div>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              initial={{ opacity: 0, y: 60, scale: 0.96, filter: 'blur(6px)' }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 background: 'rgba(17,17,32,0.7)',
                 border: '1px solid rgba(255,255,255,0.06)',
@@ -140,10 +140,10 @@ const About = () => {
               ].map((card, i) => (
                 <motion.div
                   key={card.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 + 0.3 }}
+                  initial={{ opacity: 0, y: 50, scale: 0.96, filter: 'blur(5px)' }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 + 0.25 }}
                   whileHover={{ borderColor: `${card.color}40`, scale: 1.02 }}
                   style={{
                     padding: '16px 20px',
@@ -190,10 +190,10 @@ const About = () => {
               {timelineItems.map((item, i) => (
                 <motion.div
                   key={item.year}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  initial={{ opacity: 0, x: 28, filter: 'blur(5px)' }}
+                  whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: i * 0.12 }}
                   style={{
                     display: 'flex',
                     gap: 24,

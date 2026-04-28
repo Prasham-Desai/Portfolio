@@ -1,15 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.04a892e6.css",
-    "main.js": "/static/js/main.eb56809b.js",
+    "main.js": "/static/js/main.998fad2a.js",
     "static/media/Loading.png": "/static/media/Loading.84c64c55137ed02d17bd.png",
     "static/media/Home.png": "/static/media/Home.0f6a10ede0f8492d1c1c.png",
     "static/media/Zyyngo.png": "/static/media/Zyyngo.1fe2edde53a7abc9381b.png",
-    "static/media/Game_Over.png": "/static/media/Game_Over.bba8f92aa7d7dcfda61b.png",
     "static/media/RoadRunner.png": "/static/media/RoadRunner.9c8891afc2cb001b6067.png",
     "static/media/Setting.png": "/static/media/Setting.8f254f52f96a7e04c49e.png",
-    "static/media/UFO-Banner.png": "/static/media/UFO-Banner.0ee45baf1ae0ceedf95b.png",
-    "static/media/UFO Banner.png": "/static/media/UFO Banner.b15f799d85e96d2fa91f.png",
+    "static/media/UFO-Banner.png": "/static/media/UFO-Banner.b15f799d85e96d2fa91f.png",
     "static/media/RoadRunner-Banner.png": "/static/media/RoadRunner-Banner.545a2d40373329550ea4.png",
     "static/media/SpinShotPro-Banner.png": "/static/media/SpinShotPro-Banner.419dd6fce9f60f5cd1ad.png",
     "static/media/SpinShot Banner.png": "/static/media/SpinShot Banner.9f38673feb07b6328432.png",
@@ -38,10 +36,10 @@
     "static/media/Sudoku Banner.png": "/static/media/Sudoku Banner.88d25b7b82157d30b916.png",
     "index.html": "/index.html",
     "main.04a892e6.css.map": "/static/css/main.04a892e6.css.map",
-    "main.eb56809b.js.map": "/static/js/main.eb56809b.js.map"
+    "main.998fad2a.js.map": "/static/js/main.998fad2a.js.map"
   },
   "entrypoints": [
     "static/css/main.04a892e6.css",
-    "static/js/main.eb56809b.js"
+    "static/js/main.998fad2a.js"
   ]
 }

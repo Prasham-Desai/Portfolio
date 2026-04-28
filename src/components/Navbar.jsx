@@ -1,19 +1,53 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const navLinks = [
-  { label: 'Work', href: '/#projects' },
-  { label: 'Skills', href: '/#skills' },
-  { label: 'About', href: '/#about' },
-  { label: 'Contact', href: '/#contact' },
+const homeNavLinks = [
+  { label: 'Work',    href: '/#projects', targetId: 'projects', sectionIds: ['projects'], color: '#00d4ff' }, // teal
+  { label: 'Skills',  href: '/#skills',   targetId: 'skills',   sectionIds: ['skills'],   color: '#ffd700' }, // gold
+  { label: 'Experience', href: '/#experience', targetId: 'experience', sectionIds: ['experience'], color: '#ff6b00' }, // orange
+  { label: 'About',   href: '/#about',    targetId: 'about',    sectionIds: ['about'],    color: '#b44fff' }, // purple
+  { label: 'Contact', href: '/#contact',  targetId: 'contact',  sectionIds: ['contact'],  color: '#00fff2' }, // cyan
 ];
+
+const caseStudyNavLinks = [
+  { label: 'Vision',      href: '#overview',   targetId: 'overview',   sectionIds: ['overview', 'systems'],             color: '#00d4ff' },
+  { label: 'Engineering', href: '#tech-stack', targetId: 'tech-stack', sectionIds: ['tech-stack', 'challenges'],       color: '#b44fff' },
+  { label: 'Showcase',    href: '#features',   targetId: 'features',   sectionIds: ['features', 'gallery'],            color: '#00ff88' },
+  { label: 'Results',     href: '#outcome',    targetId: 'outcome',    sectionIds: ['outcome', 'associated-with'],    color: '#ff6b6b' },
+];
+
+const HOME_SCROLL_OFFSET = 20;
+const CASE_STUDY_SCROLL_OFFSET = 112;
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const isHome = location.pathname === '/';
+  const isCaseStudy = location.pathname.startsWith('/project/');
+  const navLinks = isCaseStudy ? caseStudyNavLinks : homeNavLinks;
+
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const offset = isCaseStudy ? CASE_STUDY_SCROLL_OFFSET : HOME_SCROLL_OFFSET;
+    const top = window.scrollY + el.getBoundingClientRect().top - offset;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  };
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    if (isHome) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigate('/');
+      // give the route a tick to mount, then jump to top
+      requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'auto' }));
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -21,15 +55,73 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Scroll-spy: pick the section whose midpoint is closest to the
+  // viewport centre. IntersectionObserver alone fires on entry/exit
+  // and gets confused on tall sections; midpoint-distance is stable.
+  useEffect(() => {
+    if (!isHome && !isCaseStudy) {
+      setActiveSection(null);
+      return;
+    }
+
+    const update = () => {
+      if (isHome) {
+        const hero = document.getElementById('hero');
+        if (hero) {
+          const heroRect = hero.getBoundingClientRect();
+          if (heroRect.bottom > window.innerHeight / 2) {
+            setActiveSection(null);
+            return;
+          }
+        }
+      }
+
+      const viewportMid = window.innerHeight / 2;
+      let bestLabel = null;
+      let bestDist = Infinity;
+
+      for (const link of navLinks) {
+        for (const id of link.sectionIds) {
+          const el = document.getElementById(id);
+          if (!el) continue;
+          const r = el.getBoundingClientRect();
+          if (r.bottom < CASE_STUDY_SCROLL_OFFSET || r.top > window.innerHeight) continue;
+          const sectionMid = r.top + r.height / 2;
+          const dist = Math.abs(sectionMid - viewportMid);
+          if (dist < bestDist) {
+            bestDist = dist;
+            bestLabel = link.label;
+          }
+        }
+      }
+
+      setActiveSection(bestLabel);
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, [isHome, isCaseStudy, navLinks]);
+
   useEffect(() => {
     setMobileOpen(false);
   }, [location]);
 
   const handleNavClick = (href) => {
+    if (href.startsWith('#')) {
+      const id = href.slice(1);
+      scrollToSection(id);
+      return;
+    }
+
     if (href.startsWith('/#')) {
       const id = href.slice(2);
       if (isHome) {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        scrollToSection(id);
       } else {
         // navigate to home then scroll
         window.location.href = href;
@@ -66,7 +158,7 @@ const Navbar = () => {
           height: 60,
         }}>
           {/* Logo */}
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/" onClick={handleLogoClick} style={{ textDecoration: 'none' }}>
             <motion.div
               whileHover={{ scale: 1.02 }}
               style={{
@@ -75,6 +167,7 @@ const Navbar = () => {
                 fontSize: '2.75rem',
                 letterSpacing: '-0.01em',
                 color: '#f0f0f8',
+                cursor: 'pointer',
               }}
             >
               PD<span style={{ color: '#00d4ff' }}>.</span>
@@ -82,30 +175,37 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Links */}
-          <div style={{ display: 'flex', gap: 4, alignItems: 'center' }} className="desktop-nav">
-            {navLinks.map((link) => (
-              <motion.button
-                key={link.label}
-                onClick={() => handleNavClick(link.href)}
-                whileHover={{ color: '#00d4ff' }}
-                style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: '0.97rem',
-                  fontWeight: 500,
-                  color: '#8888aa',
-                  padding: '8px 18px',
-                  borderRadius: 8,
-                  transition: 'all 0.2s ease',
-                  background: 'transparent',
-                  letterSpacing: '0.01em',
-                }}
-              >
-                {link.label}
-              </motion.button>
-            ))}
+          <div style={{ display: 'flex', gap: isCaseStudy ? 2 : 4, alignItems: 'center' }} className="desktop-nav">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.label;
+              return (
+                <motion.button
+                  key={link.label}
+                  onClick={() => handleNavClick(link.href)}
+                  whileHover={{ color: link.color, scale: 1.04 }}
+                  animate={{
+                    color: isActive ? link.color : '#e8e8f4',
+                    textShadow: isActive ? `0 0 18px ${link.color}99` : '0 0 0 rgba(0,0,0,0)',
+                  }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  style={{
+                    position: 'relative',
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: isCaseStudy ? '0.95rem' : '1rem',
+                    fontWeight: 600,
+                    padding: isCaseStudy ? '8px 14px' : '8px 18px',
+                    borderRadius: 8,
+                    letterSpacing: '0.01em',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {link.label}
+                </motion.button>
+              );
+            })}
 
             <motion.a
-              href="mailto:prashamdesai@example.com"
+              href="mailto:prashamdesai9114@gmail.com"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               style={{
