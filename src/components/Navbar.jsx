@@ -214,26 +214,7 @@ const Navbar = () => {
               );
             })}
 
-            <motion.a
-              className="site-nav-cta"
-              href="mailto:prashamdesai9114@gmail.com"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: '0.95rem',
-                fontWeight: 600,
-                color: '#00d4ff',
-                borderRadius: 8,
-                border: '1px solid rgba(0,212,255,0.3)',
-                transition: 'all 0.2s ease',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-              }}
-            >
-              Hire Me
-            </motion.a>
+            {/* Hire Me CTA removed per request */}
           </div>
 
           {/* Mobile Menu Button */}
@@ -311,23 +292,7 @@ const Navbar = () => {
                 {link.label}
               </motion.button>
             ))}
-            <motion.a
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: navLinks.length * 0.08 }}
-              href="mailto:prashamdesai9114@gmail.com"
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: '1rem',
-                fontWeight: 600,
-                color: '#00d4ff',
-                padding: '12px 22px',
-                borderRadius: 999,
-                border: '1px solid rgba(0,212,255,0.28)',
-              }}
-            >
-              Hire Me
-            </motion.a>
+            {/* Mobile Hire Me CTA removed per request */}
           </motion.div>
         )}
       </AnimatePresence>
