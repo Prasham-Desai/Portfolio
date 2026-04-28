@@ -109,6 +109,7 @@ const About = () => {
                 borderRadius: 16,
                 padding: 32,
                 marginBottom: 20,
+                boxShadow: 'inset 2px 0 0 rgba(0,212,255,0.35)',
               }}
             >
               <p style={{
@@ -150,6 +151,7 @@ const About = () => {
                     background: 'rgba(13,13,26,0.6)',
                     border: '1px solid rgba(255,255,255,0.05)',
                     borderRadius: 12,
+                    boxShadow: `inset 2px 0 0 ${card.color}50`,
                     transition: 'all 0.25s ease',
                   }}
                 >

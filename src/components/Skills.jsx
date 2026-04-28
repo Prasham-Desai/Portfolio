@@ -182,6 +182,7 @@ const Skills = () => {
                     border: activeGroup === group.id
                       ? `1px solid ${group.color}30`
                       : '1px solid rgba(255,255,255,0.04)',
+                    boxShadow: `inset 2px 0 0 ${activeGroup === group.id ? `${group.color}70` : 'rgba(255,255,255,0.08)'}`,
                     cursor: 'pointer',
                     transition: 'all 0.25s ease',
                     textAlign: 'left',
@@ -257,6 +258,7 @@ const Skills = () => {
               background: 'rgba(13,13,26,0.6)',
               borderRadius: 12,
               border: '1px solid rgba(255,255,255,0.05)',
+              boxShadow: 'inset 2px 0 0 rgba(0,212,255,0.35)',
             }}>
               <div style={{
                 fontFamily: "'JetBrains Mono', monospace",
@@ -304,6 +306,7 @@ const Skills = () => {
                   border: `1px solid ${currentGroup.color}20`,
                   borderRadius: 16,
                   padding: '32px 32px',
+                  boxShadow: `inset 2px 0 0 ${currentGroup.color}55`,
                 }}
               >
                 {/* Group header */}

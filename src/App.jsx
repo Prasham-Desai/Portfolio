@@ -53,9 +53,7 @@ const App = () => {
     <BrowserRouter>
       <CustomCursor />
       {!loaded && <LoadingScreen onComplete={() => setLoaded(true)} />}
-      <div style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.4s ease' }}>
-        <AppContent />
-      </div>
+      {loaded && <AppContent />}
     </BrowserRouter>
   );
 };

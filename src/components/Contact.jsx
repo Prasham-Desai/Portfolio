@@ -70,7 +70,7 @@ const contactLinks = [
   },
   {
     label: 'GitHub',
-    value: 'github.com/prashamdesai',
+    value: 'github.com/prashamd9114',
     href: 'https://github.com/prashamdesai',
     color: '#ffd700',
     Icon: GitHubIcon,

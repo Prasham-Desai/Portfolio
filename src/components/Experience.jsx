@@ -3,18 +3,6 @@ import { motion } from 'framer-motion';
 const experienceItems = [
   {
     company: 'Indianic Infotech Ltd',
-    role: 'Game Developer Trainee',
-    period: 'May 2025 - Oct 2025',
-    duration: '6 months',
-    color: '#00d4ff',
-    responsibilities: [
-      'Built and polished gameplay systems in Unity for casual and multiplayer mobile titles.',
-      'Implemented UI flows, balancing tweaks, and content iteration based on internal playtests.',
-      'Supported bug fixing, optimization passes, and feature integration across active game builds.',
-    ],
-  },
-  {
-    company: 'Indianic Infotech Ltd',
     role: 'Jr Game Developer',
     period: 'Nov 2025 - Apr 2026',
     duration: '6 months',
@@ -23,6 +11,18 @@ const experienceItems = [
       'Owned feature implementation from prototype to production, including gameplay loops and progression systems.',
       'Integrated backend-connected systems such as leaderboards, matchmaking, analytics, and live game data.',
       'Collaborated with design and QA to ship stable builds while improving performance on Android and iOS devices.',
+    ],
+  },
+  {
+    company: 'Indianic Infotech Ltd',
+    role: 'Game Developer Trainee',
+    period: 'May 2025 - Oct 2025',
+    duration: '6 months',
+    color: '#00d4ff',
+    responsibilities: [
+      'Built and polished gameplay systems in Unity for casual and multiplayer mobile titles.',
+      'Implemented UI flows, balancing tweaks, and content iteration based on internal playtests.',
+      'Supported bug fixing, optimization passes, and feature integration across active game builds.',
     ],
   },
 ];
