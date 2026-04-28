@@ -121,7 +121,7 @@ const LoadingScreen = ({ onComplete }) => {
                 marginTop: 8,
                 textTransform: 'uppercase',
               }}>
-                Unity 3D Programmer
+                Game Developer
               </div>
             </motion.div>
 
