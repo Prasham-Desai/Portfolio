@@ -17,7 +17,7 @@ const caseStudyNavLinks = [
   { label: 'Results',     href: '#outcome',    targetId: 'outcome',    sectionIds: ['outcome', 'associated-with'],    color: '#ff6b6b' },
 ];
 
-const HOME_SCROLL_OFFSET = 20;
+const HOME_SCROLL_OFFSET = 16;
 const CASE_STUDY_SCROLL_OFFSET = 112;
 
 const Navbar = () => {

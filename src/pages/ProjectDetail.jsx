@@ -395,6 +395,7 @@ const ProjectDetail = () => {
                 borderRadius: 12,
                 border: '1px solid rgba(255,255,255,0.05)',
                 borderLeft: `3px solid ${project.accentColor}`,
+                boxShadow: `inset 2px 0 0 ${project.accentColor}50`,
               }}>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: project.accentColor, marginBottom: 12, letterSpacing: '0.14em', fontWeight: 600 }}>
                   PROBLEM
@@ -409,6 +410,7 @@ const ProjectDetail = () => {
                 borderRadius: 12,
                 border: '1px solid rgba(255,255,255,0.05)',
                 borderLeft: '3px solid #ffd700',
+                boxShadow: 'inset 2px 0 0 rgba(255,215,0,0.45)',
               }}>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: '#ffd700', marginBottom: 12, letterSpacing: '0.14em', fontWeight: 600 }}>
                   GOAL
@@ -457,6 +459,7 @@ const ProjectDetail = () => {
                     background: 'rgba(13,13,26,0.8)',
                     border: '1px solid rgba(255,255,255,0.05)',
                     borderRadius: 12,
+                    boxShadow: `inset 2px 0 0 ${project.accentColor}45`,
                     transition: 'all 0.25s ease',
                   }}
                 >
@@ -515,6 +518,7 @@ const ProjectDetail = () => {
                     border: '1px solid rgba(255,255,255,0.05)',
                     borderRadius: 12,
                     minWidth: 140,
+                    boxShadow: `inset 2px 0 0 ${project.accentColor}40`,
                   }}
                 >
                   <div style={{
@@ -591,6 +595,7 @@ const ProjectDetail = () => {
                   padding: '20px 24px',
                   background: 'rgba(255,71,87,0.05)',
                   borderRight: '1px solid rgba(255,255,255,0.05)',
+                  boxShadow: 'inset 2px 0 0 rgba(255,71,87,0.45)',
                 }}>
                   <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: '#ff4757', letterSpacing: '0.14em', marginBottom: 10, fontWeight: 600 }}>
                     CHALLENGE
@@ -599,7 +604,7 @@ const ProjectDetail = () => {
                     {item.challenge}
                   </p>
                 </div>
-                <div style={{ padding: '20px 24px', background: 'rgba(0,212,255,0.04)' }}>
+                <div style={{ padding: '20px 24px', background: 'rgba(0,212,255,0.04)', boxShadow: 'inset 2px 0 0 rgba(0,212,255,0.4)' }}>
                   <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: '#00d4ff', letterSpacing: '0.14em', marginBottom: 10, fontWeight: 600 }}>
                     SOLUTION
                   </div>
@@ -640,6 +645,7 @@ const ProjectDetail = () => {
                     borderRadius: 8,
                     border: '1px solid rgba(255,255,255,0.07)',
                     background: 'rgba(17,17,32,0.6)',
+                    boxShadow: `inset 2px 0 0 ${project.accentColor}42`,
                     display: 'flex',
                     alignItems: 'center',
                     gap: 8,
@@ -823,6 +829,7 @@ const ProjectDetail = () => {
                 background: `${project.accentColor}08`,
                 border: `1px solid ${project.accentColor}25`,
                 borderRadius: 16,
+                boxShadow: `inset 2px 0 0 ${project.accentColor}55`,
                 marginBottom: 20,
               }}
             >
@@ -844,6 +851,7 @@ const ProjectDetail = () => {
                 background: 'rgba(255,215,0,0.05)',
                 border: '1px solid rgba(255,215,0,0.2)',
                 borderRadius: 16,
+                boxShadow: 'inset 2px 0 0 rgba(255,215,0,0.45)',
               }}
             >
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: '#ffd700', letterSpacing: '0.14em', marginBottom: 14, fontWeight: 600 }}>
@@ -869,6 +877,7 @@ const ProjectDetail = () => {
               background: 'rgba(13,13,26,0.72)',
               border: '1px solid rgba(255,255,255,0.06)',
               borderRadius: 16,
+              boxShadow: `inset 2px 0 0 ${(associatedWith.color || project.accentColor)}55`,
             }}
           >
             <div
@@ -933,6 +942,7 @@ const ProjectDetail = () => {
                 background: 'rgba(13,13,26,0.6)',
                 border: `1px solid ${nextProject.accentColor}20`,
                 borderRadius: 16,
+                boxShadow: `inset 2px 0 0 ${nextProject.accentColor}45`,
                 gap: 16,
                 cursor: 'pointer',
               }}

@@ -123,6 +123,7 @@ const Experience = () => {
               border: '1px solid rgba(255,255,255,0.06)',
               borderRadius: 18,
               padding: 28,
+              boxShadow: 'inset 2px 0 0 rgba(0,212,255,0.45)',
             }}
           >
             <div
