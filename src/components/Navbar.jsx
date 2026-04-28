@@ -65,7 +65,7 @@ const Navbar = () => {
     }
 
     const update = () => {
-      if (isHome) {
+      if (isHome || isCaseStudy) {
         const hero = document.getElementById('hero');
         if (hero) {
           const heroRect = hero.getBoundingClientRect();

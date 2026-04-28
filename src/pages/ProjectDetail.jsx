@@ -171,6 +171,7 @@ const ProjectDetail = () => {
     <div style={{ background: 'var(--color-bg)', minHeight: '100vh' }}>
       {/* Hero Section */}
       <section
+        id="hero"
         ref={heroRef}
         style={{
           minHeight: '70vh',

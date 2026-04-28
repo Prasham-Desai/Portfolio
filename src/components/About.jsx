@@ -23,7 +23,7 @@ const timelineItems = [
     icon: '▸',
   },
   {
-    year: '2024',
+    year: '2025',
     title: 'Addressables & DOTS',
     body: 'Built first game (UFO.io) with addressables and remote scene loading. Adopted DOTS/ECS architecture Started exploring AR/VR development.',
     color: '#ff6b6b',
