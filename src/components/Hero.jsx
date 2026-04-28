@@ -79,9 +79,10 @@ const Hero = () => {
     <section
       ref={containerRef}
       id="hero"
+      className="home-hero"
       style={{
-        height: '100vh',
-        minHeight: 720,
+        minHeight: '100svh',
+        padding: '120px 0 64px',
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
@@ -124,6 +125,7 @@ const Hero = () => {
       <AnimatePresence>
         {!hasInteracted && (
           <motion.div
+            className="hero-drag-hint"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
@@ -152,7 +154,7 @@ const Hero = () => {
       </AnimatePresence>
 
       {/* Content layer */}
-      <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
+      <div className="container hero-container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
         <div className="hero-grid" style={{
           display: 'grid',
           gridTemplateColumns: '1.05fr 1fr',
@@ -161,6 +163,7 @@ const Hero = () => {
         }}>
           {/* LEFT: text */}
           <motion.div
+            className="hero-copy"
             initial="hidden"
             animate="show"
             variants={{ hidden: {}, show: { transition: { staggerChildren: 0.10, delayChildren: 0.1 } } }}
@@ -193,9 +196,10 @@ const Hero = () => {
             </FadeUp>
 
             <FadeUp>
-              <div style={{ height: 36, marginBottom: 36, position: 'relative', overflow: 'hidden' }}>
+              <div className="hero-tagline-wrap" style={{ height: 36, marginBottom: 36, position: 'relative', overflow: 'hidden' }}>
                 <AnimatePresence mode="wait">
                   <motion.p
+                    className="hero-tagline"
                     key={taglineIndex}
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -218,13 +222,13 @@ const Hero = () => {
             </FadeUp>
 
             <FadeUp>
-              <div style={{ display: 'flex', gap: 36, marginBottom: 44 }}>
+              <div className="hero-stats" style={{ display: 'flex', gap: 36, marginBottom: 44 }}>
                 {[
                   { v: '7+',   l: 'Games Shipped' },
                   { v: '1yr+', l: 'Experience' },
                   { v: '∞',    l: 'Bugs Solved' },
                 ].map(s => (
-                  <motion.div key={s.l} whileHover={{ y: -3 }} transition={{ type: 'spring', stiffness: 300 }}>
+                  <motion.div className="hero-stat" key={s.l} whileHover={{ y: -3 }} transition={{ type: 'spring', stiffness: 300 }}>
                     <div style={{
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontSize: '1.9rem', fontWeight: 800,
@@ -241,7 +245,7 @@ const Hero = () => {
             </FadeUp>
 
             <FadeUp>
-              <div style={{ display: 'flex', gap: 14 }}>
+              <div className="hero-actions" style={{ display: 'flex', gap: 14 }}>
                 <MagneticButton primary onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
                   View Work
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -257,6 +261,7 @@ const Hero = () => {
 
           {/* RIGHT: portrait card with deeper 3D tilt */}
           <motion.div
+            className="hero-visual"
             initial={{ opacity: 0, scale: 0.92, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.85, delay: 0.35, ease: [0.4, 0, 0.2, 1] }}
@@ -273,12 +278,97 @@ const Hero = () => {
       </div>
 
       <style>{`
-        @media (max-width: 880px) {
-          #hero .hero-grid {
-            grid-template-columns: 1fr !important;
-            gap: 36px !important;
+        .home-hero .hero-button {
+          justify-content: center;
+        }
+
+        @media (max-width: 1180px) {
+          .home-hero .hero-grid {
+            gap: 40px !important;
           }
-          #hero .hero-shape { display: none !important; }
+
+          .home-hero .hero-tagline {
+            white-space: normal !important;
+            max-width: 34ch;
+          }
+        }
+
+        @media (max-width: 980px) {
+          .home-hero {
+            padding: 128px 0 80px !important;
+          }
+
+          .home-hero .hero-grid {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
+
+          .home-hero .hero-visual {
+            max-width: min(560px, 100%);
+            width: 100%;
+            margin: 0 auto;
+          }
+
+          .home-hero .hero-shape,
+          .home-hero .hero-drag-hint {
+            display: none !important;
+          }
+        }
+
+        @media (max-width: 767px) {
+          .home-hero {
+            padding: 112px 0 72px !important;
+          }
+
+          .home-hero .hero-tagline-wrap {
+            height: 58px !important;
+            margin-bottom: 28px !important;
+          }
+
+          .home-hero .hero-tagline {
+            white-space: normal !important;
+            line-height: 1.45 !important;
+          }
+
+          .home-hero .hero-stats {
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px 12px !important;
+            margin-bottom: 34px !important;
+          }
+
+          .home-hero .hero-actions {
+            flex-wrap: wrap;
+          }
+
+          .home-hero .hero-actions > * {
+            width: 100%;
+          }
+
+          .home-hero .hero-button {
+            padding: 15px 22px !important;
+          }
+
+          .home-hero .hero-portrait-card {
+            padding: 20px !important;
+            border-radius: 24px !important;
+          }
+
+          .home-hero .hero-identity-strip {
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 10px;
+          }
+        }
+
+        @media (max-width: 560px) {
+          .home-hero .hero-stats {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+
+          .home-hero .hero-stat:last-child {
+            grid-column: 1 / -1;
+          }
         }
       `}</style>
     </section>
@@ -468,7 +558,7 @@ const ShapeGraphic = ({ kind, size, color }) => {
 ────────────────────────────────────── */
 const PortraitCard = () => {
   return (
-    <div style={{
+    <div className="hero-portrait-frame" style={{
       position: 'relative',
       maxWidth: 520,
       width: '100%',
@@ -483,7 +573,7 @@ const PortraitCard = () => {
         borderRadius: 40,
       }} />
 
-      <div style={{
+      <div className="hero-portrait-card" style={{
         background: 'rgba(13,13,26,0.92)',
         border: '1px solid rgba(0,212,255,0.18)',
         borderRadius: 28,
@@ -547,7 +637,7 @@ const PortraitCard = () => {
         </div>
 
         {/* Identity strip — pushed forward in Z */}
-        <div style={{
+        <div className="hero-identity-strip" style={{
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
           padding: '10px 14px',
           background: 'rgba(0,212,255,0.05)',
@@ -605,6 +695,7 @@ const MagneticButton = ({ children, primary, onClick }) => {
   const sy = useSpring(y, { stiffness: 200, damping: 15 });
 
   const onMove = (e) => {
+    if (!ref.current) return;
     const r = ref.current.getBoundingClientRect();
     x.set((e.clientX - (r.left + r.width / 2)) * 0.35);
     y.set((e.clientY - (r.top + r.height / 2)) * 0.35);
@@ -613,6 +704,7 @@ const MagneticButton = ({ children, primary, onClick }) => {
 
   return (
     <motion.button
+      className={`hero-button ${primary ? 'hero-button-primary' : 'hero-button-secondary'}`}
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={onLeave}

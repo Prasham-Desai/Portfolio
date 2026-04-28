@@ -4,8 +4,8 @@ import { projects } from '../data/projects';
 
 const Projects = () => {
   return (
-    <section id="projects" style={{
-      padding: '130px 0',
+    <section id="projects" className="projects-section" style={{
+      padding: 'var(--section-space) 0',
       background: 'var(--color-bg)',
       position: 'relative',
     }}>
@@ -69,7 +69,7 @@ const Projects = () => {
         </motion.div>
 
         {/* ── GRID — fixed 3-col, equal card heights ── */}
-        <div style={{
+        <div className="projects-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
           gridAutoRows: '420px',   /* same as CARD_HEIGHT in ProjectCard */
@@ -82,15 +82,36 @@ const Projects = () => {
       </div>
 
       <style>{`
-        @media (max-width: 1024px) {
-          #projects .container > div:last-child {
+        #projects .project-card {
+          min-width: 0;
+        }
+
+        @media (max-width: 1120px) {
+          #projects .projects-grid {
             grid-template-columns: repeat(2, 1fr) !important;
           }
         }
-        @media (max-width: 640px) {
-          #projects .container > div:last-child {
+
+        @media (max-width: 720px) {
+          #projects .projects-grid {
             grid-template-columns: 1fr !important;
             grid-auto-rows: auto !important;
+          }
+
+          #projects .project-card {
+            height: auto !important;
+          }
+
+          #projects .project-card-thumb {
+            height: 212px !important;
+          }
+
+          #projects .project-card-body {
+            padding: 18px 18px 20px !important;
+          }
+
+          #projects .container > div:first-child {
+            margin-bottom: 44px !important;
           }
         }
       `}</style>

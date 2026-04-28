@@ -38,8 +38,9 @@ const Experience = () => {
   return (
     <section
       id="experience"
+      className="experience-section"
       style={{
-        padding: '120px 0',
+        padding: 'var(--section-space) 0',
         background: 'var(--color-bg)',
         position: 'relative',
         overflow: 'hidden',
@@ -106,6 +107,7 @@ const Experience = () => {
         </motion.div>
 
         <div
+          className="experience-layout"
           style={{
             display: 'grid',
             gridTemplateColumns: '0.9fr 1.4fr',
@@ -185,7 +187,7 @@ const Experience = () => {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="experience-facts" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               {companyFacts.map((item, index) => (
                 <motion.div
                   key={item.label}
@@ -228,8 +230,9 @@ const Experience = () => {
             </div>
           </motion.div>
 
-          <div style={{ position: 'relative', paddingLeft: 32 }}>
+          <div className="experience-timeline" style={{ position: 'relative', paddingLeft: 32 }}>
             <div
+              className="experience-line"
               style={{
                 position: 'absolute',
                 left: 8,
@@ -242,6 +245,7 @@ const Experience = () => {
             />
             {experienceItems.map((item, index) => (
               <motion.div
+                className="experience-card"
                 key={`${item.role}-${item.period}`}
                 initial={{ opacity: 0, x: 28, filter: 'blur(6px)' }}
                 whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
@@ -259,6 +263,7 @@ const Experience = () => {
                 }}
               >
                 <div
+                  className="experience-dot"
                   style={{
                     position: 'absolute',
                     left: -32,
@@ -406,9 +411,36 @@ const Experience = () => {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          #experience > .container > div:last-child {
+        @media (max-width: 980px) {
+          #experience .experience-layout {
             grid-template-columns: 1fr !important;
+          }
+        }
+
+        @media (max-width: 720px) {
+          #experience .experience-timeline {
+            padding-left: 22px !important;
+          }
+
+          #experience .experience-line {
+            left: 0 !important;
+          }
+
+          #experience .experience-dot {
+            left: -22px !important;
+            top: 26px !important;
+            width: 14px !important;
+            height: 14px !important;
+          }
+        }
+
+        @media (max-width: 560px) {
+          #experience .experience-facts {
+            grid-template-columns: 1fr !important;
+          }
+
+          #experience .experience-card {
+            padding: 22px 18px !important;
           }
         }
       `}</style>

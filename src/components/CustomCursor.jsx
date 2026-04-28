@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 const CustomCursor = () => {
+  const [enabled, setEnabled] = useState(false);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
@@ -10,13 +11,27 @@ const CustomCursor = () => {
   const ringY = useSpring(mouseY, { damping: 28, stiffness: 220, mass: 0.35 });
 
   useEffect(() => {
+    const media = window.matchMedia('(pointer: fine) and (hover: hover)');
+    const updateEnabled = () => setEnabled(media.matches);
+
+    updateEnabled();
+    media.addEventListener('change', updateEnabled);
+
+    return () => media.removeEventListener('change', updateEnabled);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return undefined;
+
     const move = (e) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
     window.addEventListener('mousemove', move, { passive: true });
     return () => window.removeEventListener('mousemove', move);
-  }, [mouseX, mouseY]);
+  }, [enabled, mouseX, mouseY]);
+
+  if (!enabled) return null;
 
   return (
     <>

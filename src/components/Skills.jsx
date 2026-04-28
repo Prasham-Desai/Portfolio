@@ -100,8 +100,8 @@ const Skills = () => {
   const currentGroup = skillGroups.find(g => g.id === activeGroup) || skillGroups[0];
 
   return (
-    <section id="skills" ref={ref} style={{
-      padding: '120px 0',
+    <section id="skills" ref={ref} className="skills-section" style={{
+      padding: 'var(--section-space) 0',
       background: 'var(--color-bg)',
       position: 'relative',
       overflow: 'hidden',
@@ -145,7 +145,7 @@ const Skills = () => {
           </h2>
         </motion.div>
 
-        <div style={{
+        <div className="skills-layout" style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1.4fr',
           gap: 48,
@@ -158,7 +158,7 @@ const Skills = () => {
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div style={{ marginBottom: 24 }}>
+            <div className="skills-node-list" style={{ marginBottom: 24 }}>
               {skillGroups.map((group, i) => (
                 <motion.button
                   key={group.id}
@@ -253,7 +253,7 @@ const Skills = () => {
             </div>
 
             {/* Quick tech tags */}
-            <div style={{
+            <div className="skills-aux-card" style={{
               padding: '20px',
               background: 'rgba(13,13,26,0.6)',
               borderRadius: 12,
@@ -301,6 +301,7 @@ const Skills = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
+                className="skills-panel"
                 style={{
                   background: 'rgba(13,13,26,0.6)',
                   border: `1px solid ${currentGroup.color}20`,
@@ -388,9 +389,32 @@ const Skills = () => {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          #skills > .container > div:last-child {
+        @media (max-width: 980px) {
+          #skills .skills-layout {
             grid-template-columns: 1fr !important;
+          }
+        }
+
+        @media (max-width: 720px) {
+          #skills .skills-node-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+          }
+
+          #skills .skills-node {
+            margin-bottom: 0 !important;
+            padding: 14px 16px !important;
+          }
+
+          #skills .skills-panel {
+            padding: 24px 20px !important;
+          }
+        }
+
+        @media (max-width: 560px) {
+          #skills .skills-node-list {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>

@@ -75,6 +75,7 @@ const ProjectCard = ({ project, index }) => {
     >
       <Link to={`/project/${project.id}`} style={{ display: 'block', height: '100%', textDecoration: 'none' }}>
         <motion.div
+          className="project-card-inner"
           style={{
             rotateX, rotateY,
             transformStyle: 'preserve-3d',
@@ -103,7 +104,7 @@ const ProjectCard = ({ project, index }) => {
           />
 
           {/* ── THUMBNAIL ── */}
-          <div style={{
+          <div className="project-card-thumb" style={{
             height: THUMB_HEIGHT,
             flexShrink: 0,
             background: project.coverColor,
@@ -188,7 +189,7 @@ const ProjectCard = ({ project, index }) => {
           </div>
 
           {/* ── BODY ── flex column, footer pinned to bottom */}
-          <div style={{
+          <div className="project-card-body" style={{
             flex: 1,
             display: 'flex',
             flexDirection: 'column',

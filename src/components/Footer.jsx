@@ -27,12 +27,12 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer style={{
+    <footer className="site-footer" style={{
       borderTop: '1px solid rgba(255,255,255,0.05)',
       padding: '40px 0',
       background: 'var(--color-bg)',
     }}>
-      <div className="container" style={{
+      <div className="container site-footer-layout" style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -59,7 +59,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div style={{
+        <div className="site-footer-pillars" style={{
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: '0.9rem',
           letterSpacing: '0.05em',
@@ -97,6 +97,20 @@ const Footer = () => {
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 767px) {
+          .site-footer-layout {
+            flex-direction: column;
+            align-items: flex-start !important;
+          }
+
+          .site-footer-pillars {
+            flex-wrap: wrap;
+            text-align: left !important;
+          }
+        }
+      `}</style>
     </footer>
   );
 };

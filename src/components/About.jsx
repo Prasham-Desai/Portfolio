@@ -40,8 +40,8 @@ const timelineItems = [
 
 const About = () => {
   return (
-    <section id="about" style={{
-      padding: '120px 0',
+    <section id="about" className="about-section" style={{
+      padding: 'var(--section-space) 0',
       background: 'var(--color-bg)',
       position: 'relative',
       overflow: 'hidden',
@@ -90,7 +90,7 @@ const About = () => {
           </h2>
         </motion.div>
 
-        <div style={{
+        <div className="about-layout" style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gap: 80,
@@ -132,7 +132,7 @@ const About = () => {
             </motion.div>
 
             {/* Credential cards */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="about-credentials" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               {[
                 { label: 'Education', value: 'BE Computer Science', sub: 'LJIET, Ahmedabad', color: '#00d4ff' },
                 { label: 'Specialty', value: 'Mobile Games', sub: 'Android & iOS', color: '#ffd700' },
@@ -279,10 +279,16 @@ const About = () => {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          #about > .container > div:last-child {
+        @media (max-width: 980px) {
+          #about .about-layout {
             grid-template-columns: 1fr !important;
             gap: 40px !important;
+          }
+        }
+
+        @media (max-width: 560px) {
+          #about .about-credentials {
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>

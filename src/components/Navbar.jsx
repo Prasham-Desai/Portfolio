@@ -111,7 +111,20 @@ const Navbar = () => {
     setMobileOpen(false);
   }, [location]);
 
+  useEffect(() => {
+    if (!mobileOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileOpen]);
+
   const handleNavClick = (href) => {
+    setMobileOpen(false);
+
     if (href.startsWith('#')) {
       const id = href.slice(1);
       scrollToSection(id);
@@ -132,6 +145,7 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
+        className="site-nav"
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
@@ -144,27 +158,23 @@ const Navbar = () => {
           transition: 'all 0.4s ease',
         }}
       >
-        <div style={{
-          margin: '16px 24px',
-          borderRadius: 12,
+        <div className="site-nav-shell" style={{
           background: scrolled ? 'rgba(8,8,15,0.92)' : 'transparent',
           backdropFilter: scrolled ? 'blur(20px)' : 'none',
           border: scrolled ? '1px solid rgba(255,255,255,0.06)' : '1px solid transparent',
           transition: 'all 0.4s ease',
-          padding: '0 28px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          height: 60,
         }}>
           {/* Logo */}
           <Link to="/" onClick={handleLogoClick} style={{ textDecoration: 'none' }}>
             <motion.div
+              className="site-nav-logo"
               whileHover={{ scale: 1.02 }}
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
                 fontWeight: 700,
-                fontSize: '2.75rem',
                 letterSpacing: '-0.01em',
                 color: '#f0f0f8',
                 cursor: 'pointer',
@@ -205,6 +215,7 @@ const Navbar = () => {
             })}
 
             <motion.a
+              className="site-nav-cta"
               href="mailto:prashamdesai9114@gmail.com"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -213,10 +224,8 @@ const Navbar = () => {
                 fontSize: '0.95rem',
                 fontWeight: 600,
                 color: '#00d4ff',
-                padding: '8px 22px',
                 borderRadius: 8,
                 border: '1px solid rgba(0,212,255,0.3)',
-                marginLeft: 8,
                 transition: 'all 0.2s ease',
                 display: 'flex',
                 alignItems: 'center',
@@ -266,6 +275,7 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            className="mobile-menu-panel"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -301,14 +311,63 @@ const Navbar = () => {
                 {link.label}
               </motion.button>
             ))}
+            <motion.a
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: navLinks.length * 0.08 }}
+              href="mailto:prashamdesai9114@gmail.com"
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: '1rem',
+                fontWeight: 600,
+                color: '#00d4ff',
+                padding: '12px 22px',
+                borderRadius: 999,
+                border: '1px solid rgba(0,212,255,0.28)',
+              }}
+            >
+              Hire Me
+            </motion.a>
           </motion.div>
         )}
       </AnimatePresence>
 
       <style>{`
-        @media (max-width: 768px) {
+        .site-nav-shell {
+          margin: clamp(12px, 2.4vw, 16px) clamp(16px, 2.8vw, 24px);
+          padding: 0 clamp(18px, 2.4vw, 28px);
+          min-height: clamp(60px, 6vw, 64px);
+          border-radius: 12px;
+        }
+
+        .site-nav-logo {
+          font-size: clamp(2rem, 4vw, 2.75rem);
+        }
+
+        .site-nav-cta {
+          padding: 8px clamp(16px, 2vw, 22px);
+          margin-left: clamp(4px, 1vw, 8px);
+        }
+
+        @media (max-width: 1080px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
+        }
+
+        @media (max-width: 767px) {
+          .site-nav-shell {
+            padding: 0 16px;
+            min-height: 58px;
+          }
+
+          .mobile-menu-panel {
+            padding: 96px 24px 40px;
+            gap: 24px !important;
+          }
+
+          .mobile-menu-panel button {
+            font-size: clamp(1.55rem, 8vw, 2rem) !important;
+          }
         }
       `}</style>
     </>

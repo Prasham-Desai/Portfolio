@@ -95,8 +95,8 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" style={{
-      padding: '120px 0',
+    <section id="contact" className="contact-section" style={{
+      padding: 'var(--section-space) 0',
       background: 'var(--color-bg)',
       position: 'relative',
       overflow: 'hidden',
@@ -156,7 +156,7 @@ const Contact = () => {
           </p>
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 48, alignItems: 'start' }}>
+        <div className="contact-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 48, alignItems: 'start' }}>
           <motion.div
             initial={{ opacity: 0, x: -28, filter: 'blur(6px)' }}
             whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
@@ -252,7 +252,7 @@ const Contact = () => {
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div style={{
+            <div className="contact-form-card" style={{
               background: 'rgba(17,17,32,0.7)',
               border: '1px solid rgba(255,255,255,0.06)',
               borderRadius: 16,
@@ -326,7 +326,7 @@ const Contact = () => {
                     exit={{ opacity: 0 }}
                     onSubmit={handleSubmit}
                   >
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 16px' }}>
+                    <div className="contact-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 16px' }}>
                       <InputField
                         label="Name"
                         value={form.name}
@@ -406,12 +406,19 @@ const Contact = () => {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          #contact > .container > div:last-child {
+        @media (max-width: 980px) {
+          #contact .contact-layout {
             grid-template-columns: 1fr !important;
           }
-          #contact form > div:first-child {
+        }
+
+        @media (max-width: 720px) {
+          #contact .contact-form-grid {
             grid-template-columns: 1fr !important;
+          }
+
+          #contact .contact-form-card {
+            padding: 24px 20px !important;
           }
         }
         #contact input::placeholder, #contact textarea::placeholder {

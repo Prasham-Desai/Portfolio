@@ -65,7 +65,7 @@ const getCaseStudyBanner = (project) => {
 };
 
 const StickyLabel = ({ children, color }) => (
-  <div style={{
+  <div className="project-detail-sticky-label" style={{
     position: 'sticky',
     top: 100,
     fontFamily: "'JetBrains Mono', monospace",
@@ -168,11 +168,12 @@ const ProjectDetail = () => {
   const associatedWith = project.associatedWith || defaultAssociation;
 
   return (
-    <div style={{ background: 'var(--color-bg)', minHeight: '100vh' }}>
+    <div className="project-detail-page" style={{ background: 'var(--color-bg)', minHeight: '100vh' }}>
       {/* Hero Section */}
       <section
         id="hero"
         ref={heroRef}
+        className="project-detail-hero"
         style={{
           minHeight: '70vh',
           position: 'relative',
@@ -225,7 +226,7 @@ const ProjectDetail = () => {
         <motion.div
           style={{ opacity: heroOpacity, position: 'relative', zIndex: 2, width: '100%' }}
         >
-          <div className="container" style={{ padding: '0 24px 64px' }}>
+          <div className="container project-detail-hero-content" style={{ padding: '0 24px 64px' }}>
             {/* Back button */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -277,7 +278,7 @@ const ProjectDetail = () => {
             </motion.div>
 
             {/* Title + icon */}
-            <div style={{
+            <div className="project-detail-hero-head" style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
@@ -311,6 +312,7 @@ const ProjectDetail = () => {
                   initial={{ opacity: 0, y: 20, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ delay: 0.48, duration: 0.5 }}
+                  className="project-detail-hero-icon"
                   style={{
                     width: 'clamp(198px, 21vw, 264px)',
                     height: 'clamp(198px, 21vw, 264px)',
@@ -368,9 +370,9 @@ const ProjectDetail = () => {
       </section>
 
       {/* Content Sections */}
-      <div className="container" style={{ paddingTop: 80, paddingBottom: 120 }}>
+      <div className="container project-detail-content" style={{ paddingTop: 80, paddingBottom: 120 }}>
         {/* Overview + Problem/Goal */}
-        <div id="overview" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+        <div id="overview" className="project-detail-section" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={project.accentColor}>Overview</StickyLabel>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -388,7 +390,7 @@ const ProjectDetail = () => {
               {project.overview}
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            <div className="project-detail-problem-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
               <div style={{
                 padding: '24px',
                 background: 'rgba(17,17,32,0.7)',
@@ -426,7 +428,7 @@ const ProjectDetail = () => {
         <SectionDivider color={`${project.accentColor}20`} />
 
         {/* Gameplay Systems */}
-        <div id="systems" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+        <div id="systems" className="project-detail-section" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={project.accentColor}>Systems</StickyLabel>
           <div>
             <motion.h2
@@ -445,7 +447,7 @@ const ProjectDetail = () => {
               Gameplay Systems Built
             </motion.h2>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className="project-detail-systems-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               {project.systems.map((system, i) => (
                 <motion.div
                   key={system.name}
@@ -497,14 +499,14 @@ const ProjectDetail = () => {
         <SectionDivider color="rgba(255,215,0,0.15)" />
 
         {/* Tech Stack */}
-        <div id="tech-stack" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+        <div id="tech-stack" className="project-detail-section" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={project.accentColor}>Tech Stack</StickyLabel>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
+            <div className="project-detail-tech-grid" style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
               {project.techStack.map((group, i) => (
                 <motion.div
                   key={group.category}
@@ -555,7 +557,7 @@ const ProjectDetail = () => {
         <SectionDivider color="rgba(180,79,255,0.15)" />
 
         {/* Challenges & Solutions */}
-        <div id="challenges" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+        <div id="challenges" className="project-detail-section" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={project.accentColor}>Challenges</StickyLabel>
           <div>
             <motion.h2
@@ -581,6 +583,7 @@ const ProjectDetail = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }}
+                className="project-detail-challenge-card"
                 style={{
                   display: 'grid',
                   gridTemplateColumns: '1fr 1fr',
@@ -620,14 +623,14 @@ const ProjectDetail = () => {
         <SectionDivider color="rgba(0,255,136,0.1)" />
 
         {/* Features */}
-        <div id="features" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+        <div id="features" className="project-detail-section" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={project.accentColor}>Features</StickyLabel>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+            <div className="project-detail-features-grid" style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
               {project.features.map((feature, i) => (
                 <motion.div
                   key={feature}
@@ -661,7 +664,7 @@ const ProjectDetail = () => {
         </div>
 
         {/* Visual Showcase */}
-        <div id="gallery" style={{ display: 'grid', gridTemplateColumns: '200px minmax(0, 1fr)', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+        <div id="gallery" className="project-detail-section project-detail-gallery" style={{ display: 'grid', gridTemplateColumns: '200px minmax(0, 1fr)', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={project.accentColor}>Gallery</StickyLabel>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -672,7 +675,7 @@ const ProjectDetail = () => {
             {projectScreenshots.length > 0 ? (
               <>
                 <div style={{ position: 'relative' }}>
-                  <div style={{
+                  <div className="project-detail-gallery-head" style={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -733,6 +736,7 @@ const ProjectDetail = () => {
 
                   <div style={{ position: 'relative', width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
                     <div
+                      className="project-detail-carousel"
                       ref={carouselRef}
                       tabIndex={0}
                       style={{
@@ -753,15 +757,18 @@ const ProjectDetail = () => {
                         const orientation = imageOrientation[src] || 'landscape';
                         // Landscape: 16:9 (605×340) so 1920×1080/736×414 sources fit without cropping.
                         // Portrait: 9:16-ish (220×340) for phone screenshots.
-                        const cardWidth = orientation === 'portrait' ? 220 : 605;
+                        const cardWidth = orientation === 'portrait'
+                          ? 'min(220px, 44vw)'
+                          : 'min(605px, 82vw)';
 
                         return (
                           <motion.div
+                            className={`project-detail-shot ${orientation}`}
                             key={`${project.id}-${i}`}
                             whileHover={{ y: -3, borderColor: `${project.accentColor}55` }}
                             style={{
                               width: cardWidth,
-                              height: 340,
+                              aspectRatio: orientation === 'portrait' ? '9 / 16' : '16 / 9',
                               flex: '0 0 auto',
                               borderRadius: 14,
                               border: '1px solid rgba(255,255,255,0.08)',
@@ -817,7 +824,7 @@ const ProjectDetail = () => {
         <SectionDivider color={`${project.accentColor}15`} />
 
         {/* Outcome & Learnings */}
-        <div id="outcome" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+        <div id="outcome" className="project-detail-section" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={project.accentColor}>Outcome</StickyLabel>
           <div>
             <motion.div
@@ -866,7 +873,7 @@ const ProjectDetail = () => {
 
         <SectionDivider color={`${associatedWith.color || project.accentColor}18`} />
 
-        <div id="associated-with" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
+        <div id="associated-with" className="project-detail-section" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={associatedWith.color || project.accentColor}>Associated With</StickyLabel>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -933,6 +940,7 @@ const ProjectDetail = () => {
           </div>
           <Link to={`/project/${nextProject.id}`} style={{ textDecoration: 'none' }}>
             <motion.div
+              className="project-detail-next-card"
               whileHover={{ x: 8 }}
               style={{
                 display: 'flex',
@@ -976,13 +984,101 @@ const ProjectDetail = () => {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          .container > div[style*="gridTemplateColumns: 200px"] {
-            display: block !important;
+        .project-detail-carousel::-webkit-scrollbar {
+          height: 6px;
+        }
+
+        @media (max-width: 1100px) {
+          .project-detail-section {
+            grid-template-columns: 1fr !important;
+            gap: 22px !important;
           }
-          .container > div[style*="gridTemplateColumns: 200px"] > div:first-child {
+
+          .project-detail-sticky-label {
             position: static !important;
-            margin-bottom: 16px !important;
+            margin-bottom: 0 !important;
+          }
+
+          .project-detail-hero-content {
+            padding-bottom: 56px !important;
+          }
+        }
+
+        @media (max-width: 900px) {
+          .project-detail-hero-head {
+            align-items: flex-start !important;
+            gap: 12px !important;
+          }
+
+          .project-detail-hero-icon {
+            margin-right: 0 !important;
+          }
+
+          .project-detail-problem-grid,
+          .project-detail-systems-grid,
+          .project-detail-challenge-card {
+            grid-template-columns: 1fr !important;
+          }
+        }
+
+        @media (max-width: 767px) {
+          .project-detail-hero-content {
+            padding: 0 0 48px !important;
+          }
+
+          .project-detail-content {
+            padding-top: 56px !important;
+            padding-bottom: 88px !important;
+          }
+
+          .project-detail-gallery-head {
+            gap: 12px;
+            flex-wrap: wrap;
+          }
+
+          .project-detail-carousel {
+            gap: 10px !important;
+            mask-image: none !important;
+            -webkit-mask-image: none !important;
+          }
+
+          .project-detail-shot.landscape {
+            width: min(88vw, 520px) !important;
+          }
+
+          .project-detail-shot.portrait {
+            width: min(48vw, 220px) !important;
+          }
+
+          .project-detail-next-card {
+            padding: 22px 20px !important;
+          }
+        }
+
+        @media (max-width: 560px) {
+          .project-detail-hero-head {
+            flex-direction: column;
+          }
+
+          .project-detail-hero-icon {
+            width: 140px !important;
+            height: 140px !important;
+            border-radius: 32px !important;
+          }
+
+          .project-detail-tech-grid > div,
+          .project-detail-features-grid > div {
+            width: 100%;
+          }
+
+          .project-detail-shot.landscape,
+          .project-detail-shot.portrait {
+            width: 100% !important;
+          }
+
+          .project-detail-next-card {
+            flex-direction: column;
+            align-items: flex-start !important;
           }
         }
       `}</style>
