@@ -182,6 +182,7 @@ const Contact = () => {
                   background: 'rgba(13,13,26,0.6)',
                   border: '1px solid rgba(255,255,255,0.05)',
                   borderRadius: 12,
+                  boxShadow: `inset 2px 0 0 ${item.color}55`,
                   marginBottom: 12,
                   textDecoration: 'none',
                   transition: 'all 0.25s ease',
@@ -231,6 +232,7 @@ const Contact = () => {
               background: 'rgba(0,212,255,0.04)',
               borderRadius: 12,
               border: '1px solid rgba(0,212,255,0.1)',
+              boxShadow: 'inset 2px 0 0 rgba(0,212,255,0.45)',
             }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: '#00d4ff', letterSpacing: '0.1em', marginBottom: 4 }}>
                 LOCATION
@@ -255,6 +257,7 @@ const Contact = () => {
               border: '1px solid rgba(255,255,255,0.06)',
               borderRadius: 16,
               padding: 32,
+              boxShadow: 'inset 2px 0 0 rgba(0,212,255,0.35)',
             }}>
               <AnimatePresence mode="wait">
                 {status === 'sent' ? (
