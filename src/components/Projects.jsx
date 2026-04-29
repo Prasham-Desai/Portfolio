@@ -96,6 +96,7 @@ const Projects = () => {
           #projects .projects-grid {
             grid-template-columns: 1fr !important;
             grid-auto-rows: auto !important;
+            gap: 18px !important;
           }
 
           #projects .project-card {
@@ -103,15 +104,25 @@ const Projects = () => {
           }
 
           #projects .project-card-thumb {
-            height: 212px !important;
+            height: 200px !important;
           }
 
           #projects .project-card-body {
-            padding: 18px 18px 20px !important;
+            padding: 16px 18px 18px !important;
           }
 
           #projects .container > div:first-child {
-            margin-bottom: 44px !important;
+            margin-bottom: 40px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          #projects .project-card-thumb {
+            height: 172px !important;
+          }
+
+          #projects .project-card-body {
+            padding: 14px 16px 16px !important;
           }
         }
       `}</style>

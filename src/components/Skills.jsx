@@ -106,15 +106,6 @@ const Skills = () => {
       position: 'relative',
       overflow: 'hidden',
     }}>
-      {/* Background grid */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: 'linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px)',
-        backgroundSize: '60px 60px',
-        pointerEvents: 'none',
-      }} />
-
       <div className="container" style={{ position: 'relative' }}>
         {/* Header */}
         <motion.div
@@ -397,24 +388,42 @@ const Skills = () => {
 
         @media (max-width: 720px) {
           #skills .skills-node-list {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px;
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+          }
+          #skills .skills-node-list::-webkit-scrollbar {
+            display: none;
           }
 
-          #skills .skills-node {
+          #skills .skill-node {
             margin-bottom: 0 !important;
-            padding: 14px 16px !important;
+            padding: 12px 16px !important;
+            flex-shrink: 0;
+            min-width: 150px;
           }
 
           #skills .skills-panel {
-            padding: 24px 20px !important;
+            padding: 22px 18px !important;
+          }
+
+          #skills .skills-aux-card {
+            margin-top: 16px;
           }
         }
 
-        @media (max-width: 560px) {
-          #skills .skills-node-list {
-            grid-template-columns: 1fr;
+        @media (max-width: 480px) {
+          #skills .skill-node {
+            min-width: 130px;
+            padding: 10px 14px !important;
+          }
+
+          #skills .skills-panel {
+            padding: 18px 14px !important;
+            border-radius: 12px !important;
           }
         }
       `}</style>

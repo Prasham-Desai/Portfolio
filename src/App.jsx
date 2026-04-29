@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -13,17 +13,12 @@ import './styles/globals.css';
 
 const PageTransition = ({ children }) => {
   const location = useLocation();
-  const firstRenderRef = useRef(true);
-
-  useEffect(() => {
-    firstRenderRef.current = false;
-  }, []);
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode="wait">
       <motion.div
         key={location.pathname}
-        initial={firstRenderRef.current ? false : { opacity: 0, y: 24, filter: 'blur(6px)' }}
+        initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         exit={{ opacity: 0, y: -12, filter: 'blur(4px)' }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
@@ -58,7 +53,9 @@ const App = () => {
     <BrowserRouter>
       <CustomCursor />
       {!loaded && <LoadingScreen onComplete={() => setLoaded(true)} />}
-      {loaded && <AppContent />}
+      {/* Key forces complete remount after loading screen, so IntersectionObserver
+          triggers cleanly on first visit (fixes whileInView / useInView not firing). */}
+      {loaded && <AppContent key="app-loaded" />}
     </BrowserRouter>
   );
 };

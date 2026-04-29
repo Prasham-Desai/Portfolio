@@ -301,12 +301,12 @@ const Navbar = () => {
         .site-nav-shell {
           margin: clamp(12px, 2.4vw, 16px) clamp(16px, 2.8vw, 24px);
           padding: 0 clamp(18px, 2.4vw, 28px);
-          min-height: clamp(60px, 6vw, 64px);
+          min-height: clamp(56px, 6vw, 64px);
           border-radius: 12px;
         }
 
         .site-nav-logo {
-          font-size: clamp(2rem, 4vw, 2.75rem);
+          font-size: clamp(1.8rem, 4vw, 2.75rem);
         }
 
         .site-nav-cta {
@@ -321,17 +321,40 @@ const Navbar = () => {
 
         @media (max-width: 767px) {
           .site-nav-shell {
-            padding: 0 16px;
-            min-height: 58px;
+            padding: 0 14px;
+            min-height: 54px;
+            margin: 10px 12px;
           }
 
           .mobile-menu-panel {
-            padding: 96px 24px 40px;
-            gap: 24px !important;
+            padding: 88px 24px 40px;
+            gap: 22px !important;
           }
 
           .mobile-menu-panel button {
-            font-size: clamp(1.55rem, 8vw, 2rem) !important;
+            font-size: clamp(1.4rem, 7vw, 1.8rem) !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .site-nav-shell {
+            padding: 0 12px;
+            min-height: 50px;
+            margin: 8px 10px;
+            border-radius: 10px;
+          }
+
+          .site-nav-logo {
+            font-size: 1.6rem !important;
+          }
+
+          .mobile-menu-panel {
+            padding: 80px 20px 32px;
+            gap: 18px !important;
+          }
+
+          .mobile-menu-panel button {
+            font-size: clamp(1.2rem, 6vw, 1.5rem) !important;
           }
         }
       `}</style>

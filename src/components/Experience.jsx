@@ -432,6 +432,15 @@ const Experience = () => {
             width: 14px !important;
             height: 14px !important;
           }
+
+          #experience .experience-card > div:first-child {
+            flex-direction: column;
+            gap: 12px !important;
+          }
+
+          #experience .experience-card > div:first-child > div:last-child {
+            text-align: left !important;
+          }
         }
 
         @media (max-width: 560px) {
@@ -440,7 +449,13 @@ const Experience = () => {
           }
 
           #experience .experience-card {
-            padding: 22px 18px !important;
+            padding: 20px 16px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          #experience .experience-card > div > div > p {
+            font-size: 0.88rem !important;
           }
         }
       `}</style>

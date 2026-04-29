@@ -286,7 +286,7 @@ const Hero = () => {
         /* ── 1180px: slightly tighter ── */
         @media (max-width: 1180px) {
           .home-hero .hero-grid {
-            gap: 36px !important;
+            gap: 28px !important;
           }
           .home-hero .hero-tagline-wrap {
             min-height: 64px !important;
@@ -307,19 +307,24 @@ const Hero = () => {
         @media (max-width: 900px) {
           .home-hero .hero-grid {
             grid-template-columns: 1fr !important;
-            gap: 40px !important;
+            gap: 36px !important;
           }
           .home-hero .hero-copy {
             text-align: left;
           }
           .home-hero .hero-visual {
-            max-width: min(520px, 100%);
+            max-width: min(480px, 100%);
             width: 100%;
             margin: 0 auto;
             justify-content: center !important;
           }
           .home-hero .hero-tagline-wrap {
-            min-height: 68px !important;
+            min-height: 52px !important;
+          }
+          .home-hero .hero-tagline {
+            white-space: normal !important;
+            max-width: 100%;
+            line-height: 1.4 !important;
           }
           .home-hero .hero-shape,
           .home-hero .hero-drag-hint {
@@ -332,73 +337,84 @@ const Hero = () => {
           .home-hero .hero-title {
             font-size: clamp(2.6rem, 11vw, 3.4rem) !important;
             line-height: 0.95 !important;
-            margin-bottom: 20px !important;
+            margin-bottom: 18px !important;
           }
           .home-hero .hero-tagline-wrap {
-            min-height: 84px !important;
-            margin-bottom: 28px !important;
+            min-height: 48px !important;
+            margin-bottom: 24px !important;
           }
           .home-hero .hero-tagline {
             white-space: normal !important;
             line-height: 1.45 !important;
-            font-size: 1rem !important;
+            font-size: 0.95rem !important;
+            position: relative !important;
           }
           .home-hero .hero-stats {
-            display: grid !important;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 18px 12px !important;
-            margin-bottom: 34px !important;
+            display: flex !important;
+            flex-wrap: wrap;
+            gap: 20px 28px !important;
+            margin-bottom: 30px !important;
           }
           .home-hero .hero-actions {
             flex-wrap: wrap;
           }
           .home-hero .hero-actions > * {
-            width: 100%;
+            flex: 1 1 auto;
+            min-width: 140px;
           }
           .home-hero .hero-button {
-            padding: 15px 22px !important;
+            padding: 14px 22px !important;
           }
           .home-hero .hero-portrait-card {
-            padding: 20px !important;
-            border-radius: 24px !important;
+            padding: 18px !important;
+            border-radius: 22px !important;
           }
           .home-hero .hero-identity-strip {
-            flex-direction: column;
-            align-items: flex-start !important;
-            gap: 10px;
+            flex-direction: row;
+            align-items: center !important;
+            gap: 12px;
+            flex-wrap: wrap;
+          }
+          .home-hero .hero-visual {
+            max-width: 100%;
           }
         }
 
         /* ── 560px ── */
         @media (max-width: 560px) {
-          .home-hero .hero-stats {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+          .home-hero .hero-title {
+            font-size: clamp(2.2rem, 12vw, 3rem) !important;
           }
           .home-hero .hero-visual {
             max-width: 100%;
           }
-          .home-hero .hero-stat:last-child {
-            grid-column: 1 / -1;
-          }
           .home-hero .hero-actions {
             gap: 10px !important;
+          }
+          .home-hero .hero-actions > * {
+            width: 100%;
+            flex: unset;
           }
           .home-hero .hero-button {
             width: 100%;
           }
         }
 
-        /* ── 420px ── */
+        /* ── 420px: very small phones ── */
         @media (max-width: 420px) {
+          .home-hero .hero-title {
+            font-size: clamp(2rem, 13vw, 2.6rem) !important;
+            margin-bottom: 14px !important;
+          }
           .home-hero .hero-tagline-wrap {
-            min-height: 102px !important;
+            min-height: 56px !important;
           }
           .home-hero .hero-stats {
-            grid-template-columns: 1fr;
-            gap: 14px !important;
+            gap: 16px 24px !important;
           }
-          .home-hero .hero-stat:last-child {
-            grid-column: auto;
+          .home-hero .hero-portrait-card {
+            padding: 14px !important;
+            border-radius: 18px !important;
           }
         }
       `}</style>

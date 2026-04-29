@@ -421,7 +421,20 @@ const Contact = () => {
             padding: 24px 20px !important;
           }
         }
-        #contact input::placeholder, #contact textarea::placeholder {
+
+        @media (max-width: 480px) {
+          #contact .contact-form-card {
+            padding: 20px 16px !important;
+            border-radius: 12px !important;
+          }
+
+          #contact .contact-layout > div:first-child a {
+            padding: 14px 16px !important;
+          }
+        }
+
+        #contact input::placeholder,
+        #contact textarea::placeholder {
           color: #8a8aa8;
           opacity: 1;
         }

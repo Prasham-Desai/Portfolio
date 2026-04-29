@@ -1061,9 +1061,9 @@ const ProjectDetail = () => {
           }
 
           .project-detail-hero-icon {
-            width: 140px !important;
-            height: 140px !important;
-            border-radius: 32px !important;
+            width: 120px !important;
+            height: 120px !important;
+            border-radius: 28px !important;
           }
 
           .project-detail-tech-grid > div,
@@ -1079,6 +1079,27 @@ const ProjectDetail = () => {
           .project-detail-next-card {
             flex-direction: column;
             align-items: flex-start !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .project-detail-hero {
+            min-height: 55vh !important;
+          }
+
+          .project-detail-content {
+            padding-top: 40px !important;
+            padding-bottom: 64px !important;
+          }
+
+          .project-detail-section {
+            margin-bottom: 48px !important;
+          }
+
+          .project-detail-hero-icon {
+            width: 100px !important;
+            height: 100px !important;
+            border-radius: 24px !important;
           }
         }
       `}</style>

@@ -103,11 +103,22 @@ const Footer = () => {
           .site-footer-layout {
             flex-direction: column;
             align-items: flex-start !important;
+            gap: 20px !important;
           }
 
           .site-footer-pillars {
             flex-wrap: wrap;
             text-align: left !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .site-footer {
+            padding: 28px 0 !important;
+          }
+
+          .site-footer-pillars {
+            font-size: 0.8rem !important;
           }
         }
       `}</style>

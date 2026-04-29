@@ -256,6 +256,7 @@ main {
   transition: opacity 400ms, transform 400ms;
 }
 
+/* Custom cursor only on devices with fine pointers (desktops with a mouse) */
 @media (pointer: fine) {
   html,
   a,
@@ -266,6 +267,7 @@ main {
   }
 }
 
+/* Restore default cursor for touch/coarse-pointer devices */
 @media (pointer: coarse), (hover: none) {
   html,
   a,
@@ -276,14 +278,23 @@ main {
   }
 }
 
+/* ============================
+   RESPONSIVE BREAKPOINTS
+   ============================ */
 @media (max-width: 1024px) {
   :root {
-    --section-space: clamp(80px, 10vw, 110px);
-    --section-space-tight: clamp(64px, 8vw, 92px);
+    --section-space: clamp(72px, 10vw, 110px);
+    --section-space-tight: clamp(56px, 8vw, 92px);
   }
 }
 
 @media (max-width: 768px) {
+  :root {
+    --section-space: clamp(56px, 9vw, 88px);
+    --section-space-tight: clamp(48px, 7vw, 72px);
+    --container-gutter: clamp(16px, 4vw, 28px);
+  }
+
   body {
     font-size: 15px;
   }
@@ -297,5 +308,17 @@ main {
 
   .section-label::before {
     width: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --section-space: clamp(48px, 8vw, 72px);
+    --section-space-tight: clamp(40px, 6vw, 56px);
+    --container-gutter: 16px;
+  }
+
+  body {
+    font-size: 14px;
   }
 }

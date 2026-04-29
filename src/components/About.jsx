@@ -291,6 +291,17 @@ const About = () => {
             grid-template-columns: 1fr !important;
           }
         }
+
+        @media (max-width: 480px) {
+          #about .about-layout > div:first-child > div:first-child {
+            padding: 24px 20px !important;
+          }
+
+          #about .about-layout > div:last-child > div > div {
+            gap: 18px !important;
+            margin-bottom: 24px !important;
+          }
+        }
       `}</style>
     </section>
   );
