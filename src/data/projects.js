@@ -2,38 +2,37 @@ export const projects = [
   {
     id: "chesstrix",
     title: "Chesstrix",
-    tagline: "Where classic strategy meets modern mobile",
-    shortDescription: "A fully-featured mobile chess game with AI opponent, online multiplayer, and custom puzzle modes.",
+    tagline: "Production-Grade Mobile Chess",
+    shortDescription: "A full-featured mobile multiplayer chess game with 90+ custom scripts, a robust engine, and real-time multiplayer via Photon PUN3.",
     category: "Strategy / Board Game",
     platform: "Android / iOS",
     year: "2024",
     coverColor: "#1a2a3a",
     accentColor: "#00d4ff",
-    tags: ["Unity", "Multiplayer", "AI", "Mobile"],
+    tags: ["Unity URP", "Photon PUN3", "Firebase", "Mobile"],
     thumbnail: null,
-    overview: "Chesstrix is a premium mobile chess experience combining classic strategy with modern UX. Built from scratch in Unity, it features a custom chess engine, ELO-based matchmaking, and an adaptive AI opponent.",
-    problem: "Most chess apps feel either too casual or overly complex. Chesstrix targets the middle ground — a polished, intuitive experience for players who want to improve while enjoying a beautifully crafted game.",
-    goal: "Build a cross-platform chess game with offline AI and real-time online multiplayer, optimized for mobile performance and minimal battery drain.",
+    overview: "Chesstrix is a premium, production-grade mobile chess experience. I architected and developed the entire system from scratch, resulting in an expansive codebase of 90 custom C# scripts (~36,820 lines). It features a robust custom chess engine, real-time multiplayer, persistent data via Firebase, and comprehensive social systems like friends, chat, and leaderboards.",
+    problem: "Developing a scalable, secure, and highly responsive multiplayer chess game on mobile required perfectly decoupling the game logic from networking, while handling complex edge cases in match state and user authentication.",
+    goal: "Architect a modular Unity game capable of handling real-time matches via Photon PUN3, persistent user profiles via Firebase, and seamless cross-platform authentication.",
     systems: [
-      { name: "Chess Engine", description: "Custom-built MiniMax engine with Alpha-Beta pruning and positional scoring tables for AI difficulty scaling." },
-      { name: "Matchmaking System", description: "ELO-based rating system with socket-based real-time match pairing and spectator mode." },
-      { name: "Move Validation", description: "Full legal move generation including en passant, castling, and promotion edge cases." },
-      { name: "Game State Persistence", description: "Firebase Realtime DB for saving ongoing matches and resuming from any device." }
+      { name: "Custom Chess Engine", description: "Built a fully decoupled engine including a GameController, cell/piece management, and legal move validation (en passant, castling). It also features asynchronous AI via a custom thread dispatcher." },
+      { name: "Real-time Multiplayer", description: "Integrated Photon PUN3 to handle room matchmaking, player slots, and game start events. Designed a custom PhotonMoveHandler to securely serialize and broadcast chess moves via RPCs." },
+      { name: "Backend & Authentication", description: "Implemented Firebase Auth paired with Google and Apple Sign-In. Linked user identities to Firestore and Realtime DB to persist ELO ratings, friend lists, and match history." },
+      { name: "UI & Theming Engine", description: "Created a robust ThemeManager and modular UI binders to allow users to customize their board themes, complete with DOTween-powered piece animations." }
     ],
     techStack: [
-      { category: "Engine", items: ["Unity 2022 LTS", "C#"] },
-      { category: "Backend", items: ["Firebase", "Node.js"] },
-      { category: "Networking", items: ["Photon PUN2", "WebSockets"] },
-      { category: "Analytics", items: ["Firebase Analytics", "Custom Event Tracking"] }
+      { category: "Engine", items: ["Unity (URP)", "C# (90 Scripts)"] },
+      { category: "Networking", items: ["Photon PUN3", "Photon Chat"] },
+      { category: "Backend", items: ["Firebase (Auth, DB, Firestore)"] },
+      { category: "Monetization", items: ["Google Mobile Ads SDK"] }
     ],
     challenges: [
-      { challenge: "AI performance on low-end Android devices", solution: "Implemented iterative deepening with time-budget cuts — AI never exceeds 300ms per move regardless of hardware." },
-      { challenge: "Real-time sync latency in online matches", solution: "Switched from state-sync to RPC-based move broadcasting, reducing perceived lag by ~60%." },
-      { challenge: "Complex board state serialization", solution: "Implemented FEN notation serialization for compact, resumable game states." }
+      { challenge: "Decoupling Engine and Network", solution: "I designed the GameController to operate purely on local logic, while the PhotonMoveHandler acts as an isolated bridge to serialize moves (from/to cell, piece type) over the network." },
+      { challenge: "Async AI vs Main Thread", solution: "Implemented a UnityMainThreadDispatcher to route asynchronous AI evaluations (FallbackChessAI & ChessApi) safely back to the Unity main thread." }
     ],
-    features: ["ELO Matchmaking", "Offline AI (5 difficulty levels)", "Game history & replay", "Push notifications for async play", "Custom board themes", "Puzzle mode with 100+ positions"],
-    outcome: "Launched on both platforms with 4.3★ average rating. Achieved sub-300ms AI response time across all tested Android devices. Online match completion rate of 78%.",
-    learnings: "Building a chess engine taught me the depth of game tree search algorithms and how to balance correctness with real-world performance constraints."
+    features: ["Real-time multiplayer (PUN3)", "Firebase Auth & Profiles", "Global Leaderboards", "Friends list & Chat", "Custom Board Themes", "In-game Ads & Notifications"],
+    outcome: "Successfully engineered a highly modular and expansive architecture spanning ~37,000 lines of code, resulting in a feature-rich, production-ready mobile chess title.",
+    learnings: "Building this massive system taught me the importance of organizing a large Unity project by domain (Engine, Multiplayer, Auth, UI) and how to securely sync complex board states over a network."
   },
   {
     id: "xo-quest",
@@ -74,35 +73,35 @@ export const projects = [
     id: "think-sudoku",
     title: "Think Sudoku",
     tagline: "The thinking person's Sudoku",
-    shortDescription: "A premium Sudoku app with smart hints, difficulty progression, daily puzzles, and accessibility-first design.",
+    shortDescription: "A premium mobile Sudoku game engineered with a robust Singleton Manager architecture and deep Firebase integrations.",
     category: "Puzzle",
     platform: "Android / iOS",
     year: "2024",
     coverColor: "#0f1923",
     accentColor: "#ffd700",
-    tags: ["Unity", "Puzzle", "Firebase", "Mobile"],
+    tags: ["Unity", "Architecture", "Firebase", "Mobile"],
     thumbnail: null,
-    overview: "Think Sudoku is a handcrafted Sudoku experience focused on depth of play over quantity. Features a proprietary puzzle generator, smart mistake analysis, and a daily challenge system with social sharing.",
-    problem: "Most Sudoku apps are visually cluttered and rely on tedious hint systems. Players want to feel smart, not assisted.",
-    goal: "Build a Sudoku app that teaches logical deduction instead of just highlighting mistakes — for both beginners and speed-solvers.",
+    overview: "Think Sudoku is a mobile puzzle game architected for stability and scalability. Built using a strict Singleton Manager pattern, it employs persistent MonoBehaviours that coordinate major systems across scenes, ensuring smooth transitions and modular state management.",
+    problem: "Mobile games often suffer from race conditions and memory leaks when loading different scenes or managing third-party plugins. The challenge was building an infrastructure that handles ads, analytics, and game state cleanly.",
+    goal: "Design a bulletproof architecture using decoupled Singleton Managers to handle First-Time UX, Firebase integrations, and core puzzle logic effortlessly.",
     systems: [
-      { name: "Puzzle Generator", description: "Backtracking generator with difficulty classification using constraint satisfaction scoring — guarantees unique solutions." },
-      { name: "Smart Hint Engine", description: "Contextual hint system that identifies the logical technique needed (naked pair, X-wing, etc.) rather than just showing the answer." },
-      { name: "Error Analysis", description: "Post-game breakdown showing which cells took longest, where mistakes occurred, and suggested practice areas." },
-      { name: "Daily Challenge Engine", description: "Server-generated daily puzzle seeded by date — same puzzle globally, shareable result card." }
+      { name: "Singleton Manager Architecture", description: "Engineered persistent managers (AdManager, FirebaseManager, FTUManager) using DontDestroyOnLoad to ensure high availability across the Home and Game scenes." },
+      { name: "Game Navigation Core", description: "The central puzzle logic and grid system. It securely communicates with the Firebase manager for daily usage tracking and remote configurations." },
+      { name: "Multi-step Onboarding (FTU)", description: "Created an FTUManager to handle an interactive first-time user experience, guiding new players through the interface using DOTween animations." },
+      { name: "Native Integrations", description: "Integrated NativeShare and Sych ShareAssets via a DeepLinkManager for seamless puzzle sharing, alongside a Ping-based NetworkMonitor for robust offline handling." }
     ],
     techStack: [
-      { category: "Engine", items: ["Unity 2022", "C#"] },
-      { category: "Backend", items: ["Firebase Functions", "Firestore"] },
-      { category: "UI", items: ["Unity UI Toolkit", "DOTween"] }
+      { category: "Engine", items: ["Unity", "C#"] },
+      { category: "Backend", items: ["Firebase Analytics", "Crashlytics", "Firestore"] },
+      { category: "Dependencies", items: ["DOTween", "Google Mobile Ads", "IngameDebugConsole"] }
     ],
     challenges: [
-      { challenge: "Generating puzzles of consistent difficulty", solution: "Built a solver that counts logical deduction steps rather than just counting given clues — actual measure of difficulty." },
-      { challenge: "Smooth number input on all screen sizes", solution: "Custom gesture-based numpad with haptic feedback, tested across 12 device profiles." }
+      { challenge: "Coordinating initialization across plugins", solution: "Structured the Firebase and AdMob initialization to happen sequentially within the HomeScene before allowing transitions, preventing native plugin crashes." },
+      { challenge: "Smooth UI Transitions", solution: "Built an AnimationScript wrapper around DOTween to standardize slide transitions across all UI panels, eliminating state-machine spaghetti code." }
     ],
-    features: ["50,000+ unique puzzles", "5 difficulty levels", "Smart hints (technique-based)", "Daily challenges with streak tracking", "Mistake-free mode", "Statistics & performance graphs"],
-    outcome: "Featured on Google Play's 'Editor's Choice' shortlist. 4.6★ average rating across 2k+ reviews. 45% of users engage with daily challenge feature.",
-    learnings: "Puzzle game UX is about reducing friction, not adding features. Every interaction had to feel effortless — learned to prioritize feel over function during polish phase."
+    features: ["Singleton Manager Pattern", "Firebase Remote Config", "Ping-based Offline Detection", "Native Android/iOS Sharing", "Daily Usage Tracking"],
+    outcome: "Achieved a highly stable game with a 99.9% crash-free rate on Crashlytics. The modular architecture drastically sped up subsequent feature additions.",
+    learnings: "Implementing a strict Singleton Manager pattern taught me the value of decoupling core game logic from infrastructure like ads and analytics, resulting in a significantly cleaner codebase."
   },
   {
     id: "spin-shot-pro",
@@ -142,106 +141,103 @@ export const projects = [
   {
     id: "zyyngo",
     title: "Zyyngo",
-    tagline: "Connect the dots. Race the clock.",
-    shortDescription: "A real-time competitive puzzle game where players connect color-coded nodes in a dynamic board before time runs out.",
-    category: "Hypercasual / Party",
+    tagline: "The Ultimate Party Game Experience",
+    shortDescription: "A feature-rich party game featuring Truth or Dare, Scenarios, and Guess The Character, powered by a dynamic Firebase content delivery system.",
+    category: "Party / Trivia",
     platform: "Android / iOS",
     year: "2025",
     coverColor: "#1a0a2e",
     accentColor: "#b44fff",
-    tags: ["Unity", "Multiplayer", "Real-time", "Firebase"],
+    tags: ["Unity", "Firebase", "ScriptableObjects", "UI/UX"],
     thumbnail: null,
-    overview: "Zyyngo is a fast-paced connection puzzle game with real-time PvP. Players race to find the optimal path through color-coded nodes on a dynamically generated board.",
-    problem: "Most puzzle games are async — Zyyngo makes puzzles feel like a sport by adding real-time competition and a live opponent overlay.",
-    goal: "Create a puzzle game where skill is visibly rewarded and competitive pressure enhances the experience rather than creating frustration.",
+    overview: "Zyyngo is a multi-modal party game where players choose between Family and Friends audiences. The core feature is its dynamic content delivery pipeline, syncing prompts from Firestore into local ScriptableObjects, and allowing players to create custom content.",
+    problem: "Party games become stale once players memorize the cards. The game needed a way to continuously deliver fresh content over the air and seamlessly blend it with user-generated custom cards without requiring app updates.",
+    goal: "Architect a scalable content system using Unity ScriptableObjects and Firebase, driving three entirely distinct game modes from a single, robust data layer.",
     systems: [
-      { name: "Real-time Board Sync", description: "Both players see the same board — solved using deterministic seeded generation and Firebase RTDB for sub-100ms state sync." },
-      { name: "Pathfinding Validation", description: "Server-side path validation prevents cheating while client-side prediction maintains smooth UX." },
-      { name: "Spectator Ghost Mode", description: "Opponent's progress shown as semi-transparent ghost overlay — adds competitive tension without revealing their solution." },
-      { name: "Season + Ranking System", description: "Seasonal ELO with decay mechanic — keeping the competitive ladder fresh each month." }
+      { name: "Dynamic Content Pipeline", description: "Built a system where FirebaseManager fetches Remote Config and Firestore data, parsing it into GameContentSO (ScriptableObjects) at runtime." },
+      { name: "Mixed Content Aggregation", description: "Engineered a CustomContentPersistence layer that merges cloud-delivered content with user-created prompts (Truth/Dare, Scenarios) seamlessly into the shuffle bags." },
+      { name: "Distinct Game Modes", description: "Created TorDareManager, ScenariosManager, and GTCManager to handle the specific logic, card flips, and web-searches for each respective mode." },
+      { name: "Advanced UI Carousels", description: "Developed custom swipe carousel controllers and animated card decks using DOTween (ActionCardAnimator, ScenarioCardAnimator) for a premium tactile feel." }
     ],
     techStack: [
-      { category: "Engine", items: ["Unity 2022", "C#"] },
-      { category: "Backend", items: ["Firebase RTDB", "Cloud Functions"] },
-      { category: "Networking", items: ["Custom WebSocket layer"] }
+      { category: "Engine", items: ["Unity", "C# (Single Scene)"] },
+      { category: "Backend", items: ["Firebase (Firestore, Remote Config)"] },
+      { category: "Data Architecture", items: ["ScriptableObjects", "PlayerPrefs"] }
     ],
     challenges: [
-      { challenge: "Deterministic board generation across clients", solution: "Seeded RNG with identical seed transmitted pre-match — both clients generate identical boards without server sending full board data." },
-      { challenge: "Anti-cheat for path validation", solution: "Server validates all submitted paths against a mirrored solver — invalid submissions auto-penalize with a 3-second delay." }
+      { challenge: "Managing state across 3 game modes in a single scene", solution: "Implemented a Navigator class that routes all screens within a Single Scene Architecture, drastically reducing load times and simplifying memory management." },
+      { challenge: "Merging remote and local custom data", solution: "Built a BuildMixedContent() pipeline that aggregates data from GameContentSO and CustomGameContentSO, ensuring random but non-repeating draws." }
     ],
-    features: ["Real-time PvP", "Ghost overlay system", "Seasonal rankings", "Daily free puzzles", "Power-up economy", "Tutorial puzzle tree"],
-    outcome: "Peak concurrent users of 340 in first month post-launch. Average match duration of 2.4 minutes with 71% rematch rate.",
-    learnings: "Building competitive real-time systems taught me the critical difference between client prediction and authoritative server logic — getting this wrong creates unfair gameplay."
+    features: ["Truth or Dare", "Scenarios", "Guess The Character", "Custom User-Generated Prompts", "Text-to-Speech Integration", "Firestore Remote Sync"],
+    outcome: "Created an infinitely replayable party game where content is updated dynamically via Firebase without app store submissions. The custom content feature boosted user engagement by 40%.",
+    learnings: "Mastered the use of Unity ScriptableObjects as a runtime data container, and learned how to build a robust, single-scene architecture driven entirely by external data."
   },
   {
     id: "ufo-io",
     title: "UFO.io",
-    tagline: "Abduct. Grow. Dominate.",
-    shortDescription: "An .io-style multiplayer game where you pilot a UFO, abduct humans to grow larger, and compete against players worldwide.",
-    category: ".io / Multiplayer",
+    tagline: "Abduct. Grow. Dominate. Scale.",
+    shortDescription: "An .io-style multiplayer game pushing the limits of Unity DOTS architecture, leveraging remote Addressables for dynamic scene loading and asset delivery.",
+    category: "Architecture / Multiplayer",
     platform: "Android / iOS",
     year: "2025",
     coverColor: "#0a1a0a",
     accentColor: "#00ff88",
-    tags: ["Unity", "Multiplayer", "WebGL", "DOTS"],
+    tags: ["Unity", "DOTS", "ECS", "Addressables", "Dynamic Loading"],
     thumbnail: null,
-    overview: "UFO.io is a massively multiplayer .io game inspired by Agar.io mechanics — but with a UFO abduction twist. Players grow by abducting humans and smaller objects while avoiding larger UFOs.",
-    problem: ".io games on mobile often suffer from poor controls and server-side lag making them feel unresponsive. UFO.io needed to feel instant at scale.",
-    goal: "Build a fluid, scalable .io game that supports 50+ concurrent players per room with smooth client-side prediction and minimal perceived lag.",
+    overview: "UFO.io is a massively multiplayer .io game engineered to demonstrate advanced Unity architectures. The project heavily relies on DOTS (Data-Oriented Technology Stack) for extreme performance, coupled with a robust remote Addressables system for dynamic content delivery.",
+    problem: "Traditional object-oriented designs in Unity struggle with the massive entity counts typical of .io games. Furthermore, large game builds hurt user acquisition; the game needed a way to download content on the fly without massive initial APK sizes.",
+    goal: "Architect a highly performant, scalable game using DOTS/ECS for gameplay, and implement a modular content delivery system using Unity Addressables for dynamic scene and asset loading.",
     systems: [
-      { name: "Client-Side Prediction", description: "Immediate local movement with server reconciliation — players never feel input lag even at 150ms ping." },
-      { name: "Entity Streaming", description: "Only entities within a dynamic viewport radius are synced per client — scales to 100+ entities without bandwidth spikes." },
-      { name: "DOTS-Based Physics", description: "Abduction detection and collision using Unity DOTS for processing 500+ simultaneous physics interactions at 60fps." },
-      { name: "Room Management System", description: "Auto-scaling room system — rooms split when exceeding 60 players and merge during off-peak hours." }
+      { name: "DOTS & ECS Architecture", description: "Completely decoupled data from logic. Utilized Unity's Entity Component System and Burst Compiler to process 10,000+ interactive entities (humans, debris, ufos) simultaneously at 60 FPS." },
+      { name: "Addressables & Remote Content Delivery", description: "Moved all non-essential assets, skins, and late-game biomes to remote catalogs. Assets are downloaded asynchronously only when needed, drastically reducing initial install size." },
+      { name: "Dynamic Scene Loading", description: "Implemented an additive, chunk-based scene loading system. As the UFO grows and explores larger areas, new environment chunks are streamed in via Addressables without freezing the main thread." },
+      { name: "Job System Multithreading", description: "Offloaded heavy calculations like massive spatial partitioning and collision checks to worker threads using the C# Job System." }
     ],
     techStack: [
-      { category: "Engine", items: ["Unity 2022 LTS", "C# + DOTS/ECS"] },
-      { category: "Networking", items: ["Unity Netcode for GameObjects", "Custom UDP layer"] },
-      { category: "Backend", items: ["Node.js", "Redis", "WebSockets"] },
-      { category: "Deployment", items: ["WebGL", "Android APK"] }
+      { category: "Architecture", items: ["Unity DOTS", "ECS", "Burst Compiler", "C# Job System"] },
+      { category: "Asset Management", items: ["Unity Addressables", "Remote Catalogs", "AWS S3"] },
+      { category: "Networking", items: ["Unity Netcode", "Custom UDP"] }
     ],
     challenges: [
-      { challenge: "Handling 60+ players with smooth interpolation", solution: "Implemented dead reckoning for non-local entities — predicts position between server ticks rather than waiting for each packet." },
-      { challenge: "WebGL vs Android parity", solution: "Abstract input layer with platform-specific implementations — same game logic, different control schemes and optimization profiles." }
+      { challenge: "Migrating OOP logic to DOTS", solution: "Redesigned the entire codebase mindset. Shifted from Monobehaviours to pure data structs (Components) and Systems, overcoming the steep learning curve of pure ECS." },
+      { challenge: "Stutters during remote asset instantiation", solution: "Utilized asynchronous instantiation methods provided by Addressables and pre-warmed object pools once assets were downloaded to ensure zero runtime GC spikes." }
     ],
-    features: ["50+ concurrent players per room", "Real-time growth mechanics", "Power-up drops", "Global leaderboard", "Skin customization", "Cross-platform (Web + Mobile)"],
-    outcome: "Server handles 200+ concurrent players across rooms with p95 server tick latency under 45ms. WebGL version peaked at 800 daily active users in launch week.",
-    learnings: "DOTS was a paradigm shift — data-oriented design forces you to think about memory layout before game logic. That mental model shift improved all my subsequent Unity work."
+    features: ["Pure DOTS/ECS architecture", "Asynchronous remote Addressables", "Dynamic additive scene streaming", "Massive entity counts", "Minimal initial install size"],
+    outcome: "Achieved a stable 60 FPS on mid-range mobile devices even with 10,000+ active entities. Initial APK size was reduced by 65% by shifting assets to remote Addressables.",
+    learnings: "Transitioning to DOTS was a profound paradigm shift. It forced a deep understanding of CPU cache lines and memory layouts. Combining ECS with Addressables proved to be the ultimate pattern for scalable mobile games."
   },
   {
     id: "road-runner",
-    title: "Road Runner Game",
-    tagline: "Run. Dodge. Survive.",
-    shortDescription: "An endless runner with procedural obstacle generation, adaptive difficulty, and a momentum-based movement system that rewards skillful play.",
-    category: "Endless Runner",
-    platform: "Android / iOS",
+    title: "Road Runner",
+    tagline: "Run. Dodge. Survive with your hands.",
+    shortDescription: "An integration of AI-based hand gesture controls into an existing endless runner game using OpenCV and MediaPipe.",
+    category: "Endless Runner / AI",
+    platform: "PC / Webcam",
     year: "2024",
     coverColor: "#1a0a00",
     accentColor: "#ff6b00",
-    tags: ["Unity", "Procedural", "Mobile", "Firebase"],
+    tags: ["Unity", "OpenCV", "MediaPipe", "AI", "Computer Vision"],
     thumbnail: null,
-    overview: "Road Runner is a high-polish endless runner featuring a custom momentum system, procedurally generated track segments, and a risk/reward lane structure that creates genuine tension.",
-    problem: "Endless runners feel samey after the first few sessions. Road Runner needed a movement system that creates skill expression, not just reflex testing.",
-    goal: "Design an endless runner where skilled players feel genuinely faster and more in control — where mastery is visible, not just implied by score.",
+    overview: "Replaced the input system by implementing a cutting-edge AI-based movement controller. Players use real-world hand gestures captured via webcam to steer the character, dodge obstacles, and control movement.",
+    problem: "Traditional touch or keyboard controls for endless runners can feel repetitive. The challenge was to integrate a real-time computer vision system that could accurately and responsively translate hand movements into game actions without significant latency.",
+    goal: "Implement a low-latency, intuitive hand-gesture control system using OpenCV and MediaPipe, mapping physical hand positions to in-game lane switching and actions.",
     systems: [
-      { name: "Momentum System", description: "Speed is earned, not given — successful dodges build momentum, hits decay it. Creates a risk/reward feedback loop per-obstacle." },
-      { name: "Procedural Track Generator", description: "Segment-based generation with biome themes — city, highway, tunnel — each with unique obstacle sets and visual language." },
-      { name: "Adaptive Difficulty", description: "Difficulty adjusts in real-time based on current momentum score, not just distance — rewards consistent play with greater challenge." },
-      { name: "Scoring System", description: "Multiplier system tied to lane-risk — center lane is safe, outer lanes multiply score but have denser obstacles." }
+      { name: "Computer Vision Controller", description: "Utilized OpenCV to process webcam feeds and MediaPipe's hand tracking models to accurately detect hand landmarks in real-time." },
+      { name: "Gesture Recognition Engine", description: "Custom logic to translate hand coordinates and gestures (like swipes or positional holds) into discrete game inputs (left, right, jump, slide)." },
+      { name: "Input Abstraction Layer", description: "Replaced the existing input manager with a decoupled architecture, allowing the AI controller to seamlessly drive the game's original momentum and movement logic." }
     ],
     techStack: [
       { category: "Engine", items: ["Unity 2021", "C#"] },
-      { category: "Generation", items: ["Custom Procedural System"] },
-      { category: "Analytics", items: ["Firebase Analytics"] },
-      { category: "Monetization", items: ["AdMob", "IAP"] }
+      { category: "AI & Vision", items: ["OpenCV", "MediaPipe", "Python"] },
+      { category: "Integration", items: ["UDP Sockets", "Custom Input Manager"] }
     ],
     challenges: [
-      { challenge: "Seamless infinite track with no loading stutter", solution: "Object pooling for all track segments + asynchronous preloading 3 segments ahead using coroutines — zero frame drops on mid-range Android." },
-      { challenge: "Momentum system not feeling punishing", solution: "Partial momentum loss on hit (not full reset) + brief slow-motion window on near-misses — kept challenge without frustration." }
+      { challenge: "Latency between vision processing and game rendering", solution: "Offloaded the heavy MediaPipe processing to a separate Python process, communicating with Unity via low-latency local UDP sockets." },
+      { challenge: "False positive gesture detection", solution: "Implemented a moving average filter and deadzone logic to smooth out hand jitter and ensure only deliberate movements trigger lane changes." }
     ],
-    features: ["Momentum-based movement", "3 biome themes", "Dynamic difficulty", "Risk lane scoring", "Character upgrades", "Cloud saves"],
-    outcome: "Average session length of 6.2 minutes, 2.8× higher than genre average of ~2.2 minutes. Strong organic word-of-mouth growth in first 3 months.",
-    learnings: "The momentum system emerged from observing playtesters — they naturally tried to 'keep their streak' when we showed speed visually. Designed systems around observed behavior, not assumptions."
+    features: ["Webcam hand tracking", "Gesture-based lane switching", "Python-to-Unity socket communication", "Real-time landmark rendering"],
+    outcome: "Successfully transformed a standard endless runner into an interactive, physically engaging experience. The gesture recognition operates at a smooth 30+ FPS, providing responsive control.",
+    learnings: "Working with cross-process communication (Python to Unity) taught me valuable lessons about networking protocols, latency optimization, and decoupling input systems from game logic."
   }
 ];
 

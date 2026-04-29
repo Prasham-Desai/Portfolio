@@ -5,18 +5,30 @@ import { getProjectAssets } from '../data/projectAssets';
 
 const TAG_COLORS = {
   'Unity':      '#00d4ff',
+  'Unity URP':  '#00d4ff',
   'Multiplayer':'#ff6b6b',
+  'Photon PUN3':'#ff6b6b',
   'Firebase':   '#ffd700',
   'Mobile':     '#00ff88',
   'Physics':    '#b44fff',
   'DOTS':       '#00fff2',
+  'ECS':        '#ff6b6b',
+  'Addressables':'#00d4ff',
+  'Dynamic Loading':'#ffd700',
   'AdMob':      '#ff6b00',
   'WebGL':      '#00d4ff',
   'Procedural': '#ffd700',
   'AI':         '#ff6b6b',
+  'OpenCV':     '#00fff2',
+  'MediaPipe':  '#ff6b00',
+  'Computer Vision': '#b44fff',
   'Casual':     '#00ff88',
+  'Hyper-Casual':'#ff6b00',
   'Real-time':  '#b44fff',
   'Puzzle':     '#ffd700',
+  'Architecture':'#b44fff',
+  'ScriptableObjects': '#ffd700',
+  'UI/UX':      '#00ff88',
 };
 
 const CARD_HEIGHT   = 420;   // total card height — fixed for all cards
@@ -217,7 +229,7 @@ const ProjectCard = ({ project, index }) => {
               <span style={{
                 fontFamily: "'JetBrains Mono', monospace",
                 fontSize: '0.65rem',
-                color: '#333350',
+                color: project.accentColor,
               }}>
                 {project.year}
               </span>
