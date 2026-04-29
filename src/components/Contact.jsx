@@ -114,10 +114,10 @@ const Contact = () => {
 
       <div className="container" style={{ position: 'relative' }}>
         <motion.div
-          initial={{ opacity: 0, y: 60, scale: 0.96, filter: 'blur(8px)' }}
-          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           style={{ marginBottom: 64 }}
         >
           <div className="section-label">Get In Touch</div>
@@ -158,10 +158,10 @@ const Contact = () => {
 
         <div className="contact-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 48, alignItems: 'start' }}>
           <motion.div
-            initial={{ opacity: 0, x: -28, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           >
             {contactLinks.map((item, i) => (
               <motion.a
@@ -169,10 +169,10 @@ const Contact = () => {
                 href={item.href}
                 target={item.href.startsWith('http') ? '_blank' : undefined}
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
-                whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 + 0.1 }}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.1 + 0.1 }}
                 whileHover={{ x: 4, borderColor: `${item.color}40` }}
                 style={{
                   display: 'flex',
@@ -247,10 +247,10 @@ const Contact = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 28, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <div className="contact-form-card" style={{
               background: 'rgba(17,17,32,0.7)',

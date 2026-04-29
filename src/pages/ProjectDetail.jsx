@@ -256,7 +256,7 @@ const ProjectDetail = () => {
 
             {/* Category + Platform */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
               style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}
@@ -339,7 +339,7 @@ const ProjectDetail = () => {
 
             {/* Tagline */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
               style={{
@@ -375,10 +375,10 @@ const ProjectDetail = () => {
         <div id="overview" className="project-detail-section" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={project.accentColor}>Overview</StickyLabel>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.35 }}
           >
             <p style={{
               fontFamily: "'Inter', sans-serif",
@@ -432,9 +432,9 @@ const ProjectDetail = () => {
           <StickyLabel color={project.accentColor}>Systems</StickyLabel>
           <div>
             <motion.h2
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-60px' }}
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
                 fontSize: 'clamp(1.9rem, 3vw, 2.4rem)',
@@ -451,9 +451,9 @@ const ProjectDetail = () => {
               {project.systems.map((system, i) => (
                 <motion.div
                   key={system.name}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 28 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, margin: '-60px' }}
                   transition={{ delay: i * 0.1 }}
                   whileHover={{ borderColor: `${project.accentColor}40`, y: -2 }}
                   style={{
@@ -502,9 +502,9 @@ const ProjectDetail = () => {
         <div id="tech-stack" className="project-detail-section" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={project.accentColor}>Tech Stack</StickyLabel>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-60px' }}
           >
             <div className="project-detail-tech-grid" style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
               {project.techStack.map((group, i) => (
@@ -512,7 +512,7 @@ const ProjectDetail = () => {
                   key={group.category}
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, margin: '-60px' }}
                   transition={{ delay: i * 0.08 }}
                   style={{
                     padding: '16px 20px',
@@ -561,9 +561,9 @@ const ProjectDetail = () => {
           <StickyLabel color={project.accentColor}>Challenges</StickyLabel>
           <div>
             <motion.h2
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-60px' }}
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
                 fontSize: 'clamp(1.9rem, 3vw, 2.4rem)',
@@ -581,7 +581,7 @@ const ProjectDetail = () => {
                 key={i}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: '-60px' }}
                 transition={{ delay: i * 0.15 }}
                 className="project-detail-challenge-card"
                 style={{
@@ -626,9 +626,9 @@ const ProjectDetail = () => {
         <div id="features" className="project-detail-section" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={project.accentColor}>Features</StickyLabel>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-60px' }}
           >
             <div className="project-detail-features-grid" style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
               {project.features.map((feature, i) => (
@@ -636,7 +636,7 @@ const ProjectDetail = () => {
                   key={feature}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, margin: '-60px' }}
                   transition={{ delay: i * 0.06 }}
                   whileHover={{ scale: 1.04, borderColor: `${project.accentColor}50` }}
                   style={{
@@ -667,9 +667,9 @@ const ProjectDetail = () => {
         <div id="gallery" className="project-detail-section project-detail-gallery" style={{ display: 'grid', gridTemplateColumns: '200px minmax(0, 1fr)', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={project.accentColor}>Gallery</StickyLabel>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-60px' }}
             style={{ minWidth: 0 }}
           >
             {projectScreenshots.length > 0 ? (
@@ -828,9 +828,9 @@ const ProjectDetail = () => {
           <StickyLabel color={project.accentColor}>Outcome</StickyLabel>
           <div>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-60px' }}
               style={{
                 padding: '28px 32px',
                 background: `${project.accentColor}08`,
@@ -849,9 +849,9 @@ const ProjectDetail = () => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-60px' }}
               transition={{ delay: 0.2 }}
               style={{
                 padding: '28px 32px',
@@ -876,9 +876,9 @@ const ProjectDetail = () => {
         <div id="associated-with" className="project-detail-section" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, marginBottom: 80, scrollMarginTop: 112 }}>
           <StickyLabel color={associatedWith.color || project.accentColor}>Associated With</StickyLabel>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-60px' }}
             style={{
               padding: '28px 32px',
               background: 'rgba(13,13,26,0.72)',
@@ -932,7 +932,7 @@ const ProjectDetail = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: '-60px' }}
           style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: 60 }}
         >
           <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: '#444460', marginBottom: 20, letterSpacing: '0.1em' }}>

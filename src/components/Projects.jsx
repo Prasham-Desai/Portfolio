@@ -13,10 +13,10 @@ const Projects = () => {
 
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 60, scale: 0.96, filter: 'blur(8px)' }}
-          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
           style={{ marginBottom: 64 }}
         >
           <div className="section-label" style={{ fontSize: '0.8rem', marginBottom: 18 }}>
@@ -53,8 +53,8 @@ const Projects = () => {
             <motion.p
               initial={{ opacity: 0, x: 16 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: 0.1 }}
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.97rem',

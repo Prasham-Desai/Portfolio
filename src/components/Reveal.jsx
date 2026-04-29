@@ -1,18 +1,17 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
-/* Premium scroll reveal — fades, lifts, gently un-blurs as it crosses
-   into view. Uses react-intersection-observer for reliable triggering
-   on long pages. Pass `delay` to stagger siblings. */
+/* Scroll reveal — triggers early via rootMargin, animates with
+   a smooth ease that feels natural, not choppy or laggy. */
 const Reveal = ({
   children,
-  y = 48,
+  y = 32,
   x = 0,
-  scale = 0.98,
-  blur = 8,
+  scale = 1,
+  blur = 0,
   delay = 0,
-  duration = 0.9,
-  threshold = 0.15,
+  duration = 0.7,
+  threshold = 0.05,
   as = 'div',
   style,
   className,
@@ -20,20 +19,21 @@ const Reveal = ({
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold,
-    rootMargin: '0px 0px -8% 0px',
+    // Fire when element is 80px from entering the viewport
+    rootMargin: '0px 0px -80px 0px',
   });
   const MotionTag = motion[as] || motion.div;
 
   return (
     <MotionTag
       ref={ref}
-      initial={{ opacity: 0, y, x, scale, filter: `blur(${blur}px)` }}
+      initial={{ opacity: 0, y, x, scale }}
       animate={
         inView
-          ? { opacity: 1, y: 0, x: 0, scale: 1, filter: 'blur(0px)' }
-          : { opacity: 0, y, x, scale, filter: `blur(${blur}px)` }
+          ? { opacity: 1, y: 0, x: 0, scale: 1 }
+          : undefined
       }
-      transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration, delay, ease: [0.25, 0.1, 0.25, 1] }}
       style={style}
       className={className}
     >

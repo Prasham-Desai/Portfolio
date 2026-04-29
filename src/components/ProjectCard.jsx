@@ -65,10 +65,10 @@ const ProjectCard = ({ project, index }) => {
     <motion.div
       ref={cardRef}
       className="project-card"
-      initial={{ opacity: 0, y: 70, scale: 0.94, filter: 'blur(10px)' }}
-      whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.95, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       style={{ perspective: 900, height: CARD_HEIGHT }}
@@ -178,7 +178,7 @@ const ProjectCard = ({ project, index }) => {
             <motion.div
               initial={{ scaleX: 0 }}
               whileHover={{ scaleX: 1 }}
-              transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+              transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
               style={{
                 position: 'absolute', bottom: 0, left: 0, right: 0,
                 height: 2,

@@ -61,10 +61,10 @@ const Experience = () => {
 
       <div className="container" style={{ position: 'relative' }}>
         <motion.div
-          initial={{ opacity: 0, y: 60, scale: 0.96, filter: 'blur(8px)' }}
-          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           style={{ marginBottom: 64 }}
         >
           <div className="section-label">Professional Experience</div>
@@ -116,10 +116,10 @@ const Experience = () => {
           }}
         >
           <motion.div
-            initial={{ opacity: 0, x: -28, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             style={{
               background: 'rgba(17,17,32,0.7)',
               border: '1px solid rgba(255,255,255,0.06)',
@@ -191,9 +191,9 @@ const Experience = () => {
               {companyFacts.map((item, index) => (
                 <motion.div
                   key={item.label}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 28 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.1 }}
+                  viewport={{ once: true, margin: '-60px' }}
                   transition={{ duration: 0.55, delay: 0.18 + index * 0.08 }}
                   style={{
                     padding: '14px 14px',
@@ -247,10 +247,10 @@ const Experience = () => {
               <motion.div
                 className="experience-card"
                 key={`${item.role}-${item.period}`}
-                initial={{ opacity: 0, x: 28, filter: 'blur(6px)' }}
-                whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.82, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.6, delay: index * 0.07, ease: [0.25, 0.1, 0.25, 1] }}
                 whileHover={{ borderColor: `${item.color}35`, y: -2 }}
                 style={{
                   position: 'relative',

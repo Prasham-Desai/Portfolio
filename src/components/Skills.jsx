@@ -95,7 +95,7 @@ const SkillBar = ({ name, level, color, inView, delay }) => (
 
 const Skills = () => {
   const [activeGroup, setActiveGroup] = useState('core');
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
 
   const currentGroup = skillGroups.find(g => g.id === activeGroup) || skillGroups[0];
 
@@ -109,10 +109,10 @@ const Skills = () => {
       <div className="container" style={{ position: 'relative' }}>
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 60, scale: 0.96, filter: 'blur(8px)' }}
-          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           style={{ marginBottom: 64 }}
         >
           <div className="section-label">Technical Arsenal</div>
@@ -144,10 +144,10 @@ const Skills = () => {
         }}>
           {/* Left: Category selector — node map style */}
           <motion.div
-            initial={{ opacity: 0, x: -28, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <div className="skills-node-list" style={{ marginBottom: 24 }}>
               {skillGroups.map((group, i) => (
@@ -158,7 +158,7 @@ const Skills = () => {
                   whileHover={{ x: 6 }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
+                  transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.08 }}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -280,10 +280,10 @@ const Skills = () => {
 
           {/* Right: Skill bars */}
           <motion.div
-            initial={{ opacity: 0, x: 28, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <AnimatePresence mode="wait">
               <motion.div
