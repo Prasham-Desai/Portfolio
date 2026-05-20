@@ -49,14 +49,28 @@ const companyFacts = [
 const Experience = () => {
   const activeCompany = experienceItems[0];
   const isCareerBreak = activeCompany.company.toLowerCase().includes('career');
-  const displayFacts = isCareerBreak
-    ? [
-        { label: 'Status', value: 'Professional Development', color: '#ff8c00' },
-        { label: 'Focus', value: 'Unreal Engine', color: '#ff8c00' },
-        { label: 'Location', value: 'Self-directed', color: '#00d4ff' },
-        { label: 'Duration', value: activeCompany.duration, color: '#b44fff' },
-      ]
-    : companyFacts;
+  const companyCards = [
+    {
+      title: activeCompany.company,
+      subtitle: activeCompany.role,
+      status: 'Current',
+      statusColor: activeCompany.color,
+      period: activeCompany.period,
+      duration: activeCompany.duration,
+      description: 'Professional development break focused on Unreal Engine, Blueprints, and Unreal C++.',
+      highlightColor: activeCompany.color,
+    },
+    {
+      title: 'Indianic Infotech Ltd',
+      subtitle: 'Previous company',
+      status: 'Past',
+      statusColor: '#b44fff',
+      period: 'May 2025 - Apr 2026',
+      duration: '1 year',
+      description: 'Built and shipped mobile game features across the trainee and junior developer roles.',
+      highlightColor: '#00d4ff',
+    },
+  ];
 
   return (
     <section
@@ -138,147 +152,121 @@ const Experience = () => {
             alignItems: 'start',
           }}
         >
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            style={{
-              background: 'rgba(17,17,32,0.7)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              borderRadius: 18,
-              padding: 28,
-              boxShadow: 'inset 2px 0 0 rgba(0,212,255,0.45)',
-            }}
-          >
-            <div
-              style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: '0.7rem',
-                color: '#00d4ff',
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                marginBottom: 10,
-              }}
-            >
-              Company
-            </div>
-            <div
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: '1.45rem',
-                fontWeight: 700,
-                color: '#f0f0f8',
-                lineHeight: 1.2,
-                marginBottom: 12,
-              }}
-            >
-              {activeCompany.company}
-            </div>
-            <p
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: '0.95rem',
-                color: '#9090b5',
-                lineHeight: 1.8,
-                marginBottom: 20,
-              }}
-            >
-              {isCareerBreak
-                ? 'Currently on a professional development break focused on Unreal Engine (Blueprints & Unreal C++).'
-                : 'Worked across gameplay, systems, optimization, and production support for mobile game projects in an iterative studio workflow.'}
-            </p>
-
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 12,
-                marginBottom: 16,
-              }}
-            >
-              <div style={{ width: 28, height: 1, background: 'rgba(0,212,255,0.45)' }} />
-              <div
+          <div style={{ display: 'grid', gap: 16 }}>
+            {companyCards.map((card, index) => (
+              <motion.div
+                key={card.title + card.period}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.6, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
                 style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: '0.64rem',
-                  color: '#7b7ba0',
-                  letterSpacing: '0.14em',
-                  textTransform: 'uppercase',
+                  background: 'rgba(17,17,32,0.7)',
+                  border: `1px solid ${card.highlightColor}22`,
+                  borderRadius: 18,
+                  padding: 28,
+                  boxShadow: `inset 2px 0 0 ${card.highlightColor}55`,
                 }}
               >
-                Snapshot
-              </div>
-            </div>
-
-            <div className="experience-facts" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              {displayFacts.map((item, index) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, y: 28 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.55, delay: 0.18 + index * 0.08 }}
-                  style={{
-                    padding: '14px 14px',
-                    borderRadius: 12,
-                    background: 'rgba(13,13,26,0.7)',
-                    border: '1px solid rgba(255,255,255,0.05)',
-                    boxShadow: `inset 2px 0 0 ${item.color}50`,
-                  }}
-                >
-                  <div
-                    style={{
+                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, alignItems: 'flex-start', marginBottom: 16, flexWrap: 'wrap' }}>
+                  <div>
+                    <div style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: '0.62rem',
-                      color: item.color,
+                      fontSize: '0.7rem',
+                      color: card.statusColor,
+                      letterSpacing: '0.14em',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.12em',
-                      marginBottom: 6,
-                    }}
-                  >
-                    {item.label}
-                  </div>
-                  <div
-                    style={{
+                      marginBottom: 10,
+                    }}>
+                      {card.status}
+                    </div>
+                    <div style={{
                       fontFamily: "'Space Grotesk', sans-serif",
+                      fontSize: '1.45rem',
+                      fontWeight: 700,
+                      color: '#f0f0f8',
+                      lineHeight: 1.2,
+                      marginBottom: 6,
+                    }}>
+                      {card.title}
+                    </div>
+                    <div style={{
+                      fontFamily: "'Inter', sans-serif",
                       fontSize: '0.95rem',
-                      fontWeight: 600,
-                      color: '#e8e8f4',
-                    }}
-                  >
-                    {item.value}
+                      color: '#b4b4cb',
+                    }}>
+                      {card.subtitle}
+                    </div>
                   </div>
-                </motion.div>
-              ))}
-            </div>
 
-            <div style={{ marginTop: 18 }}>
-              <div style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: '0.68rem',
-                color: '#6a6a92',
-                letterSpacing: '0.1em',
-                marginBottom: 10,
-                textTransform: 'uppercase',
-              }}>
-                Previous Companies
-              </div>
-              <div style={{ display: 'grid', gap: 10 }}>
-                {experienceItems.slice(1).map((c) => (
-                  <div key={c.company + c.period} style={{
-                    padding: '10px 12px',
-                    borderRadius: 10,
-                    background: 'rgba(255,255,255,0.02)',
-                    border: '1px solid rgba(255,255,255,0.03)'
-                  }}>
-                    <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.96rem', fontWeight: 600, color: '#f0f0f8' }}>{c.company}</div>
-                    <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.84rem', color: '#9090b5' }}>{c.role} • {c.period}</div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: '0.72rem',
+                      color: card.statusColor,
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      marginBottom: 6,
+                    }}>
+                      {card.period}
+                    </div>
+                    <div style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      padding: '6px 12px',
+                      borderRadius: 999,
+                      background: `${card.statusColor}10`,
+                      border: `1px solid ${card.statusColor}24`,
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: '0.7rem',
+                      color: '#cfcfe2',
+                    }}>
+                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: card.statusColor }} />
+                      {card.duration}
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+                </div>
+
+                <p style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '0.95rem',
+                  color: '#9090b5',
+                  lineHeight: 1.8,
+                  marginBottom: 20,
+                  maxWidth: 520,
+                }}>
+                  {card.description}
+                </p>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                  {card.status === 'Current' ? (
+                    <>
+                      <div style={{ padding: '14px', borderRadius: 12, background: 'rgba(13,13,26,0.7)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: card.statusColor, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6 }}>Focus</div>
+                        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.95rem', fontWeight: 600, color: '#e8e8f4' }}>Unreal Engine</div>
+                      </div>
+                      <div style={{ padding: '14px', borderRadius: 12, background: 'rgba(13,13,26,0.7)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: '#00d4ff', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6 }}>Mode</div>
+                        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.95rem', fontWeight: 600, color: '#e8e8f4' }}>Self-directed</div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div style={{ padding: '14px', borderRadius: 12, background: 'rgba(13,13,26,0.7)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: card.statusColor, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6 }}>Roles</div>
+                        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.95rem', fontWeight: 600, color: '#e8e8f4' }}>Trainee + Junior</div>
+                      </div>
+                      <div style={{ padding: '14px', borderRadius: 12, background: 'rgba(13,13,26,0.7)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: '#00d4ff', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6 }}>Type</div>
+                        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.95rem', fontWeight: 600, color: '#e8e8f4' }}>Previous company</div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </div>
 
           <div className="experience-timeline" style={{ position: 'relative', paddingLeft: 32 }}>
             <div
