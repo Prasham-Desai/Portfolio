@@ -47,6 +47,17 @@ const companyFacts = [
 ];
 
 const Experience = () => {
+  const activeCompany = experienceItems[0];
+  const isCareerBreak = activeCompany.company.toLowerCase().includes('career');
+  const displayFacts = isCareerBreak
+    ? [
+        { label: 'Status', value: 'Professional Development', color: '#ff8c00' },
+        { label: 'Focus', value: 'Unreal Engine', color: '#ff8c00' },
+        { label: 'Location', value: 'Self-directed', color: '#00d4ff' },
+        { label: 'Duration', value: activeCompany.duration, color: '#b44fff' },
+      ]
+    : companyFacts;
+
   return (
     <section
       id="experience"
@@ -162,7 +173,7 @@ const Experience = () => {
                 marginBottom: 12,
               }}
             >
-              Indianic Infotech Ltd
+              {activeCompany.company}
             </div>
             <p
               style={{
@@ -173,8 +184,9 @@ const Experience = () => {
                 marginBottom: 20,
               }}
             >
-              Worked across gameplay, systems, optimization, and production support for mobile game projects in an
-              iterative studio workflow.
+              {isCareerBreak
+                ? 'Currently on a professional development break focused on Unreal Engine (Blueprints & Unreal C++).'
+                : 'Worked across gameplay, systems, optimization, and production support for mobile game projects in an iterative studio workflow.'}
             </p>
 
             <div
@@ -200,7 +212,7 @@ const Experience = () => {
             </div>
 
             <div className="experience-facts" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              {companyFacts.map((item, index) => (
+              {displayFacts.map((item, index) => (
                 <motion.div
                   key={item.label}
                   initial={{ opacity: 0, y: 28 }}
