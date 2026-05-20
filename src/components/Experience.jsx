@@ -2,6 +2,18 @@ import { motion } from 'framer-motion';
 
 const experienceItems = [
   {
+    company: 'Professional Development',
+    role: 'Career Break — Unreal Engine',
+    period: 'May 2026 - Present',
+    duration: 'Ongoing',
+    color: '#ff8c00',
+    responsibilities: [
+      'Focused on learning Unreal Engine using Blueprints and Unreal C++.',
+      'Built prototypes to explore gameplay systems, tools, and performance patterns in UE.',
+      'Studying engine architecture, C++ integration, and best practices for production workflows.',
+    ],
+  },
+  {
     company: 'Indianic Infotech Ltd',
     role: 'Jr Game Developer',
     period: 'Nov 2025 - Apr 2026',

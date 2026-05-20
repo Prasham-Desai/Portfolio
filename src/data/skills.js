@@ -7,6 +7,8 @@ export const skillGroups = [
     skills: [
       { name: "Unity 3D / 2D", level: 85, years: "2+" },
       { name: "C#", level: 80, years: "2+" },
+      { name: "Unreal Engine (Blueprints)", level: 45, years: "0.5+" },
+      { name: "Unreal C++", level: 40, years: "0.5+" },
       { name: "Game Architecture", level: 75, years: "2+" },
       { name: "DOTS / ECS", level: 40, years: "1+" }
     ]
@@ -63,7 +65,9 @@ export const skillGroups = [
 
 export const techLogos = [
   { name: "Unity", category: "Engine" },
+  { name: "Unreal Engine", category: "Engine" },
   { name: "C#", category: "Language" },
+  { name: "C++", category: "Language" },
   { name: "Firebase", category: "Backend" },
   { name: "Photon", category: "Networking" },
   { name: "Android", category: "Platform" },

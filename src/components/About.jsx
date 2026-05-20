@@ -124,6 +124,15 @@ const About = () => {
               <p style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.97rem',
+                color: '#c0c0d0',
+                lineHeight: 1.7,
+                marginBottom: 20,
+              }}>
+                Currently on a professional development career break (May 2026 – Present) to learn Unreal Engine — focusing on Blueprints and Unreal C++.
+              </p>
+              <p style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '0.97rem',
                 color: '#8888aa',
                 lineHeight: 1.85,
               }}>
