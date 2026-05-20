@@ -2,15 +2,15 @@ import { motion } from 'framer-motion';
 
 const experienceItems = [
   {
-    company: 'Career Break (Unreal Engine)',
-    role: 'Professional Development',
+    company: 'Professional Development',
+    role: 'Career Break — Unreal Engine',
     period: 'May 2026 - Present',
     duration: 'Ongoing',
     color: '#ff8c00',
     responsibilities: [
-      'Learning Unreal Engine (Blueprints) and Unreal C++.',
-      'Building prototypes to explore gameplay systems, tools, and performance patterns in UE.',
-      'Studying engine architecture, C++ integration, and production workflows.',
+      'Focused on learning Unreal Engine using Blueprints and Unreal C++.',
+      'Built prototypes to explore gameplay systems, tools, and performance patterns in UE.',
+      'Studying engine architecture, C++ integration, and best practices for production workflows.',
     ],
   },
   {
@@ -162,7 +162,7 @@ const Experience = () => {
                 marginBottom: 12,
               }}
             >
-              {experienceItems[0].company}
+              Indianic Infotech Ltd
             </div>
             <p
               style={{
@@ -173,9 +173,8 @@ const Experience = () => {
                 marginBottom: 20,
               }}
             >
-              {experienceItems[0].company.toLowerCase().includes('career')
-                ? 'Currently on a professional development break focused on Unreal Engine (Blueprints & Unreal C++).'
-                : 'Worked across gameplay, systems, optimization, and production support for mobile game projects in an iterative studio workflow.'}
+              Worked across gameplay, systems, optimization, and production support for mobile game projects in an
+              iterative studio workflow.
             </p>
 
             <div
