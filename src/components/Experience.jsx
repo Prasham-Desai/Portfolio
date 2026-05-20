@@ -252,6 +252,32 @@ const Experience = () => {
                 </motion.div>
               ))}
             </div>
+
+            <div style={{ marginTop: 18 }}>
+              <div style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: '0.68rem',
+                color: '#6a6a92',
+                letterSpacing: '0.1em',
+                marginBottom: 10,
+                textTransform: 'uppercase',
+              }}>
+                Previous Companies
+              </div>
+              <div style={{ display: 'grid', gap: 10 }}>
+                {experienceItems.slice(1).map((c) => (
+                  <div key={c.company + c.period} style={{
+                    padding: '10px 12px',
+                    borderRadius: 10,
+                    background: 'rgba(255,255,255,0.02)',
+                    border: '1px solid rgba(255,255,255,0.03)'
+                  }}>
+                    <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.96rem', fontWeight: 600, color: '#f0f0f8' }}>{c.company}</div>
+                    <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.84rem', color: '#9090b5' }}>{c.role} • {c.period}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </motion.div>
 
           <div className="experience-timeline" style={{ position: 'relative', paddingLeft: 32 }}>
