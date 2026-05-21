@@ -62,16 +62,25 @@ const Experience = () => {
     const isCurrent = group.isCurrent;
     const companyPeriod = isCurrent ? 'May 2026 - Present' : 'May 2025 - Apr 2026';
     const summary = isCurrent
-      ? 'Current focus: Unreal Engine, Blueprints, Unreal C++, and production-minded prototype work.'
-      : 'Built and shipped mobile game features across trainee and junior developer roles.';
-    const roleSummary = group.roles.map((role) => role.role).join(' + ');
+      ? 'Focused on Unreal Engine, Blueprints, Unreal C++, and production-minded prototype work while learning the engine from the inside out.'
+      : 'Built and shipped mobile game features across production builds, from gameplay systems to backend-connected delivery and optimization.';
+
+    const highlights = isCurrent
+      ? [
+          { label: 'Focus', value: 'Unreal prototypes' },
+          { label: 'Stack', value: 'Blueprints + C++' },
+        ]
+      : [
+          { label: 'Focus', value: 'Mobile gameplay systems' },
+          { label: 'Impact', value: 'Stable shipped builds' },
+        ];
 
     return {
       ...group,
       isCurrent,
       companyPeriod,
       summary,
-      roleSummary,
+      highlights,
       accentColor: isCurrent ? '#ff8c00' : '#00d4ff',
       borderColor: isCurrent ? '#ff8c0044' : '#00d4ff33',
       background: isCurrent
@@ -204,7 +213,7 @@ const Experience = () => {
                       fontSize: '0.95rem',
                       color: '#b4b4cb',
                     }}>
-                      {card.roleSummary}
+                      Company scope and delivery context
                     </div>
                   </div>
 
@@ -242,10 +251,45 @@ const Experience = () => {
                   fontSize: '0.95rem',
                   color: '#9090b5',
                   lineHeight: 1.8,
-                  maxWidth: 520,
+                  maxWidth: 560,
+                  marginBottom: 18,
                 }}>
                   {card.summary}
                 </p>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 12 }}>
+                  {card.highlights.map((highlight) => (
+                    <div
+                      key={highlight.label}
+                      style={{
+                        padding: '14px 16px',
+                        borderRadius: 12,
+                        background: 'rgba(13,13,26,0.68)',
+                        border: `1px solid ${card.accentColor}18`,
+                      }}
+                    >
+                      <div style={{
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontSize: '0.62rem',
+                        color: card.accentColor,
+                        letterSpacing: '0.12em',
+                        textTransform: 'uppercase',
+                        marginBottom: 6,
+                      }}>
+                        {highlight.label}
+                      </div>
+                      <div style={{
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontSize: '0.95rem',
+                        fontWeight: 600,
+                        color: '#f0f0f8',
+                        lineHeight: 1.4,
+                      }}>
+                        {highlight.value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </motion.div>
             ))}
           </div>
