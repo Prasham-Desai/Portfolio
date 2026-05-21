@@ -25,14 +25,14 @@ const timelineItems = [
   {
     year: '2025',
     title: 'Addressables & DOTS',
-    body: 'Built first game (UFO.io) with addressables and remote scene loading. Adopted DOTS/ECS architecture Started exploring AR/VR development.',
+    body: 'Built UFO.io with Addressables and remote scene loading. Adopted DOTS/ECS architecture and started exploring AR/VR and engine-level optimization.',
     color: '#ff6b6b',
     icon: '▸',
   },
   {
     year: 'Now',
     title: 'Looking Forward',
-    body: 'Focused on large-scale multiplayer architecture,   and AR/VR systems. Actively seeking studio roles.',
+    body: 'Focused on Unreal Engine Blueprints, Unreal C++, gameplay prototypes, and studio-ready production workflows while continuing to sharpen multiplayer architecture and AR/VR systems.',
     color: '#00d4ff',
     icon: '◈',
   },
@@ -119,7 +119,7 @@ const About = () => {
                 lineHeight: 1.85,
                 marginBottom: 20,
               }}>
-                Game developer with a year of hands-on experience building and deploying mobile games. I specialize in Unity (2D & 3D), gameplay systems, and performance optimization.
+                Game developer with hands-on experience building and deploying mobile games. I specialize in Unity (2D & 3D), gameplay systems, performance optimization, and backend-connected features.
               </p>
               <p style={{
                 fontFamily: "'Inter', sans-serif",
@@ -128,7 +128,7 @@ const About = () => {
                 lineHeight: 1.7,
                 marginBottom: 20,
               }}>
-                Currently on a professional development career break (May 2026 – Present) to learn Unreal Engine — focusing on Blueprints and Unreal C++.
+                Currently on a professional development career break (May 2026 – Present) to learn Unreal Engine, with a focus on Blueprints, Unreal C++, and gameplay prototype development.
               </p>
               <p style={{
                 fontFamily: "'Inter', sans-serif",
@@ -136,7 +136,7 @@ const About = () => {
                 color: '#8888aa',
                 lineHeight: 1.85,
               }}>
-                My approach: every system should be performant, every interaction should feel intentional, and every game should respect the player's time. I build with production mindset from day one.
+                My approach: every system should be performant, every interaction should feel intentional, and every game should respect the player's time. Right now I’m building Unreal prototypes, studying engine architecture, and translating everything I learned in Unity into a broader studio workflow.
               </p>
             </motion.div>
 
