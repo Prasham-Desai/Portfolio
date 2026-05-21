@@ -39,38 +39,52 @@ const experienceItems = [
   },
 ];
 
-const companyFacts = [
-  { label: 'Total Tenure', value: '1 Year', color: '#00d4ff' },
-  { label: 'Growth Path', value: 'Trainee to Junior', color: '#b44fff' },
-  { label: 'Focus', value: 'Unity Mobile Games', color: '#ff6b00' },
-  { label: 'Environment', value: 'Team Production', color: '#00ff88' },
-];
+const groupedExperience = experienceItems.reduce((groups, item) => {
+  const existingGroup = groups.find((group) => group.company === item.company);
+
+  if (existingGroup) {
+    existingGroup.roles.push(item);
+    existingGroup.isCurrent = existingGroup.isCurrent || /present/i.test(item.period);
+    return groups;
+  }
+
+  groups.push({
+    company: item.company,
+    isCurrent: /present/i.test(item.period),
+    roles: [item],
+  });
+
+  return groups;
+}, []);
 
 const Experience = () => {
-  const activeCompany = experienceItems[0];
-  const isCareerBreak = activeCompany.company.toLowerCase().includes('career');
-  const companyCards = [
-    {
-      title: activeCompany.company,
-      subtitle: activeCompany.role,
-      status: 'Current',
-      statusColor: activeCompany.color,
-      period: activeCompany.period,
-      duration: activeCompany.duration,
-      description: 'Professional development break focused on Unreal Engine, Blueprints, and Unreal C++.',
-      highlightColor: activeCompany.color,
-    },
-    {
-      title: 'Indianic Infotech Ltd',
-      subtitle: 'Previous company',
-      status: 'Past',
-      statusColor: '#b44fff',
-      period: 'May 2025 - Apr 2026',
-      duration: '1 year',
-      description: 'Built and shipped mobile game features across the trainee and junior developer roles.',
-      highlightColor: '#00d4ff',
-    },
-  ];
+  const companyCards = groupedExperience.map((group) => {
+    const isCurrent = group.isCurrent;
+    const totalRoles = group.roles.length;
+    const firstRolePeriod = group.roles[0].period.split(' - ');
+    const lastRolePeriod = group.roles[group.roles.length - 1].period.split(' - ');
+    const companyPeriod =
+      totalRoles > 1
+        ? `${lastRolePeriod[0]} - ${firstRolePeriod[1] || 'Present'}`
+        : group.roles[0].period;
+    const summary = isCurrent
+      ? 'Current company focused on active learning and production-ready Unreal Engine work.'
+      : 'Past company where I progressed across multiple game development roles.';
+
+    return {
+      ...group,
+      isCurrent,
+      totalRoles,
+      companyPeriod,
+      summary,
+      accentColor: isCurrent ? '#ff8c00' : '#00d4ff',
+      borderColor: isCurrent ? '#ff8c0044' : '#00d4ff33',
+      background: isCurrent
+        ? 'linear-gradient(135deg, rgba(255,140,0,0.12), rgba(13,13,26,0.82))'
+        : 'rgba(13,13,26,0.72)',
+      badgeLabel: isCurrent ? 'Current company' : 'Past company',
+    };
+  });
 
   return (
     <section
@@ -147,55 +161,69 @@ const Experience = () => {
           className="experience-layout"
           style={{
             display: 'grid',
-            gridTemplateColumns: '0.9fr 1.4fr',
-            gap: 44,
-            alignItems: 'start',
+            gap: 20,
+            maxWidth: 940,
+            margin: '0 auto',
           }}
         >
-          <div style={{ display: 'grid', gap: 16 }}>
-            {companyCards.map((card, index) => (
-              <motion.div
-                key={card.title + card.period}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
+          {companyCards.map((card, index) => (
+            <motion.div
+              key={card.company}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
+              whileHover={{ y: -3 }}
+              style={{
+                background: card.background,
+                border: `1px solid ${card.borderColor}`,
+                borderRadius: 22,
+                padding: 28,
+                boxShadow: card.isCurrent ? `inset 2px 0 0 ${card.accentColor}66` : 'inset 2px 0 0 rgba(0,212,255,0.3)',
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+            >
+              <div
                 style={{
-                  background: 'rgba(17,17,32,0.7)',
-                  border: `1px solid ${card.highlightColor}22`,
-                  borderRadius: 18,
-                  padding: 28,
-                  boxShadow: `inset 2px 0 0 ${card.highlightColor}55`,
+                  position: 'absolute',
+                  inset: 0,
+                  background: card.isCurrent
+                    ? 'linear-gradient(135deg, rgba(255,140,0,0.08), transparent 45%)'
+                    : 'linear-gradient(135deg, rgba(0,212,255,0.05), transparent 40%)',
+                  pointerEvents: 'none',
                 }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, alignItems: 'flex-start', marginBottom: 16, flexWrap: 'wrap' }}>
+              />
+
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, alignItems: 'flex-start', marginBottom: 18, flexWrap: 'wrap' }}>
                   <div>
                     <div style={{
                       fontFamily: "'JetBrains Mono', monospace",
                       fontSize: '0.7rem',
-                      color: card.statusColor,
+                      color: card.accentColor,
                       letterSpacing: '0.14em',
                       textTransform: 'uppercase',
                       marginBottom: 10,
                     }}>
-                      {card.status}
+                      {card.badgeLabel}
                     </div>
                     <div style={{
                       fontFamily: "'Space Grotesk', sans-serif",
-                      fontSize: '1.45rem',
+                      fontSize: '1.5rem',
                       fontWeight: 700,
                       color: '#f0f0f8',
                       lineHeight: 1.2,
                       marginBottom: 6,
                     }}>
-                      {card.title}
+                      {card.company}
                     </div>
                     <div style={{
                       fontFamily: "'Inter', sans-serif",
                       fontSize: '0.95rem',
                       color: '#b4b4cb',
                     }}>
-                      {card.subtitle}
+                      {card.totalRoles} {card.totalRoles === 1 ? 'role' : 'roles'} across {card.companyPeriod}
                     </div>
                   </div>
 
@@ -203,12 +231,12 @@ const Experience = () => {
                     <div style={{
                       fontFamily: "'JetBrains Mono', monospace",
                       fontSize: '0.72rem',
-                      color: card.statusColor,
+                      color: card.accentColor,
                       letterSpacing: '0.12em',
                       textTransform: 'uppercase',
                       marginBottom: 6,
                     }}>
-                      {card.period}
+                      {card.isCurrent ? 'Current' : 'Past'}
                     </div>
                     <div style={{
                       display: 'inline-flex',
@@ -216,14 +244,14 @@ const Experience = () => {
                       gap: 8,
                       padding: '6px 12px',
                       borderRadius: 999,
-                      background: `${card.statusColor}10`,
-                      border: `1px solid ${card.statusColor}24`,
+                      background: `${card.accentColor}12`,
+                      border: `1px solid ${card.accentColor}24`,
                       fontFamily: "'JetBrains Mono', monospace",
                       fontSize: '0.7rem',
                       color: '#cfcfe2',
                     }}>
-                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: card.statusColor }} />
-                      {card.duration}
+                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: card.accentColor }} />
+                      {card.isCurrent ? 'Active position' : 'Completed company'}
                     </div>
                   </div>
                 </div>
@@ -233,266 +261,140 @@ const Experience = () => {
                   fontSize: '0.95rem',
                   color: '#9090b5',
                   lineHeight: 1.8,
-                  marginBottom: 20,
-                  maxWidth: 520,
+                  marginBottom: 22,
+                  maxWidth: 640,
                 }}>
-                  {card.description}
+                  {card.summary}
                 </p>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  {card.status === 'Current' ? (
-                    <>
-                      <div style={{ padding: '14px', borderRadius: 12, background: 'rgba(13,13,26,0.7)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: card.statusColor, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6 }}>Focus</div>
-                        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.95rem', fontWeight: 600, color: '#e8e8f4' }}>Unreal Engine</div>
-                      </div>
-                      <div style={{ padding: '14px', borderRadius: 12, background: 'rgba(13,13,26,0.7)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: '#00d4ff', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6 }}>Mode</div>
-                        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.95rem', fontWeight: 600, color: '#e8e8f4' }}>Self-directed</div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div style={{ padding: '14px', borderRadius: 12, background: 'rgba(13,13,26,0.7)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: card.statusColor, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6 }}>Roles</div>
-                        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.95rem', fontWeight: 600, color: '#e8e8f4' }}>Trainee + Junior</div>
-                      </div>
-                      <div style={{ padding: '14px', borderRadius: 12, background: 'rgba(13,13,26,0.7)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: '#00d4ff', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 6 }}>Type</div>
-                        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.95rem', fontWeight: 600, color: '#e8e8f4' }}>Previous company</div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="experience-timeline" style={{ position: 'relative', paddingLeft: 32 }}>
-            <div
-              className="experience-line"
-              style={{
-                position: 'absolute',
-                left: 8,
-                top: 40,
-                bottom: 40,
-                width: 1,
-                background: 'linear-gradient(to bottom, rgba(0,212,255,0.24), rgba(180,79,255,0.24))',
-                pointerEvents: 'none',
-              }}
-            />
-            {experienceItems.map((item, index) => (
-              <motion.div
-                className="experience-card"
-                key={`${item.role}-${item.period}`}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, delay: index * 0.07, ease: [0.25, 0.1, 0.25, 1] }}
-                whileHover={{ borderColor: `${item.color}35`, y: -2 }}
-                style={{
-                  position: 'relative',
-                  background: 'rgba(13,13,26,0.72)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  borderRadius: 18,
-                  padding: 28,
-                  marginBottom: 18,
-                  transition: 'all 0.25s ease',
-                }}
-              >
-                <div
-                  className="experience-dot"
-                  style={{
-                    position: 'absolute',
-                    left: -32,
-                    top: 32,
-                    width: 16,
-                    height: 16,
-                    borderRadius: '50%',
-                    background: 'var(--color-bg)',
-                    border: `2px solid ${item.color}`,
-                    boxShadow: `0 0 0 4px ${item.color}14`,
-                  }}
-                />
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-start',
-                    gap: 18,
-                    marginBottom: 18,
-                    flexWrap: 'wrap',
-                  }}
-                >
-                  <div>
+                <div style={{ display: 'grid', gap: 14 }}>
+                  {card.roles.map((role) => (
                     <div
+                      key={`${role.company}-${role.role}-${role.period}`}
                       style={{
-                        fontFamily: "'Space Grotesk', sans-serif",
-                        fontSize: '1.3rem',
-                        fontWeight: 700,
-                        color: '#f0f0f8',
-                        marginBottom: 6,
-                      }}
-                    >
-                      {item.role}
-                    </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 10,
-                        marginBottom: 8,
-                      }}
-                    >
-                      <div style={{ width: 22, height: 1, background: `${item.color}55` }} />
-                      <div
-                        style={{
-                          fontFamily: "'JetBrains Mono', monospace",
-                          fontSize: '0.62rem',
-                          color: item.color,
-                          letterSpacing: '0.14em',
-                          textTransform: 'uppercase',
-                        }}
-                      >
-                        Role Track
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: '0.96rem',
-                        color: '#b4b4cb',
-                      }}
-                    >
-                      {item.company}
-                    </div>
-                  </div>
-
-                  <div style={{ textAlign: 'right' }}>
-                    <div
-                      style={{
-                        fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: '0.72rem',
-                        color: item.color,
-                        letterSpacing: '0.12em',
-                        textTransform: 'uppercase',
-                        marginBottom: 6,
-                      }}
-                    >
-                      {item.period}
-                    </div>
-                    <div
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: 8,
-                        padding: '6px 12px',
-                        borderRadius: 999,
-                        background: `${item.color}10`,
-                        border: `1px solid ${item.color}24`,
-                        fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: '0.7rem',
-                        color: '#cfcfe2',
-                      }}
-                    >
-                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: item.color }} />
-                      {item.duration}
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  style={{
-                    display: 'grid',
-                    gap: 10,
-                  }}
-                >
-                  {item.responsibilities.map((responsibility) => (
-                    <div
-                      key={responsibility}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: 12,
-                        padding: '12px 14px',
-                        borderRadius: 12,
+                        padding: 18,
+                        borderRadius: 16,
                         background: 'rgba(255,255,255,0.02)',
+                        border: `1px solid ${role.color}18`,
                       }}
                     >
-                      <span
-                        style={{
-                          width: 8,
-                          height: 8,
-                          borderRadius: '50%',
-                          background: item.color,
-                          marginTop: 8,
-                          flexShrink: 0,
-                        }}
-                      />
-                      <p
-                        style={{
-                          fontFamily: "'Inter', sans-serif",
-                          fontSize: '0.94rem',
-                          color: '#aeb0c8',
-                          lineHeight: 1.75,
-                        }}
-                      >
-                        {responsibility}
-                      </p>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 14, alignItems: 'flex-start', marginBottom: 14, flexWrap: 'wrap' }}>
+                        <div>
+                          <div style={{
+                            fontFamily: "'Space Grotesk', sans-serif",
+                            fontSize: '1.22rem',
+                            fontWeight: 700,
+                            color: '#f0f0f8',
+                            marginBottom: 6,
+                          }}>
+                            {role.role}
+                          </div>
+                          <div style={{
+                            fontFamily: "'JetBrains Mono', monospace",
+                            fontSize: '0.62rem',
+                            color: role.color,
+                            letterSpacing: '0.14em',
+                            textTransform: 'uppercase',
+                            marginBottom: 8,
+                          }}>
+                            {role.company}
+                          </div>
+                        </div>
+
+                        <div style={{ textAlign: 'right' }}>
+                          <div style={{
+                            fontFamily: "'JetBrains Mono', monospace",
+                            fontSize: '0.72rem',
+                            color: role.color,
+                            letterSpacing: '0.12em',
+                            textTransform: 'uppercase',
+                            marginBottom: 6,
+                          }}>
+                            {role.period}
+                          </div>
+                          <div style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 8,
+                            padding: '6px 12px',
+                            borderRadius: 999,
+                            background: `${role.color}10`,
+                            border: `1px solid ${role.color}24`,
+                            fontFamily: "'JetBrains Mono', monospace",
+                            fontSize: '0.7rem',
+                            color: '#cfcfe2',
+                          }}>
+                            <span style={{ width: 6, height: 6, borderRadius: '50%', background: role.color }} />
+                            {role.duration}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'grid', gap: 10 }}>
+                        {role.responsibilities.map((responsibility) => (
+                          <div
+                            key={responsibility}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'flex-start',
+                              gap: 12,
+                              padding: '12px 14px',
+                              borderRadius: 12,
+                              background: 'rgba(255,255,255,0.015)',
+                            }}
+                          >
+                            <span
+                              style={{
+                                width: 8,
+                                height: 8,
+                                borderRadius: '50%',
+                                background: role.color,
+                                marginTop: 8,
+                                flexShrink: 0,
+                              }}
+                            />
+                            <p
+                              style={{
+                                fontFamily: "'Inter', sans-serif",
+                                fontSize: '0.94rem',
+                                color: '#aeb0c8',
+                                lineHeight: 1.75,
+                              }}
+                            >
+                              {responsibility}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   ))}
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 980px) {
-          #experience .experience-layout {
-            grid-template-columns: 1fr !important;
-          }
-        }
-
         @media (max-width: 720px) {
-          #experience .experience-timeline {
-            padding-left: 22px !important;
-          }
-
-          #experience .experience-line {
-            left: 0 !important;
-          }
-
-          #experience .experience-dot {
-            left: -22px !important;
-            top: 26px !important;
-            width: 14px !important;
-            height: 14px !important;
-          }
-
-          #experience .experience-card > div:first-child {
+          #experience .experience-layout > div > div:first-child {
             flex-direction: column;
             gap: 12px !important;
           }
 
-          #experience .experience-card > div:first-child > div:last-child {
+          #experience .experience-layout > div > div:first-child > div:last-child {
             text-align: left !important;
           }
         }
 
         @media (max-width: 560px) {
-          #experience .experience-facts {
-            grid-template-columns: 1fr !important;
-          }
-
-          #experience .experience-card {
+          #experience .experience-layout > div {
             padding: 20px 16px !important;
           }
         }
 
         @media (max-width: 480px) {
-          #experience .experience-card > div > div > p {
+          #experience .experience-layout p {
             font-size: 0.88rem !important;
           }
         }
