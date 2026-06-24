@@ -11,7 +11,7 @@ const socialLinks = [
   },
   {
     label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/prashamdesai',
+    href: 'https://in.linkedin.com/in/prasham-desai-602094269',
     color: 'var(--color-purple)',
     hover: '#d6a3ff',
     Icon: LinkedInIcon,

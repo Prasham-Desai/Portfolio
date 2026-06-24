@@ -77,8 +77,8 @@ const contactLinks = [
   },
   {
     label: 'LinkedIn',
-    value: 'linkedin.com/in/prashamdesai',
-    href: 'https://www.linkedin.com/in/prashamdesai',
+    value: 'linkedin.com/in/prasham-desai-602094269',
+    href: 'https://in.linkedin.com/in/prasham-desai-602094269',
     color: '#b44fff',
     Icon: LinkedInIcon,
   },
