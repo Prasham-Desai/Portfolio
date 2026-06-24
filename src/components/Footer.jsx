@@ -4,7 +4,7 @@ import { GitHubIcon, LinkedInIcon, MailIcon } from './SocialIcons';
 const socialLinks = [
   {
     label: 'GitHub',
-    href: 'https://github.com/prasham9114',
+    href: 'https://github.com/Prasham-Desai',
     color: 'var(--color-teal)',
     hover: '#5fe7ff',
     Icon: GitHubIcon,
