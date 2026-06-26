@@ -261,7 +261,7 @@ const Skills = () => {
                 ALSO COMFORTABLE WITH
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                {['Unreal Engine', 'Unreal Blueprints', 'C++', 'Java', 'Python', 'MERN Stack', 'Unity Addressables', 'DOTween', 'Figma'].map(tech => (
+                {['C#', 'DOTS & ECS', 'C++', 'Java', 'Python', 'MERN Stack', 'DOTween', 'Figma'].map(tech => (
                   <span key={tech} style={{
                     fontFamily: "'JetBrains Mono', monospace",
                     fontSize: '0.75rem',
