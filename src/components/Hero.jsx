@@ -97,21 +97,7 @@ const Hero = () => {
         zIndex: 1,
       }}>
         {dots.map(dot => (
-          <motion.div
-            key={dot.id}
-            style={{
-              position: 'absolute',
-              left: `${dot.x}%`,
-              top: `${dot.y}%`,
-              width: dot.size,
-              height: dot.size,
-              borderRadius: '50%',
-              backgroundColor: '#00d4ff',
-              opacity: dot.opacity,
-              x: useTransform(dotShiftX, v => v * dot.parallax),
-              y: useTransform(dotShiftY, v => v * dot.parallax),
-            }}
-          />
+          <ParallaxDot key={dot.id} dot={dot} dotShiftX={dotShiftX} dotShiftY={dotShiftY} />
         ))}
       </div>
 
@@ -570,6 +556,28 @@ const MagneticButton = ({ children, primary, onClick }) => {
     >
       {children}
     </motion.button>
+  );
+};
+
+const ParallaxDot = ({ dot, dotShiftX, dotShiftY }) => {
+  const x = useTransform(dotShiftX, v => v * dot.parallax);
+  const y = useTransform(dotShiftY, v => v * dot.parallax);
+  
+  return (
+    <motion.div
+      style={{
+        position: 'absolute',
+        left: `${dot.x}%`,
+        top: `${dot.y}%`,
+        width: dot.size,
+        height: dot.size,
+        borderRadius: '50%',
+        backgroundColor: '#00d4ff',
+        opacity: dot.opacity,
+        x,
+        y,
+      }}
+    />
   );
 };
 
