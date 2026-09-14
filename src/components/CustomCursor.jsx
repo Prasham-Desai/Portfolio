@@ -5,11 +5,12 @@ const CustomCursor = () => {
   const [enabled, setEnabled] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [pressing, setPressing] = useState(false);
+  
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  // Tight spring — nearly native speed, no floaty lag
-  const springConfig = { damping: 32, stiffness: 420, mass: 0.2 };
+  // Smooth but fast spring
+  const springConfig = { damping: 28, stiffness: 300, mass: 0.1 };
   const cx = useSpring(mouseX, springConfig);
   const cy = useSpring(mouseY, springConfig);
 
@@ -32,8 +33,9 @@ const CustomCursor = () => {
     if (!enabled) return undefined;
 
     const move = (e) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+      // Subtract half of the wrapper's 40px size to perfectly center the cursor
+      mouseX.set(e.clientX - 20);
+      mouseY.set(e.clientY - 20);
       updateHover(e);
     };
     const down = () => setPressing(true);
@@ -42,6 +44,7 @@ const CustomCursor = () => {
     window.addEventListener('mousemove', move, { passive: true });
     window.addEventListener('mousedown', down);
     window.addEventListener('mouseup', up);
+    
     return () => {
       window.removeEventListener('mousemove', move);
       window.removeEventListener('mousedown', down);
@@ -51,13 +54,7 @@ const CustomCursor = () => {
 
   if (!enabled) return null;
 
-  // Crosshair dimensions
-  const lineLen = hovering ? 10 : 7;
-  const gap = hovering ? 3 : 2;
-  const lineThickness = 1;
-  const color = hovering
-    ? 'rgba(0, 212, 255, 0.85)'
-    : 'rgba(255, 255, 255, 0.45)';
+  const color = hovering ? 'rgba(0, 212, 255, 0.9)' : 'rgba(255, 255, 255, 0.6)';
 
   return (
     <motion.div
@@ -67,58 +64,55 @@ const CustomCursor = () => {
         left: 0,
         x: cx,
         y: cy,
-        translateX: '-50%',
-        translateY: '-50%',
         zIndex: 99999,
         pointerEvents: 'none',
-        mixBlendMode: 'difference',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 40,
+        height: 40,
       }}
       animate={{
-        scale: pressing ? 0.82 : 1,
+        scale: pressing ? 0.8 : 1,
       }}
-      transition={{ duration: 0.1 }}
+      transition={{ duration: 0.15 }}
     >
-      {/* Crosshair — four hairlines from center gap */}
-      <svg
-        width={lineLen * 2 + gap * 2}
-        height={lineLen * 2 + gap * 2}
-        viewBox={`0 0 ${lineLen * 2 + gap * 2} ${lineLen * 2 + gap * 2}`}
-        style={{ display: 'block', overflow: 'visible' }}
-      >
-        {/* Top line */}
-        <line
-          x1={lineLen + gap} y1={0}
-          x2={lineLen + gap} y2={lineLen - gap}
-          stroke={color} strokeWidth={lineThickness} strokeLinecap="round"
-        />
-        {/* Bottom line */}
-        <line
-          x1={lineLen + gap} y1={lineLen + gap * 2 + gap}
-          x2={lineLen + gap} y2={lineLen * 2 + gap * 2}
-          stroke={color} strokeWidth={lineThickness} strokeLinecap="round"
-        />
-        {/* Left line */}
-        <line
-          x1={0} y1={lineLen + gap}
-          x2={lineLen - gap} y2={lineLen + gap}
-          stroke={color} strokeWidth={lineThickness} strokeLinecap="round"
-        />
-        {/* Right line */}
-        <line
-          x1={lineLen + gap * 2 + gap} y1={lineLen + gap}
-          x2={lineLen * 2 + gap * 2} y2={lineLen + gap}
-          stroke={color} strokeWidth={lineThickness} strokeLinecap="round"
-        />
-        {/* Center dot — only on hover */}
-        {hovering && (
-          <circle
-            cx={lineLen + gap}
-            cy={lineLen + gap}
-            r={1.5}
-            fill="rgba(0, 212, 255, 0.9)"
-          />
-        )}
-      </svg>
+      {/* Horizontal Line */}
+      <motion.div
+        animate={{
+          width: hovering ? 20 : 12,
+          height: hovering ? 2 : 1,
+          backgroundColor: color,
+        }}
+        transition={{ duration: 0.2 }}
+        style={{ position: 'absolute' }}
+      />
+      {/* Vertical Line */}
+      <motion.div
+        animate={{
+          height: hovering ? 20 : 12,
+          width: hovering ? 2 : 1,
+          backgroundColor: color,
+        }}
+        transition={{ duration: 0.2 }}
+        style={{ position: 'absolute' }}
+      />
+      
+      {/* Center dot */}
+      <motion.div
+        animate={{
+          opacity: hovering ? 1 : 0,
+          scale: hovering ? 1 : 0,
+        }}
+        transition={{ duration: 0.2 }}
+        style={{
+          position: 'absolute',
+          width: 4,
+          height: 4,
+          backgroundColor: color,
+          borderRadius: '50%',
+        }}
+      />
     </motion.div>
   );
 };

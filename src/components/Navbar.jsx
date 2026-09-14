@@ -218,14 +218,14 @@ const Navbar = () => {
               );
             })}
 
-            {/* All Projects link — visible on home and case study */}
-            {(isHome || isCaseStudy) && (
+            {/* All Projects link — always visible except maybe if we want it active */}
+            {(isHome || isCaseStudy || isProjectsPage) && (
               <Link to="/projects" style={{ textDecoration: 'none' }}>
                 <motion.span
                   whileHover={{ color: '#00d4ff', scale: 1.04 }}
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: '1rem',
+                    fontSize: '0.95rem',
                     fontWeight: 600,
                     padding: '8px 18px',
                     borderRadius: 8,
@@ -233,6 +233,7 @@ const Navbar = () => {
                     whiteSpace: 'nowrap',
                     color: isProjectsPage ? '#00d4ff' : '#e8e8f4',
                     cursor: 'pointer',
+                    background: isProjectsPage ? 'rgba(0,212,255,0.08)' : 'transparent',
                   }}
                 >
                   Projects
