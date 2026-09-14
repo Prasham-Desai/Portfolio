@@ -13,14 +13,14 @@ const socialLinks = [
     label: 'LinkedIn',
     href: 'https://in.linkedin.com/in/prasham-desai-602094269',
     color: 'var(--color-purple)',
-    hover: '#d6a3ff',
+    hover: '#d8b4fe',
     Icon: LinkedInIcon,
   },
   {
     label: 'Email',
     href: 'mailto:prashamdesai9114@gmail.com',
     color: 'var(--color-gold)',
-    hover: '#ffe566',
+    hover: '#ffd43b',
     Icon: MailIcon,
   },
 ];
@@ -44,7 +44,7 @@ const Footer = () => {
             fontFamily: "'Space Grotesk', sans-serif",
             fontWeight: 700,
             fontSize: '1.4rem',
-            color: '#f0f0f8',
+            color: '#f1f5f9',
             marginBottom: 4,
           }}>
             Prasham Desai<span style={{ color: '#00d4ff' }}>.</span>

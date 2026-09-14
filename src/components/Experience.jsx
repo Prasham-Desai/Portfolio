@@ -2,15 +2,15 @@ import { motion } from 'framer-motion';
 
 const experienceItems = [
   {
-    company: 'Career Break',
-    role: 'Professional Development',
+    company: 'Independent',
+    role: 'Unreal Engine Specialization',
     period: 'May 2026 - Present',
     duration: 'Ongoing',
-    color: '#ff8c00',
+    color: '#c084fc',
     responsibilities: [
-      'Learning Unreal Engine (Blueprints) and Unreal C++.',
-      'Building prototypes to explore gameplay systems, tools, and performance patterns in UE.',
-      'Studying engine architecture, C++ integration, and production workflows.',
+      'Building gameplay prototypes in Unreal Engine 5 using C++ and Blueprints.',
+      'Implementing gameplay systems with GAS, Behavior Trees, EQS, and Enhanced Input.',
+      'Studying engine architecture, multiplayer replication, and production workflows in UE5.',
     ],
   },
   {
@@ -62,7 +62,7 @@ const Experience = () => {
     const isCurrent = group.isCurrent;
     const companyPeriod = isCurrent ? 'May 2026 - Present' : 'May 2025 - Apr 2026';
     const summary = isCurrent
-      ? 'Focused on Unreal Engine, Blueprints, Unreal C++, and production-minded prototype work while learning the engine from the inside out.'
+      ? 'Focused on Unreal Engine C++ and Blueprints — building gameplay prototypes, exploring GAS architecture, and developing production-minded systems.'
       : 'Built and shipped mobile game features across production builds, from gameplay systems to backend-connected delivery and optimization.';
 
     const highlights = isCurrent
@@ -81,12 +81,12 @@ const Experience = () => {
       companyPeriod,
       summary,
       highlights,
-      accentColor: isCurrent ? '#ff8c00' : '#00d4ff',
-      borderColor: isCurrent ? '#ff8c0044' : '#00d4ff33',
+      accentColor: isCurrent ? '#c084fc' : '#00d4ff',
+      borderColor: isCurrent ? '#c084fc44' : '#00d4ff33',
       background: isCurrent
-        ? 'linear-gradient(135deg, rgba(255,140,0,0.12), rgba(13,13,26,0.82))'
-        : 'rgba(13,13,26,0.72)',
-      badgeLabel: isCurrent ? 'Current company' : 'Past company',
+        ? 'linear-gradient(135deg, rgba(192,132,252,0.10), rgba(12,14,24,0.82))'
+        : 'rgba(12,14,24,0.72)',
+      badgeLabel: isCurrent ? 'Current focus' : 'Past company',
     };
   });
 

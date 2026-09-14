@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const bootLines = [
-  { text: 'UNITY ENGINE', delay: 0.2, status: 'OK' },
-  { text: 'LOADING ASSETS', delay: 0.5, status: 'OK' },
-  { text: 'INITIALIZING PHYSICS', delay: 0.8, status: 'OK' },
-  { text: 'COMPILING SHADERS', delay: 1.1, status: 'OK' },
-  { text: 'CONNECTING TO BACKEND', delay: 1.4, status: 'OK' },
-  { text: 'PORTFOLIO v1.0.0', delay: 1.7, status: 'READY' },
+  { text: 'UNREAL ENGINE 5.4', delay: 0.2, status: 'OK' },
+  { text: 'LOADING MODULES', delay: 0.5, status: 'OK' },
+  { text: 'COMPILING SHADERS', delay: 0.8, status: 'OK' },
+  { text: 'INITIALIZING SYSTEMS', delay: 1.1, status: 'OK' },
+  { text: 'CONNECTING BACKEND', delay: 1.4, status: 'OK' },
+  { text: 'PORTFOLIO v2.0', delay: 1.7, status: 'READY' },
 ];
 
 const LoadingScreen = ({ onComplete }) => {
@@ -57,7 +57,7 @@ const LoadingScreen = ({ onComplete }) => {
           style={{
             position: 'fixed',
             inset: 0,
-            background: '#08080f',
+            background: '#060610',
             zIndex: 100000,
             display: 'flex',
             alignItems: 'center',
@@ -108,7 +108,7 @@ const LoadingScreen = ({ onComplete }) => {
                 fontSize: '2.4rem',
                 fontWeight: 700,
                 letterSpacing: '-0.02em',
-                color: '#f0f0f8',
+                color: '#f1f5f9',
                 lineHeight: 1,
               }}>
                 PRASHAM<span style={{ color: '#00d4ff' }}> DESAI</span>
@@ -121,7 +121,7 @@ const LoadingScreen = ({ onComplete }) => {
                 marginTop: 8,
                 textTransform: 'uppercase',
               }}>
-                Game Developer
+                Gameplay & Systems Developer
               </div>
             </motion.div>
 
@@ -131,7 +131,7 @@ const LoadingScreen = ({ onComplete }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.15 }}
               style={{
-                background: 'rgba(13,13,26,0.8)',
+                background: 'rgba(12,14,24,0.8)',
                 border: '1px solid rgba(0,212,255,0.12)',
                 borderRadius: 8,
                 padding: '16px 20px',
@@ -152,7 +152,7 @@ const LoadingScreen = ({ onComplete }) => {
                         fontFamily: "'JetBrains Mono', monospace",
                         fontSize: '0.72rem',
                         marginBottom: 6,
-                        color: '#8888aa',
+                        color: '#94a3b8',
                       }}
                     >
                       <span>
@@ -160,7 +160,7 @@ const LoadingScreen = ({ onComplete }) => {
                         {line.text}
                       </span>
                       <span style={{
-                        color: line.status === 'READY' ? '#00ff88' : '#00d4ff',
+                        color: line.status === 'READY' ? '#34d399' : '#00d4ff',
                         fontWeight: 500,
                       }}>
                         [{line.status}]
@@ -188,7 +188,7 @@ const LoadingScreen = ({ onComplete }) => {
             {/* Progress bar */}
             <div style={{
               height: 2,
-              background: 'rgba(255,255,255,0.06)',
+              background: 'rgba(255,255,255,0.08)',
               borderRadius: 1,
               overflow: 'hidden',
               marginBottom: 12,
@@ -208,7 +208,7 @@ const LoadingScreen = ({ onComplete }) => {
               justifyContent: 'space-between',
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: '0.65rem',
-              color: 'rgba(136,136,170,0.6)',
+              color: 'rgba(148,163,184,0.6)',
             }}>
               <span>BOOTING EXPERIENCE</span>
               <span>{Math.min(Math.round(progress), 100)}%</span>

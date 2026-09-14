@@ -3,22 +3,22 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const homeNavLinks = [
-  { label: 'Work',    href: '/#projects', targetId: 'projects', sectionIds: ['projects'], color: '#00d4ff' }, // teal
-  { label: 'Skills',  href: '/#skills',   targetId: 'skills',   sectionIds: ['skills'],   color: '#ffd700' }, // gold
-  { label: 'Experience', href: '/#experience', targetId: 'experience', sectionIds: ['experience'], color: '#ff6b00' }, // orange
-  { label: 'About',   href: '/#about',    targetId: 'about',    sectionIds: ['about'],    color: '#b44fff' }, // purple
-  { label: 'Contact', href: '/#contact',  targetId: 'contact',  sectionIds: ['contact'],  color: '#00fff2' }, // cyan
+  { label: 'Work',       href: '/#projects',    targetId: 'projects',    sectionIds: ['projects'],    color: '#00d4ff' },
+  { label: 'Skills',     href: '/#skills',      targetId: 'skills',      sectionIds: ['skills'],      color: '#ffbe0b' },
+  { label: 'Experience', href: '/#experience',  targetId: 'experience',  sectionIds: ['experience'],  color: '#fb923c' },
+  { label: 'About',      href: '/#about',       targetId: 'about',       sectionIds: ['about'],       color: '#c084fc' },
+  { label: 'Contact',    href: '/#contact',     targetId: 'contact',     sectionIds: ['contact'],     color: '#00fff2' },
 ];
 
 const caseStudyNavLinks = [
-  { label: 'Vision',      href: '#overview',   targetId: 'overview',   sectionIds: ['overview', 'systems'],             color: '#00d4ff' },
-  { label: 'Engineering', href: '#tech-stack', targetId: 'tech-stack', sectionIds: ['tech-stack', 'challenges'],       color: '#b44fff' },
-  { label: 'Showcase',    href: '#features',   targetId: 'features',   sectionIds: ['features', 'gallery'],            color: '#00ff88' },
-  { label: 'Results',     href: '#outcome',    targetId: 'outcome',    sectionIds: ['outcome', 'associated-with'],    color: '#ff6b6b' },
+  { label: 'Vision',      href: '#overview',   targetId: 'overview',   sectionIds: ['overview', 'systems'],           color: '#00d4ff' },
+  { label: 'Engineering', href: '#tech-stack', targetId: 'tech-stack', sectionIds: ['tech-stack', 'challenges'],     color: '#c084fc' },
+  { label: 'Showcase',    href: '#features',   targetId: 'features',   sectionIds: ['features', 'gallery'],          color: '#34d399' },
+  { label: 'Results',     href: '#outcome',    targetId: 'outcome',    sectionIds: ['outcome', 'associated-with'],  color: '#ff5263' },
 ];
 
-const HOME_SCROLL_OFFSET = 16;
-const CASE_STUDY_SCROLL_OFFSET = 112;
+const HOME_SCROLL_OFFSET = 80;
+const CASE_STUDY_SCROLL_OFFSET = 80;
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -27,6 +27,7 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
+  const isProjectsPage = location.pathname === '/projects';
   const isCaseStudy = location.pathname.startsWith('/project/');
   const navLinks = isCaseStudy ? caseStudyNavLinks : homeNavLinks;
 
@@ -44,20 +45,17 @@ const Navbar = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       navigate('/');
-      // give the route a tick to mount, then jump to top
       requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'auto' }));
     }
   };
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 60);
+    const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Scroll-spy: pick the section whose midpoint is closest to the
-  // viewport centre. IntersectionObserver alone fires on entry/exit
-  // and gets confused on tall sections; midpoint-distance is stable.
+  // Scroll-spy
   useEffect(() => {
     if (!isHome && !isCaseStudy) {
       setActiveSection(null);
@@ -85,7 +83,7 @@ const Navbar = () => {
           const el = document.getElementById(id);
           if (!el) continue;
           const r = el.getBoundingClientRect();
-          if (r.bottom < CASE_STUDY_SCROLL_OFFSET || r.top > window.innerHeight) continue;
+          if (r.bottom < HOME_SCROLL_OFFSET || r.top > window.innerHeight) continue;
           const sectionMid = r.top + r.height / 2;
           const dist = Math.abs(sectionMid - viewportMid);
           if (dist < bestDist) {
@@ -113,10 +111,8 @@ const Navbar = () => {
 
   useEffect(() => {
     if (!mobileOpen) return undefined;
-
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-
     return () => {
       document.body.style.overflow = previousOverflow;
     };
@@ -136,7 +132,6 @@ const Navbar = () => {
       if (isHome) {
         scrollToSection(id);
       } else {
-        // navigate to home then scroll
         window.location.href = href;
       }
     }
@@ -155,13 +150,17 @@ const Navbar = () => {
           left: 0,
           right: 0,
           zIndex: 1000,
-          transition: 'all 0.4s ease',
         }}
       >
         <div className="site-nav-shell" style={{
-          background: scrolled ? 'rgba(8,8,15,0.92)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(20px)' : 'none',
-          border: scrolled ? '1px solid rgba(255,255,255,0.06)' : '1px solid transparent',
+          background: scrolled
+            ? 'rgba(6,6,16,0.92)'
+            : 'rgba(6,6,16,0.75)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          borderBottom: scrolled
+            ? '1px solid rgba(255,255,255,0.10)'
+            : '1px solid rgba(255,255,255,0.05)',
           transition: 'all 0.4s ease',
           display: 'flex',
           alignItems: 'center',
@@ -176,7 +175,7 @@ const Navbar = () => {
                 fontFamily: "'Space Grotesk', sans-serif",
                 fontWeight: 700,
                 letterSpacing: '-0.01em',
-                color: '#f0f0f8',
+                color: '#f1f5f9',
                 cursor: 'pointer',
               }}
             >
@@ -188,33 +187,58 @@ const Navbar = () => {
           <div style={{ display: 'flex', gap: isCaseStudy ? 2 : 4, alignItems: 'center' }} className="desktop-nav">
             {navLinks.map((link) => {
               const isActive = activeSection === link.label;
+
               return (
-                <motion.button
-                  key={link.label}
-                  onClick={() => handleNavClick(link.href)}
-                  whileHover={{ color: link.color, scale: 1.04 }}
-                  animate={{
-                    color: isActive ? link.color : '#e8e8f4',
-                    textShadow: isActive ? `0 0 18px ${link.color}99` : '0 0 0 rgba(0,0,0,0)',
-                  }}
-                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  style={{
-                    position: 'relative',
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: isCaseStudy ? '0.95rem' : '1rem',
-                    fontWeight: 600,
-                    padding: isCaseStudy ? '8px 14px' : '8px 18px',
-                    borderRadius: 8,
-                    letterSpacing: '0.01em',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {link.label}
-                </motion.button>
+                <div key={link.label}>
+                  <motion.button
+                    onClick={() => handleNavClick(link.href)}
+                    whileHover={{ color: link.color, scale: 1.04 }}
+                    animate={{
+                      color: isActive ? link.color : '#e8e8f4',
+                      textShadow: isActive ? `0 0 18px ${link.color}99` : '0 0 0 rgba(0,0,0,0)',
+                    }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    style={{
+                      position: 'relative',
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontSize: isCaseStudy ? '0.95rem' : '1rem',
+                      fontWeight: 600,
+                      padding: isCaseStudy ? '8px 14px' : '8px 18px',
+                      borderRadius: 8,
+                      letterSpacing: '0.01em',
+                      whiteSpace: 'nowrap',
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {link.label}
+                  </motion.button>
+                </div>
               );
             })}
 
-            {/* Hire Me CTA removed per request */}
+            {/* All Projects link — visible on home and case study */}
+            {(isHome || isCaseStudy) && (
+              <Link to="/projects" style={{ textDecoration: 'none' }}>
+                <motion.span
+                  whileHover={{ color: '#00d4ff', scale: 1.04 }}
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    padding: '8px 18px',
+                    borderRadius: 8,
+                    letterSpacing: '0.01em',
+                    whiteSpace: 'nowrap',
+                    color: isProjectsPage ? '#00d4ff' : '#e8e8f4',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Projects
+                </motion.span>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -242,7 +266,7 @@ const Navbar = () => {
                   display: 'block',
                   width: 22,
                   height: 1.5,
-                  background: '#f0f0f8',
+                  background: '#f1f5f9',
                   borderRadius: 1,
                   transformOrigin: 'center',
                 }}
@@ -265,7 +289,7 @@ const Navbar = () => {
               position: 'fixed',
               inset: 0,
               zIndex: 999,
-              background: 'rgba(8,8,15,0.97)',
+              background: 'rgba(6,6,16,0.97)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -284,34 +308,52 @@ const Navbar = () => {
                   fontFamily: "'Space Grotesk', sans-serif",
                   fontSize: '2rem',
                   fontWeight: 700,
-                  color: '#f0f0f8',
+                  color: '#f1f5f9',
                   background: 'transparent',
+                  border: 'none',
                   letterSpacing: '-0.02em',
                 }}
               >
                 {link.label}
               </motion.button>
             ))}
-            {/* Mobile Hire Me CTA removed per request */}
+
+            {/* Mobile Projects link */}
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: navLinks.length * 0.08 }}
+              onClick={() => {
+                setMobileOpen(false);
+                navigate('/projects');
+              }}
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: '#00d4ff',
+                background: 'transparent',
+                border: 'none',
+                letterSpacing: '-0.02em',
+              }}
+            >
+              All Projects
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
 
       <style>{`
         .site-nav-shell {
-          margin: clamp(12px, 2.4vw, 16px) clamp(16px, 2.8vw, 24px);
-          padding: 0 clamp(18px, 2.4vw, 28px);
+          margin: 0;
+          padding: 0 clamp(24px, 4vw, 48px);
           min-height: clamp(56px, 6vw, 64px);
-          border-radius: 12px;
+          border-radius: 0;
+          max-width: 100%;
         }
 
         .site-nav-logo {
           font-size: clamp(1.8rem, 4vw, 2.75rem);
-        }
-
-        .site-nav-cta {
-          padding: 8px clamp(16px, 2vw, 22px);
-          margin-left: clamp(4px, 1vw, 8px);
         }
 
         @media (max-width: 1080px) {
@@ -321,9 +363,8 @@ const Navbar = () => {
 
         @media (max-width: 767px) {
           .site-nav-shell {
-            padding: 0 14px;
+            padding: 0 16px;
             min-height: 54px;
-            margin: 10px 12px;
           }
 
           .mobile-menu-panel {
@@ -338,10 +379,8 @@ const Navbar = () => {
 
         @media (max-width: 480px) {
           .site-nav-shell {
-            padding: 0 12px;
+            padding: 0 14px;
             min-height: 50px;
-            margin: 8px 10px;
-            border-radius: 10px;
           }
 
           .site-nav-logo {

@@ -782,10 +782,14 @@ const ProjectDetail = () => {
                               alt={`${project.title} screenshot ${i + 1}`}
                               onLoad={(e) => {
                                 const isPortrait = e.currentTarget.naturalHeight > e.currentTarget.naturalWidth;
-                                setImageOrientation((prev) => ({
-                                  ...prev,
-                                  [src]: isPortrait ? 'portrait' : 'landscape',
-                                }));
+                                const newOri = isPortrait ? 'portrait' : 'landscape';
+                                setImageOrientation((prev) => {
+                                  if (prev[src] === newOri) return prev;
+                                  return {
+                                    ...prev,
+                                    [src]: newOri,
+                                  };
+                                });
                               }}
                               style={{
                                 width: '100%',

@@ -6,29 +6,36 @@ import { getProjectAssets } from '../data/projectAssets';
 const TAG_COLORS = {
   'Unity':      '#00d4ff',
   'Unity URP':  '#00d4ff',
-  'Multiplayer':'#ff6b6b',
-  'Photon PUN3':'#ff6b6b',
-  'Firebase':   '#ffd700',
-  'Mobile':     '#00ff88',
-  'Physics':    '#b44fff',
+  'Unreal Engine': '#c084fc',
+  'C++':        '#fb923c',
+  'Blueprints': '#c084fc',
+  'GAS':        '#ffbe0b',
+  'Behavior Trees': '#34d399',
+  'Chaos Physics': '#ff5263',
+  'Enhanced Input': '#00fff2',
+  'Multiplayer':'#ff5263',
+  'Photon PUN3':'#ff5263',
+  'Firebase':   '#ffbe0b',
+  'Mobile':     '#34d399',
+  'Physics':    '#c084fc',
   'DOTS':       '#00fff2',
-  'ECS':        '#ff6b6b',
+  'ECS':        '#ff5263',
   'Addressables':'#00d4ff',
-  'Dynamic Loading':'#ffd700',
-  'AdMob':      '#ff6b00',
+  'Dynamic Loading':'#ffbe0b',
+  'AdMob':      '#fb923c',
   'WebGL':      '#00d4ff',
-  'Procedural': '#ffd700',
-  'AI':         '#ff6b6b',
+  'Procedural': '#ffbe0b',
+  'AI':         '#ff5263',
   'OpenCV':     '#00fff2',
-  'MediaPipe':  '#ff6b00',
-  'Computer Vision': '#b44fff',
-  'Casual':     '#00ff88',
-  'Hyper-Casual':'#ff6b00',
-  'Real-time':  '#b44fff',
-  'Puzzle':     '#ffd700',
-  'Architecture':'#b44fff',
-  'ScriptableObjects': '#ffd700',
-  'UI/UX':      '#00ff88',
+  'MediaPipe':  '#fb923c',
+  'Computer Vision': '#c084fc',
+  'Casual':     '#34d399',
+  'Hyper-Casual':'#fb923c',
+  'Real-time':  '#c084fc',
+  'Puzzle':     '#ffbe0b',
+  'Architecture':'#c084fc',
+  'ScriptableObjects': '#ffbe0b',
+  'UI/UX':      '#34d399',
 };
 
 const CARD_HEIGHT   = 420;   // total card height — fixed for all cards
@@ -94,8 +101,8 @@ const ProjectCard = ({ project, index }) => {
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
-            background: 'linear-gradient(160deg, rgba(17,17,32,0.95), rgba(11,11,22,0.98))',
-            border: '1px solid rgba(255,255,255,0.06)',
+            background: 'linear-gradient(160deg, rgba(18,20,31,0.95), rgba(12,14,24,0.98))',
+            border: '1px solid rgba(255,255,255,0.10)',
             borderRadius: 18,
             overflow: 'hidden',
             position: 'relative',
@@ -170,6 +177,30 @@ const ProjectCard = ({ project, index }) => {
               {String(index + 1).padStart(2, '0')}
             </div>
 
+            {/* Engine badge */}
+            {project.engine && (
+              <div style={{
+                position: 'absolute', bottom: 12, left: 14,
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: '0.6rem',
+                fontWeight: 500,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                padding: '3px 8px',
+                borderRadius: 3,
+                background: project.engine === 'Unreal Engine'
+                  ? 'rgba(192,132,252,0.12)'
+                  : 'rgba(0,212,255,0.12)',
+                border: project.engine === 'Unreal Engine'
+                  ? '1px solid rgba(192,132,252,0.25)'
+                  : '1px solid rgba(0,212,255,0.25)',
+                color: project.engine === 'Unreal Engine' ? '#c084fc' : '#00d4ff',
+                zIndex: 2,
+              }}>
+                {project.engine === 'Unreal Engine' ? 'UE5 · C++' : 'UNITY · C#'}
+              </div>
+            )}
+
             {/* Arrow */}
             <motion.div
               whileHover={{ scale: 1.15, borderColor: project.accentColor }}
@@ -241,7 +272,7 @@ const ProjectCard = ({ project, index }) => {
               fontSize: '1.35rem',
               fontWeight: 700,
               letterSpacing: '-0.025em',
-              color: '#f0f0f8',
+              color: '#f1f5f9',
               marginBottom: 8,
               lineHeight: 1.2,
             }}>
@@ -252,7 +283,7 @@ const ProjectCard = ({ project, index }) => {
             <p style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: '0.88rem',
-              color: '#8888aa',
+              color: '#94a3b8',
               lineHeight: 1.55,
               marginBottom: 0,
               flex: 1,            /* pushes footer down */

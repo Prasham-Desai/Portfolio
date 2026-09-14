@@ -1,37 +1,29 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import AvatarImg from '../assets/Avatar.jpeg';
 
 const TAGLINES = [
-  'Building games that players remember.',
-  'Unity · C# · Mobile · Multiplayer · AR/VR.',
-  'From prototype to product, end to end.',
+  'Building gameplay systems and C++ architecture in Unreal Engine.',
+  'From shipped mobile titles to high-fidelity prototypes.',
+  'Systems-first thinking. Production-tested delivery.',
 ];
 
-const SHAPES = [
-  // Top band
-  { id: 'cube', kind: 'cube', top: '8%', left: '8%', size: 50, color: '#00d4ff', spin: 22 },
-  { id: 'pixel-1', kind: 'pixel', top: '12%', left: '32%', size: 26, color: '#00d4ff', spin: 32 },
-  { id: 'plus-1', kind: 'plus', top: '10%', left: '64%', size: 26, color: '#ff4757', spin: 0 },
-  { id: 'tri-1', kind: 'tri', top: '14%', left: '90%', size: 32, color: '#ffd700', spin: 0 },
-  // Mid-row edges
-  { id: 'ring', kind: 'ring', top: '42%', left: '3%', size: 42, color: '#00fff2', spin: 0 },
-  { id: 'octa', kind: 'octa', top: '50%', left: '95%', size: 38, color: '#b44fff', spin: 26 },
-  // Bottom band
-  { id: 'plus-2', kind: 'plus', top: '86%', left: '6%', size: 24, color: '#ff4757', spin: 0 },
-  { id: 'dpad', kind: 'dpad', top: '90%', left: '30%', size: 38, color: '#00ff88', spin: 0 },
-  { id: 'coin', kind: 'coin', top: '88%', left: '60%', size: 34, color: '#ffd700', spin: 14 },
-  { id: 'tri-2', kind: 'tri', top: '92%', left: '92%', size: 30, color: '#00ff88', spin: 0 },
-  // Centre seam
-  { id: 'pixel-2', kind: 'pixel', top: '54%', left: '50%', size: 22, color: '#b44fff', spin: 32 },
-];
-
-const PROXIMITY_RADIUS = 140;
+// Sparse dot field for parallax
+const DOT_COUNT = 40;
+const generateDots = () =>
+  Array.from({ length: DOT_COUNT }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 2.5 + 1,
+    opacity: Math.random() * 0.35 + 0.08,
+    parallax: Math.random() * 0.6 + 0.2,
+  }));
 
 const Hero = () => {
   const [taglineIndex, setTaglineIndex] = useState(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
   const containerRef = useRef(null);
+  const dots = useMemo(() => generateDots(), []);
 
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -40,6 +32,10 @@ const Hero = () => {
   const tiltY = useSpring(useTransform(mx, [-1, 1], [-5, 5]), { stiffness: 80, damping: 22 });
   const glowX = useSpring(useTransform(mx, [-1, 1], [-40, 40]), { stiffness: 50, damping: 22 });
   const glowY = useSpring(useTransform(my, [-1, 1], [-40, 40]), { stiffness: 50, damping: 22 });
+
+  // Mouse-driven parallax values for dots
+  const dotShiftX = useSpring(useTransform(mx, [-1, 1], [-20, 20]), { stiffness: 40, damping: 30 });
+  const dotShiftY = useSpring(useTransform(my, [-1, 1], [-20, 20]), { stiffness: 40, damping: 30 });
 
   useEffect(() => {
     const id = setInterval(() => setTaglineIndex(p => (p + 1) % TAGLINES.length), 3500);
@@ -93,46 +89,31 @@ const Hero = () => {
         pointerEvents: 'none',
       }} />
 
-      {/* Floating shapes */}
-      {SHAPES.map(shape => (
-        <FloatingShape
-          key={shape.id}
-          {...shape}
-          onInteract={() => setHasInteracted(true)}
-        />
-      ))}
-
-      {/* Drag hint */}
-      <AnimatePresence>
-        {!hasInteracted && (
+      {/* Parallax dot field */}
+      <div className="hero-dot-field" style={{
+        position: 'absolute',
+        inset: 0,
+        pointerEvents: 'none',
+        zIndex: 1,
+      }}>
+        {dots.map(dot => (
           <motion.div
-            className="hero-drag-hint"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ delay: 1.4, duration: 0.5 }}
+            key={dot.id}
             style={{
               position: 'absolute',
-              top: 110, right: 48,
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: '0.7rem',
-              color: '#8888aa',
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              display: 'flex', alignItems: 'center', gap: 10,
-              zIndex: 4,
-              pointerEvents: 'none',
+              left: `${dot.x}%`,
+              top: `${dot.y}%`,
+              width: dot.size,
+              height: dot.size,
+              borderRadius: '50%',
+              backgroundColor: '#00d4ff',
+              opacity: dot.opacity,
+              x: useTransform(dotShiftX, v => v * dot.parallax),
+              y: useTransform(dotShiftY, v => v * dot.parallax),
             }}
-          >
-            <motion.span
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 1.8, repeat: Infinity }}
-              style={{ width: 6, height: 6, background: '#00d4ff', borderRadius: '50%', boxShadow: '0 0 8px #00d4ff' }}
-            />
-            drag the shapes
-          </motion.div>
-        )}
-      </AnimatePresence>
+          />
+        ))}
+      </div>
 
       {/* ── Main content wrapper ── */}
       <div style={{
@@ -154,7 +135,7 @@ const Hero = () => {
             variants={{ hidden: {}, show: { transition: { staggerChildren: 0.10, delayChildren: 0.1 } } }}
           >
             <FadeUp>
-              <div className="section-label" style={{ marginBottom: 24 }}>Game Developer</div>
+              <div className="section-label" style={{ marginBottom: 24 }}>Gameplay & Systems Developer</div>
             </FadeUp>
 
             <FadeUp>
@@ -164,7 +145,7 @@ const Hero = () => {
                 fontWeight: 800,
                 letterSpacing: '-0.045em',
                 lineHeight: 0.92,
-                color: '#f0f0f8',
+                color: '#f1f5f9',
                 marginBottom: 28,
               }}>
                 Prasham<br />
@@ -195,7 +176,7 @@ const Hero = () => {
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontSize: 'clamp(1rem, 1.8vw, 1.2rem)',
                       fontWeight: 400,
-                      color: '#8888aa',
+                      color: '#94a3b8',
                       letterSpacing: '-0.01em',
                       whiteSpace: 'nowrap',
                       margin: 0,
@@ -211,8 +192,8 @@ const Hero = () => {
               <div className="hero-stats" style={{ display: 'flex', flexWrap: 'wrap', gap: 36, marginBottom: 44 }}>
                 {[
                   { v: '7+', l: 'Games Shipped' },
-                  { v: '1yr+', l: 'Experience' },
-                  { v: '∞', l: 'Bugs Solved' },
+                  { v: '2', l: 'Game Engines' },
+                  { v: 'C++', l: 'Primary Language' },
                 ].map(s => (
                   <motion.div className="hero-stat" key={s.l} whileHover={{ y: -3 }} transition={{ type: 'spring', stiffness: 300 }}>
                     <div style={{
@@ -222,7 +203,7 @@ const Hero = () => {
                     }}>{s.v}</div>
                     <div style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: '0.65rem', color: '#444460',
+                      fontSize: '0.65rem', color: '#64748b',
                       letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 6,
                     }}>{s.l}</div>
                   </motion.div>
@@ -326,9 +307,8 @@ const Hero = () => {
             max-width: 100%;
             line-height: 1.4 !important;
           }
-          .home-hero .hero-shape,
-          .home-hero .hero-drag-hint {
-            display: none !important;
+          .home-hero .hero-dot-field {
+            opacity: 0.4;
           }
         }
 
@@ -433,144 +413,6 @@ const FadeUp = ({ children }) => (
   </motion.div>
 );
 
-const FloatingShape = ({ kind, top, left, size, color, spin, onInteract }) => {
-  const ref = useRef(null);
-  const px = useMotionValue(0);
-  const py = useMotionValue(0);
-  const sx = useSpring(px, { stiffness: 90, damping: 20, mass: 0.5 });
-  const sy = useSpring(py, { stiffness: 90, damping: 20, mass: 0.5 });
-
-  useEffect(() => {
-    const onMove = (e) => {
-      if (!ref.current) return;
-      const r = ref.current.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const cy = r.top + r.height / 2;
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
-      const dist = Math.hypot(dx, dy);
-      if (dist < PROXIMITY_RADIUS) {
-        const falloff = 1 - dist / PROXIMITY_RADIUS;
-        const strength = 26 * falloff;
-        const angle = Math.atan2(dy, dx);
-        px.set(-Math.cos(angle) * strength);
-        py.set(-Math.sin(angle) * strength);
-      } else {
-        px.set(0);
-        py.set(0);
-      }
-    };
-    window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
-  }, [px, py]);
-
-  return (
-    <motion.div
-      ref={ref}
-      className="hero-shape"
-      style={{ position: 'absolute', top, left, width: size, height: size, x: sx, y: sy, zIndex: 1, opacity: 0.92 }}
-    >
-      <motion.div
-        drag
-        dragSnapToOrigin
-        dragElastic={0.7}
-        dragTransition={{ bounceStiffness: 220, bounceDamping: 16 }}
-        onDragStart={onInteract}
-        onTap={onInteract}
-        whileHover={{ scale: 1.18 }}
-        whileDrag={{ scale: 1.28, zIndex: 10 }}
-        style={{ width: '100%', height: '100%' }}
-      >
-        <motion.div
-          animate={{ y: [0, -14, 0], rotate: spin > 0 ? 360 : 0 }}
-          transition={{
-            y: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
-            rotate: spin > 0 ? { duration: spin, repeat: Infinity, ease: 'linear' } : { duration: 0 },
-          }}
-          style={{ width: '100%', height: '100%' }}
-        >
-          <ShapeGraphic kind={kind} size={size} color={color} />
-        </motion.div>
-      </motion.div>
-    </motion.div>
-  );
-};
-
-const ShapeGraphic = ({ kind, size, color }) => {
-  const stroke = 2;
-  const glow = `drop-shadow(0 0 12px ${color}66)`;
-  switch (kind) {
-    case 'cube':
-      return (
-        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
-          <polygon points="50,8 90,30 90,70 50,92 10,70 10,30" fill="none" stroke={color} strokeWidth={stroke} />
-          <polygon points="50,8 50,50 10,30" fill={color} opacity="0.18" />
-          <polygon points="50,8 50,50 90,30" fill={color} opacity="0.32" />
-          <polygon points="50,50 10,30 10,70 50,92" fill={color} opacity="0.10" />
-          <line x1="50" y1="8" x2="50" y2="50" stroke={color} strokeWidth={stroke} opacity="0.7" />
-          <line x1="50" y1="50" x2="10" y2="30" stroke={color} strokeWidth={stroke} opacity="0.7" />
-          <line x1="50" y1="50" x2="90" y2="30" stroke={color} strokeWidth={stroke} opacity="0.7" />
-          <line x1="50" y1="50" x2="50" y2="92" stroke={color} strokeWidth={stroke} opacity="0.7" />
-        </svg>
-      );
-    case 'octa':
-      return (
-        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
-          <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke={color} strokeWidth={stroke} />
-          <polygon points="50,5 50,95 5,50" fill={color} opacity="0.14" />
-          <polygon points="50,5 50,95 95,50" fill={color} opacity="0.28" />
-          <line x1="5" y1="50" x2="95" y2="50" stroke={color} strokeWidth={stroke} opacity="0.7" />
-          <line x1="50" y1="5" x2="50" y2="95" stroke={color} strokeWidth={stroke} opacity="0.7" />
-        </svg>
-      );
-    case 'dpad':
-      return (
-        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
-          <path d="M35 12 H65 V35 H88 V65 H65 V88 H35 V65 H12 V35 H35 Z" fill={color} opacity="0.16" stroke={color} strokeWidth={stroke} strokeLinejoin="round" />
-          <circle cx="50" cy="50" r="6" fill={color} opacity="0.7" />
-        </svg>
-      );
-    case 'coin':
-      return (
-        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
-          <circle cx="50" cy="50" r="42" fill={color} opacity="0.12" stroke={color} strokeWidth={stroke} />
-          <circle cx="50" cy="50" r="34" fill="none" stroke={color} strokeWidth="1" opacity="0.5" />
-          <text x="50" y="63" textAnchor="middle" fontFamily="'Space Grotesk', sans-serif" fontWeight="800" fontSize="36" fill={color} opacity="0.95">$</text>
-        </svg>
-      );
-    case 'pixel':
-      return (
-        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
-          <rect x="8" y="8" width="38" height="38" fill={color} opacity="0.85" />
-          <rect x="54" y="8" width="38" height="38" fill="none" stroke={color} strokeWidth="3" opacity="0.7" />
-          <rect x="8" y="54" width="38" height="38" fill="none" stroke={color} strokeWidth="3" opacity="0.7" />
-          <rect x="54" y="54" width="38" height="38" fill={color} opacity="0.5" />
-        </svg>
-      );
-    case 'tri':
-      return (
-        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
-          <polygon points="20,15 90,50 20,85" fill={color} opacity="0.20" stroke={color} strokeWidth={stroke} strokeLinejoin="round" />
-        </svg>
-      );
-    case 'plus':
-      return (
-        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
-          <path d="M40 10 H60 V40 H90 V60 H60 V90 H40 V60 H10 V40 H40 Z" fill={color} opacity="0.22" stroke={color} strokeWidth={stroke} strokeLinejoin="round" />
-        </svg>
-      );
-    case 'ring':
-    default:
-      return (
-        <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: glow }}>
-          <circle cx="50" cy="50" r="42" fill="none" stroke={color} strokeWidth={stroke} />
-          <circle cx="50" cy="50" r="32" fill="none" stroke={color} strokeWidth="1" opacity="0.5" />
-          <circle cx="50" cy="50" r="6" fill={color} />
-        </svg>
-      );
-  }
-};
-
 const PortraitCard = () => (
   <div className="hero-portrait-frame" style={{
     position: 'relative',
@@ -586,14 +428,14 @@ const PortraitCard = () => (
       borderRadius: 40,
     }} />
     <div className="hero-portrait-card" style={{
-      background: 'rgba(13,13,26,0.92)',
-      border: '1px solid rgba(0,212,255,0.18)',
+      background: 'rgba(12,14,24,0.92)',
+      border: '1px solid rgba(255,255,255,0.10)',
       borderRadius: 28,
       padding: 26,
-      boxShadow: '0 40px 100px rgba(0,0,0,0.75), inset 0 0 0 1px rgba(255,255,255,0.04), 0 0 44px rgba(0,212,255,0.10)',
+      boxShadow: '0 40px 100px rgba(0,0,0,0.75), inset 0 0 0 1px rgba(255,255,255,0.04), 0 0 44px rgba(0,212,255,0.08)',
       transformStyle: 'preserve-3d',
     }}>
-      {/* HUD top bar */}
+      {/* HUD top bar — clean engine telemetry */}
       <div style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         marginBottom: 14,
@@ -602,14 +444,14 @@ const PortraitCard = () => (
         letterSpacing: '0.14em',
         transform: 'translateZ(10px)',
       }}>
-        <span style={{ color: '#00d4ff' }}>PLAYER_01</span>
-        <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#00ff88' }}>
+        <span style={{ color: '#94a3b8' }}>ENGINE: <span style={{ color: '#c084fc' }}>UE5</span> + <span style={{ color: '#00d4ff' }}>UNITY</span></span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#34d399' }}>
           <motion.span
             animate={{ opacity: [1, 0.3, 1] }}
             transition={{ duration: 1.6, repeat: Infinity }}
-            style={{ width: 6, height: 6, borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88' }}
+            style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 8px #34d399' }}
           />
-          ONLINE
+          READY
         </span>
       </div>
 
@@ -619,7 +461,7 @@ const PortraitCard = () => (
         aspectRatio: '16/10',
         borderRadius: 16,
         overflow: 'hidden',
-        border: '1px solid rgba(0,212,255,0.22)',
+        border: '1px solid rgba(0,212,255,0.18)',
         background: '#0a0a14',
         marginBottom: 14,
         transform: 'translateZ(10px)',
@@ -631,12 +473,7 @@ const PortraitCard = () => (
         />
         <div style={{
           position: 'absolute', inset: 0,
-          backgroundImage: 'repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,212,255,0.04) 2px 3px)',
-          pointerEvents: 'none',
-        }} />
-        <div style={{
-          position: 'absolute', inset: 0,
-          boxShadow: 'inset 0 0 50px rgba(0,0,0,0.7)',
+          boxShadow: 'inset 0 0 50px rgba(0,0,0,0.6)',
           pointerEvents: 'none',
         }} />
         <Bracket pos="tl" />
@@ -645,11 +482,11 @@ const PortraitCard = () => (
         <Bracket pos="br" />
       </div>
 
-      {/* Identity strip */}
+      {/* Identity strip — clean, professional */}
       <div className="hero-identity-strip" style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         padding: '10px 14px',
-        background: 'rgba(0,212,255,0.05)',
+        background: 'rgba(0,212,255,0.04)',
         borderRadius: 10,
         borderLeft: '2px solid #00d4ff',
         transform: 'translateZ(10px)',
@@ -657,20 +494,20 @@ const PortraitCard = () => (
         <div>
           <div style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: '0.6rem', color: '#444460',
+            fontSize: '0.6rem', color: '#64748b',
             letterSpacing: '0.12em', marginBottom: 2,
-          }}>CLASS</div>
-          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.92rem', fontWeight: 700, color: '#f0f0f8' }}>
+          }}>ROLE</div>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.92rem', fontWeight: 700, color: '#f1f5f9' }}>
             Game Developer
           </div>
         </div>
         <div style={{ textAlign: 'right' }}>
           <div style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: '0.6rem', color: '#444460',
+            fontSize: '0.6rem', color: '#64748b',
             letterSpacing: '0.12em', marginBottom: 2,
           }}>BASE</div>
-          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.92rem', fontWeight: 700, color: '#f0f0f8' }}>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.92rem', fontWeight: 700, color: '#f1f5f9' }}>
             Ahmedabad
           </div>
         </div>
@@ -721,7 +558,7 @@ const MagneticButton = ({ children, primary, onClick }) => {
         letterSpacing: '-0.01em',
         border: primary ? 'none' : '1px solid rgba(255,255,255,0.12)',
         background: primary ? '#00d4ff' : 'transparent',
-        color: primary ? '#08080f' : '#f0f0f8',
+        color: primary ? '#060610' : '#f1f5f9',
         cursor: 'pointer',
       }}
       whileHover={primary
