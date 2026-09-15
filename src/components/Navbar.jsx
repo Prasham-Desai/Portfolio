@@ -33,8 +33,12 @@ const Navbar = () => {
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
-    // Uses CSS scroll-margin-top for consistent navbar-to-title spacing
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Dynamically measure the navbar's actual rendered height
+    const nav = document.querySelector('.site-nav');
+    const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+    const gap = 4; // minimal gap between navbar bottom and section top
+    const top = el.getBoundingClientRect().top + window.scrollY - navHeight - gap;
+    window.scrollTo({ top, behavior: 'smooth' });
   };
 
   const handleLogoClick = (e) => {

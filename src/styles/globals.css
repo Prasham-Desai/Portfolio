@@ -32,7 +32,7 @@
 
   --container-gutter: clamp(20px, 4vw, 48px);
   --nav-height: 64px;
-  --section-scroll-top: calc(var(--nav-height) + 20px);
+  --section-scroll-top: calc(var(--nav-height) + 4px);
   --section-space: clamp(88px, 11vw, 130px);
   --section-space-tight: clamp(72px, 9vw, 110px);
   --nav-offset: clamp(88px, 9vw, 112px);
