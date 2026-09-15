@@ -84,10 +84,10 @@ const ProjectCard = ({ project, index }) => {
     <motion.div
       ref={cardRef}
       className="project-card"
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.36), ease: [0.22, 1, 0.36, 1] }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       style={{ perspective: 900, height: CARD_HEIGHT }}
@@ -202,31 +202,31 @@ const ProjectCard = ({ project, index }) => {
             )}
 
             {/* Arrow */}
-            <motion.div
-              whileHover={{ scale: 1.15, borderColor: project.accentColor }}
+            <div
               style={{
                 position: 'absolute', top: 14, right: 14,
                 width: 30, height: 30,
                 borderRadius: '50%',
                 border: `1px solid ${project.accentColor}50`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
+                transition: 'border-color 0.25s ease, transform 0.25s ease',
               }}
             >
               <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
                 <path d="M2 10L10 2M10 2H4M10 2V8" stroke={project.accentColor} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-            </motion.div>
+            </div>
 
-            {/* Accent bar at bottom */}
-            <motion.div
-              initial={{ scaleX: 0 }}
-              whileHover={{ scaleX: 1 }}
-              transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+            {/* Accent bar at bottom — CSS hover via parent */}
+            <div
+              className="project-card-accent-bar"
               style={{
                 position: 'absolute', bottom: 0, left: 0, right: 0,
                 height: 2,
                 background: `linear-gradient(90deg, ${project.accentColor}, transparent)`,
                 transformOrigin: 'left',
+                transform: 'scaleX(0)',
+                transition: 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
               }}
             />
           </div>
@@ -295,9 +295,8 @@ const ProjectCard = ({ project, index }) => {
             <div style={{ paddingTop: 16 }}>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 14 }}>
                 {project.tags.map(tag => (
-                  <motion.span
+                  <span
                     key={tag}
-                    whileHover={{ scale: 1.06 }}
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
                       fontSize: '0.65rem',
@@ -310,7 +309,7 @@ const ProjectCard = ({ project, index }) => {
                     }}
                   >
                     {tag}
-                  </motion.span>
+                  </span>
                 ))}
               </div>
 
@@ -325,8 +324,8 @@ const ProjectCard = ({ project, index }) => {
                   color: project.accentColor,
                   opacity: 0.75,
                 }}
-                whileHover={{ opacity: 1, x: 3 }}
-                transition={{ duration: 0.2 }}
+                whileHover={{ opacity: 1, x: 5 }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
               >
                 View Case Study
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

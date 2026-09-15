@@ -116,10 +116,10 @@ const Experience = () => {
 
       <div className="container" style={{ position: 'relative' }}>
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           style={{ marginBottom: 64 }}
         >
           <div className="section-label">Professional Experience</div>
@@ -176,8 +176,8 @@ const Experience = () => {
                 key={card.company}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.36), ease: [0.22, 1, 0.36, 1] }}
                 style={{
                   background: 'rgba(17,17,32,0.7)',
                   border: `1px solid ${card.accentColor}22`,
@@ -313,8 +313,8 @@ const Experience = () => {
                 key={`${item.role}-${item.period}`}
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, delay: index * 0.07, ease: [0.25, 0.1, 0.25, 1] }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.36), ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ borderColor: `${item.color}35`, y: -2 }}
                 style={{
                   position: 'relative',
@@ -323,7 +323,6 @@ const Experience = () => {
                   borderRadius: 18,
                   padding: 28,
                   marginBottom: 18,
-                  transition: 'all 0.25s ease',
                 }}
               >
                 <div

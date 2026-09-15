@@ -114,10 +114,10 @@ const Contact = () => {
 
       <div className="container" style={{ position: 'relative' }}>
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           style={{ marginBottom: 64 }}
         >
           <div className="section-label">Get In Touch</div>
@@ -160,8 +160,8 @@ const Contact = () => {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
             {contactLinks.map((item, i) => (
               <motion.a
@@ -171,9 +171,9 @@ const Contact = () => {
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.1 + 0.1 }}
-                whileHover={{ x: 4, borderColor: `${item.color}40` }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: Math.min(i * 0.06 + 0.1, 0.4) }}
+                whileHover={{ borderColor: `${item.color}40` }}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -185,7 +185,6 @@ const Contact = () => {
                   boxShadow: `inset 2px 0 0 ${item.color}55`,
                   marginBottom: 12,
                   textDecoration: 'none',
-                  transition: 'all 0.25s ease',
                 }}
               >
                 <div style={{
@@ -249,8 +248,8 @@ const Contact = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6, delay: 0.08, ease: [0.25, 0.1, 0.25, 1] }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="contact-form-card" style={{
               background: 'rgba(17,17,32,0.7)',

@@ -5,12 +5,12 @@ import { useInView } from 'react-intersection-observer';
    a smooth ease that feels natural, not choppy or laggy. */
 const Reveal = ({
   children,
-  y = 32,
+  y = 24,
   x = 0,
   scale = 1,
   blur = 0,
   delay = 0,
-  duration = 0.7,
+  duration = 0.5,
   threshold = 0.05,
   as = 'div',
   style,
@@ -19,8 +19,8 @@ const Reveal = ({
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold,
-    // Fire when element is 80px from entering the viewport
-    rootMargin: '0px 0px -80px 0px',
+    // Fire when element is 40px from entering the viewport
+    rootMargin: '0px 0px -40px 0px',
   });
   const MotionTag = motion[as] || motion.div;
 
@@ -33,7 +33,7 @@ const Reveal = ({
           ? { opacity: 1, y: 0, x: 0, scale: 1 }
           : undefined
       }
-      transition={{ duration, delay, ease: [0.25, 0.1, 0.25, 1] }}
+      transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
       style={style}
       className={className}
     >

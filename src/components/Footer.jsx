@@ -81,7 +81,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               aria-label={label}
               title={label}
-              whileHover={{ color: hover, y: -2, scale: 1.08 }}
+              whileHover={{ color: hover, scale: 1.08 }}
               style={{
                 width: 42,
                 height: 42,

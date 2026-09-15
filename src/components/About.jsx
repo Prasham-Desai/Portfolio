@@ -61,10 +61,10 @@ const About = () => {
       <div className="container">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           style={{ marginBottom: 80 }}
         >
           <div className="section-label">The Story</div>
@@ -99,10 +99,10 @@ const About = () => {
           {/* Left: Bio cards */}
           <div>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 background: 'rgba(17,17,32,0.7)',
                 border: '1px solid rgba(255,255,255,0.06)',
@@ -150,18 +150,17 @@ const About = () => {
               ].map((card, i) => (
                 <motion.div
                   key={card.label}
-                  initial={{ opacity: 0, y: 28 }}
+                  initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.1 + 0.25 }}
-                  whileHover={{ borderColor: `${card.color}40`, scale: 1.02 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: Math.min(i * 0.06 + 0.15, 0.5) }}
+                  whileHover={{ borderColor: `${card.color}40` }}
                   style={{
                     padding: '16px 20px',
                     background: 'rgba(13,13,26,0.6)',
                     border: '1px solid rgba(255,255,255,0.05)',
                     borderRadius: 12,
                     boxShadow: `inset 2px 0 0 ${card.color}50`,
-                    transition: 'all 0.25s ease',
                   }}
                 >
                   <div style={{
@@ -203,8 +202,8 @@ const About = () => {
                   key={item.year}
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.12 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: Math.min(i * 0.06, 0.36) }}
                   style={{
                     display: 'flex',
                     gap: 24,

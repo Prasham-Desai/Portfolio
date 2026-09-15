@@ -181,7 +181,7 @@ const Hero = () => {
                   { v: '2', l: 'Game Engines' },
                   { v: 'C++', l: 'Primary Language' },
                 ].map(s => (
-                  <motion.div className="hero-stat" key={s.l} whileHover={{ y: -3 }} transition={{ type: 'spring', stiffness: 300 }}>
+                  <motion.div className="hero-stat" key={s.l} whileHover={{ y: -2 }} transition={{ type: 'spring', stiffness: 260, damping: 20 }}>
                     <div style={{
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontSize: '1.9rem', fontWeight: 800,
@@ -392,7 +392,7 @@ const FadeUp = ({ children }) => (
   <motion.div
     variants={{
       hidden: { opacity: 0, y: 24 },
-      show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] } },
+      show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
     }}
   >
     {children}
@@ -517,8 +517,8 @@ const MagneticButton = ({ children, primary, onClick }) => {
   const ref = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 200, damping: 15 });
-  const sy = useSpring(y, { stiffness: 200, damping: 15 });
+  const sx = useSpring(x, { stiffness: 200, damping: 22 });
+  const sy = useSpring(y, { stiffness: 200, damping: 22 });
 
   const onMove = (e) => {
     if (!ref.current) return;

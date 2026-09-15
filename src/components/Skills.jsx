@@ -109,10 +109,10 @@ const Skills = () => {
       <div className="container" style={{ position: 'relative' }}>
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           style={{ marginBottom: 64 }}
         >
           <div className="section-label">Technical Arsenal</div>
@@ -146,8 +146,8 @@ const Skills = () => {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="skills-node-list" style={{ marginBottom: 24 }}>
               {skillGroups.map((group, i) => (
@@ -155,10 +155,10 @@ const Skills = () => {
                   key={group.id}
                   className="skill-node"
                   onClick={() => setActiveGroup(group.id)}
-                  whileHover={{ x: 6 }}
+                  whileHover={{ borderColor: `${group.color}50` }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.08 }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: Math.min(i * 0.06, 0.36) }}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -175,7 +175,7 @@ const Skills = () => {
                       : '1px solid rgba(255,255,255,0.04)',
                     boxShadow: `inset 2px 0 0 ${activeGroup === group.id ? `${group.color}70` : 'rgba(255,255,255,0.08)'}`,
                     cursor: 'pointer',
-                    transition: 'all 0.25s ease',
+                    transition: 'background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease',
                     textAlign: 'left',
                   }}
                 >
@@ -282,8 +282,8 @@ const Skills = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6, delay: 0.08, ease: [0.25, 0.1, 0.25, 1] }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
             <AnimatePresence mode="wait">
               <motion.div

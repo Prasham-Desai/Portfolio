@@ -58,10 +58,10 @@ const Projects = () => {
 
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           style={{ marginBottom: 64 }}
         >
           <div className="section-label" style={{ fontSize: '0.8rem', marginBottom: 18 }}>
@@ -98,8 +98,8 @@ const Projects = () => {
             <motion.p
               initial={{ opacity: 0, x: 16 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: 0.1 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.97rem',
@@ -152,7 +152,7 @@ const Projects = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           style={{
             display: 'flex',
             justifyContent: 'center',
@@ -200,6 +200,10 @@ const Projects = () => {
       <style>{`
         #projects .project-card {
           min-width: 0;
+        }
+
+        #projects .project-card:hover .project-card-accent-bar {
+          transform: scaleX(1) !important;
         }
 
         @media (max-width: 1120px) {
