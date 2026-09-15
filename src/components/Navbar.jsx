@@ -34,11 +34,18 @@ const Navbar = () => {
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
+    
     // Dynamically measure the navbar's actual rendered height
     const nav = document.querySelector('.site-nav');
     const navHeight = nav ? nav.getBoundingClientRect().height : 0;
-    const gap = 4; // minimal gap between navbar bottom and section top
-    const top = el.getBoundingClientRect().top + window.scrollY - navHeight - gap;
+    
+    // Dynamically measure the target element's padding-top so we scroll to the actual content
+    const computedStyle = window.getComputedStyle(el);
+    const paddingTop = parseFloat(computedStyle.paddingTop) || 0;
+    
+    const gap = 12; // 10-15px distance between navbar bottom and content top
+    const top = el.getBoundingClientRect().top + window.scrollY - navHeight + paddingTop - gap;
+    
     window.scrollTo({ top, behavior: 'smooth' });
   };
 

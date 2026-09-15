@@ -292,11 +292,10 @@ const CustomCursor = () => {
         }}
       />
 
-      {/* ─── Target lock label (hover state) ─── */}
       {hovering && !textMode && (
         <motion.div
-          initial={{ opacity: 0, y: 4 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           style={{
             position: 'fixed',
