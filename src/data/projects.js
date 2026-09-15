@@ -9,6 +9,13 @@ export const projects = [
     platform: "PC",
     year: "2024",
     engine: "Unreal Engine",
+    associatedWith: {
+      type: "self",
+      name: "Independent Transition",
+      description: "An independent personal project built to master Unreal Engine 5 production workflows.",
+      badge: "Independent",
+      color: "#c084fc"
+    },
     featured: true,
     coverColor: "#1a0a00",
     accentColor: "#dc143c",
@@ -44,6 +51,13 @@ export const projects = [
     platform: "Windows",
     year: "2024",
     engine: "Unreal Engine",
+    associatedWith: {
+      type: "self",
+      name: "Independent Transition",
+      description: "An independent personal project built to master Unreal Engine 5 production workflows.",
+      badge: "Independent",
+      color: "#c084fc"
+    },
     featured: true,
     coverColor: "#05101a", 
     accentColor: "#00d4ff",
@@ -81,6 +95,13 @@ export const projects = [
     platform: "Windows",
     year: "2024",
     engine: "Unreal Engine",
+    associatedWith: {
+      type: "self",
+      name: "Independent Transition",
+      description: "An independent personal project built to master Unreal Engine 5 production workflows.",
+      badge: "Independent",
+      color: "#c084fc"
+    },
     featured: true,
     coverColor: "#0a121e",
     accentColor: "#34d399",
@@ -117,6 +138,13 @@ export const projects = [
     platform: "PC",
     year: "2024",
     engine: "Unreal Engine",
+    associatedWith: {
+      type: "self",
+      name: "Independent Transition",
+      description: "An independent personal project built to master Unreal Engine 5 production workflows.",
+      badge: "Independent",
+      color: "#c084fc"
+    },
     featured: false,
     coverColor: "#120505",
     accentColor: "#fb923c",
@@ -151,6 +179,13 @@ export const projects = [
     platform: "Windows",
     year: "2024",
     engine: "Unreal Engine",
+    associatedWith: {
+      type: "self",
+      name: "Independent Transition",
+      description: "An independent personal project built to master Unreal Engine 5 production workflows.",
+      badge: "Independent",
+      color: "#c084fc"
+    },
     featured: false,
     coverColor: "#1a1525",
     accentColor: "#c084fc",
@@ -185,6 +220,13 @@ export const projects = [
     platform: "Windows",
     year: "2024",
     engine: "Unreal Engine",
+    associatedWith: {
+      type: "self",
+      name: "Independent Transition",
+      description: "An independent personal project built to master Unreal Engine 5 production workflows.",
+      badge: "Independent",
+      color: "#c084fc"
+    },
     featured: false,
     coverColor: "#051515",
     accentColor: "#00fff2",
@@ -218,6 +260,13 @@ export const projects = [
     platform: "Windows",
     year: "2024",
     engine: "Unreal Engine",
+    associatedWith: {
+      type: "self",
+      name: "Independent Transition",
+      description: "An independent personal project built to master Unreal Engine 5 production workflows.",
+      badge: "Independent",
+      color: "#c084fc"
+    },
     featured: false,
     coverColor: "#150505",
     accentColor: "#ff5263",
@@ -252,6 +301,13 @@ export const projects = [
     platform: "Windows",
     year: "2024",
     engine: "Unreal Engine",
+    associatedWith: {
+      type: "self",
+      name: "Independent Transition",
+      description: "An independent personal project built to master Unreal Engine 5 production workflows.",
+      badge: "Independent",
+      color: "#c084fc"
+    },
     featured: false,
     coverColor: "#101010",
     accentColor: "#fb923c",
@@ -284,6 +340,13 @@ export const projects = [
     platform: "Windows",
     year: "2024",
     engine: "Unreal Engine",
+    associatedWith: {
+      type: "self",
+      name: "Independent Transition",
+      description: "An independent personal project built to master Unreal Engine 5 production workflows.",
+      badge: "Independent",
+      color: "#c084fc"
+    },
     featured: false,
     coverColor: "#2a1010",
     accentColor: "#ff5263",

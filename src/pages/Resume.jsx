@@ -12,7 +12,7 @@ const Resume = () => {
       fontFamily: "'Inter', sans-serif"
     }}>
       <div className="container" style={{ 
-        maxWidth: 850, 
+        maxWidth: 1100, 
         margin: '0 auto', 
         padding: '0 24px',
         position: 'relative'
