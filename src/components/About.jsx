@@ -32,7 +32,7 @@ const timelineItems = [
   {
     year: 'Now',
     title: 'Looking Forward',
-    body: 'Focused on Unreal Engine Blueprints, Unreal C++, gameplay prototypes, and studio-ready production workflows while continuing to sharpen multiplayer architecture and AR/VR systems.',
+    body: 'Fully transitioned to Unreal Engine 5, focusing on independent development. Mastering Blueprint visual scripting to build robust systems like Chaos Vehicles, UMG UI architectures, Paper2D platforming, and dynamic NavMesh AI.',
     color: '#00d4ff',
     icon: '◈',
   },

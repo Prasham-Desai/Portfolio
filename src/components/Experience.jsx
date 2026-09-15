@@ -8,9 +8,9 @@ const experienceItems = [
     duration: 'Ongoing',
     color: '#c084fc',
     responsibilities: [
-      'Building gameplay prototypes in Unreal Engine 5 using C++ and Blueprints.',
-      'Implementing gameplay systems with GAS, Behavior Trees, EQS, and Enhanced Input.',
-      'Studying engine architecture, multiplayer replication, and production workflows in UE5.',
+      'Architecting diverse gameplay experiences in Unreal Engine 5, spanning 2D action platformers to 3D vehicle simulators.',
+      'Engineering complex modular systems, from physics-driven Chaos Vehicles to dynamic AI behaviors using Behavior Trees and NavMesh.',
+      'Designing production-ready UMG interfaces, seamless camera blending, and robust interactions leveraging Blueprint visual scripting.',
     ],
   },
   {

@@ -59,24 +59,29 @@ const SkillGroupIcon = ({ id }) => {
 };
 
 const SkillBar = ({ name, level, color, inView, delay }) => (
-  <div style={{ marginBottom: 16 }}>
+  <motion.div 
+    whileHover={{ x: 4, scale: 1.01 }}
+    transition={{ duration: 0.2 }}
+    style={{ marginBottom: 16, padding: '4px 0', cursor: 'default' }}
+  >
     <div style={{
       display: 'flex',
       justifyContent: 'space-between',
-      marginBottom: 7,
+      marginBottom: 8,
       fontFamily: "'Space Grotesk', sans-serif",
       fontSize: '0.97rem',
     }}>
-      <span style={{ color: '#c0c0d0', fontWeight: 500 }}>{name}</span>
-      <span style={{ color: '#444460', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem' }}>
+      <span style={{ color: '#e2e8f0', fontWeight: 600 }}>{name}</span>
+      <span style={{ color: color, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textShadow: `0 0 8px ${color}88` }}>
         {level}%
       </span>
     </div>
     <div style={{
-      height: 3,
-      background: 'rgba(255,255,255,0.05)',
-      borderRadius: 2,
-      overflow: 'hidden',
+      height: 4,
+      background: 'rgba(255,255,255,0.08)',
+      borderRadius: 4,
+      overflow: 'visible',
+      position: 'relative'
     }}>
       <motion.div
         initial={{ width: 0 }}
@@ -84,13 +89,25 @@ const SkillBar = ({ name, level, color, inView, delay }) => (
         transition={{ duration: 1.2, delay, ease: [0.4, 0, 0.2, 1] }}
         style={{
           height: '100%',
-          background: `linear-gradient(90deg, ${color}, ${color}bb)`,
-          borderRadius: 2,
-          boxShadow: `0 0 8px ${color}40`,
+          background: `linear-gradient(90deg, ${color}88, ${color})`,
+          borderRadius: 4,
+          boxShadow: `0 0 12px ${color}88, 0 0 24px ${color}44`,
+          position: 'relative'
         }}
-      />
+      >
+        <div style={{
+          position: 'absolute',
+          right: 0,
+          top: -2,
+          bottom: -2,
+          width: 2,
+          background: '#fff',
+          boxShadow: `0 0 10px #fff`,
+          borderRadius: 4
+        }} />
+      </motion.div>
     </div>
-  </div>
+  </motion.div>
 );
 
 const Skills = () => {

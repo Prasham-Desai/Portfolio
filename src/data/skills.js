@@ -5,10 +5,10 @@ export const skillGroups = [
     icon: "⬡",
     color: "#c084fc",
     skills: [
-      { name: "Unreal Engine 5 (C++)", level: 65, years: "1+" },
-      { name: "Blueprints Visual Scripting", level: 70, years: "1+" },
-      { name: "Gameplay Ability System", level: 55, years: "0.5+" },
-      { name: "Gameplay Framework", level: 65, years: "1+" },
+      { name: "Unreal Engine 5.6", level: 85, years: "1+" },
+      { name: "Blueprints Visual Scripting", level: 90, years: "1+" },
+      { name: "Chaos Vehicles", level: 75, years: "0.5+" },
+      { name: "Paper2D", level: 70, years: "0.5+" },
     ]
   },
   {
@@ -29,10 +29,10 @@ export const skillGroups = [
     icon: "◈",
     color: "#34d399",
     skills: [
-      { name: "Behavior Trees & EQS", level: 55, years: "0.5+" },
-      { name: "AI Perception & Navigation", level: 50, years: "0.5+" },
-      { name: "Combat & Ability Systems", level: 60, years: "1+" },
-      { name: "Enhanced Input System", level: 65, years: "1+" },
+      { name: "Behavior Trees & Blackboards", level: 75, years: "1+" },
+      { name: "NavMesh Pathfinding", level: 80, years: "1+" },
+      { name: "Enhanced Input Subsystem", level: 85, years: "1+" },
+      { name: "Blueprint Interfaces", level: 85, years: "1+" },
     ]
   },
   {
@@ -74,6 +74,6 @@ export const techLogos = [
   { name: "Git", category: "Tools" },
   { name: "Visual Studio", category: "Tools" },
   { name: "DOTS", category: "Engine" },
-  { name: "GAS", category: "Engine" },
-  { name: "AR/VR", category: "Emerging" },
+  { name: "Chaos Vehicles", category: "Engine" },
+  { name: "UMG", category: "Engine" },
 ];
