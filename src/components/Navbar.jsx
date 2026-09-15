@@ -34,9 +34,8 @@ const Navbar = () => {
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const offset = isCaseStudy ? CASE_STUDY_SCROLL_OFFSET : HOME_SCROLL_OFFSET;
-    const top = window.scrollY + el.getBoundingClientRect().top - offset;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    // Uses CSS scroll-margin-top for consistent navbar-to-title spacing
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const handleLogoClick = (e) => {

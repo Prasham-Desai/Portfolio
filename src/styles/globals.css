@@ -31,6 +31,8 @@
   --radius-xl: 32px;
 
   --container-gutter: clamp(20px, 4vw, 48px);
+  --nav-height: 64px;
+  --section-scroll-top: calc(var(--nav-height) + 20px);
   --section-space: clamp(88px, 11vw, 130px);
   --section-space-tight: clamp(72px, 9vw, 110px);
   --nav-offset: clamp(88px, 9vw, 112px);
@@ -89,6 +91,11 @@ input, textarea {
 
 main {
   width: 100%;
+}
+
+/* Scroll-margin so navbar-click lands title right below nav */
+section[id] {
+  scroll-margin-top: var(--section-scroll-top);
 }
 
 /* ============================
@@ -299,13 +306,18 @@ main {
 }
 
 /* Custom cursor only on devices with fine pointers (desktops with a mouse) */
-@media (pointer: fine) {
+@media (pointer: fine) and (hover: hover) {
+  *,
   html,
   a,
   button,
   input,
-  textarea {
-    cursor: none;
+  textarea,
+  select,
+  label,
+  [role="button"],
+  [tabindex] {
+    cursor: none !important;
   }
 }
 
@@ -335,6 +347,7 @@ main {
     --section-space: clamp(56px, 9vw, 88px);
     --section-space-tight: clamp(48px, 7vw, 72px);
     --container-gutter: clamp(16px, 4vw, 28px);
+    --nav-height: 54px;
   }
 
   body {
@@ -358,6 +371,7 @@ main {
     --section-space: clamp(48px, 8vw, 72px);
     --section-space-tight: clamp(40px, 6vw, 56px);
     --container-gutter: 16px;
+    --nav-height: 50px;
   }
 
   body {
