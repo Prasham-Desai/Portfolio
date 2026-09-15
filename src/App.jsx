@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import ProjectDetail from './pages/ProjectDetail';
 import ProjectsPage from './pages/ProjectsPage';
+import Resume from './pages/Resume';
 
 import './styles/globals.css';
 
@@ -46,6 +47,7 @@ const AppContent = () => {
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/project/:id" element={<ProjectDetail />} />
+          <Route path="/resume" element={<Resume />} />
         </Routes>
       </PageTransition>
       <Footer />

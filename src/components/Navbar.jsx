@@ -28,6 +28,7 @@ const Navbar = () => {
   const isHome = location.pathname === '/';
   const isProjectsPage = location.pathname === '/projects';
   const isCaseStudy = location.pathname.startsWith('/project/');
+  const isResumePage = location.pathname === '/resume';
   const navLinks = isCaseStudy ? caseStudyNavLinks : homeNavLinks;
 
   const scrollToSection = (id) => {
@@ -242,6 +243,27 @@ const Navbar = () => {
                 </motion.span>
               </Link>
             )}
+
+            {/* Resume link */}
+            <Link to="/resume" style={{ textDecoration: 'none' }}>
+              <motion.span
+                whileHover={{ color: '#34d399', scale: 1.04 }}
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: '0.95rem',
+                  fontWeight: 600,
+                  padding: '8px 18px',
+                  borderRadius: 8,
+                  letterSpacing: '0.01em',
+                  whiteSpace: 'nowrap',
+                  color: isResumePage ? '#34d399' : '#e8e8f4',
+                  cursor: 'pointer',
+                  background: isResumePage ? 'rgba(52,211,153,0.08)' : 'transparent',
+                }}
+              >
+                Resume
+              </motion.span>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -341,6 +363,28 @@ const Navbar = () => {
               }}
             >
               All Projects
+            </motion.button>
+
+            {/* Mobile Resume link */}
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: (navLinks.length + 1) * 0.08 }}
+              onClick={() => {
+                setMobileOpen(false);
+                navigate('/resume');
+              }}
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: '#34d399',
+                background: 'transparent',
+                border: 'none',
+                letterSpacing: '-0.02em',
+              }}
+            >
+              Resume
             </motion.button>
           </motion.div>
         )}
