@@ -18,7 +18,6 @@ const caseStudyNavLinks = [
 ];
 
 const HOME_SCROLL_OFFSET = 80;
-const CASE_STUDY_SCROLL_OFFSET = 80;
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
