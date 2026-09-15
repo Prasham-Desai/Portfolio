@@ -1,4 +1,58 @@
 export const projectAssets = {
+  'red-hood': {
+    icon: 'RedHood.png',
+    homeBanner: 'RedHood-Banner.png',
+    caseStudyBanner: 'RedHood-Banner.png',
+    screenshotsFolder: 'RedHood',
+  },
+  'jetpack-journey': {
+    icon: 'JetpackJourney.png',
+    homeBanner: 'JetpackJourney-Banner.png',
+    caseStudyBanner: 'JetpackJourney-Banner.png',
+    screenshotsFolder: 'JetpackJourney',
+  },
+  'shooter-game-ui': {
+    icon: 'ShooterGameUI.png',
+    homeBanner: 'ShooterGameUI-Banner.png',
+    caseStudyBanner: 'ShooterGameUI-Banner.png',
+    screenshotsFolder: 'ShooterGameUI',
+  },
+  badbot: {
+    icon: 'BadBot.png',
+    homeBanner: 'BadBot-Banner.png',
+    caseStudyBanner: 'BadBot-Banner.png',
+    screenshotsFolder: 'BadBot',
+  },
+  'chaos-vehicles': {
+    icon: 'ChaosVehicles.png',
+    homeBanner: 'ChaosVehicles-Banner.png',
+    caseStudyBanner: 'ChaosVehicles-Banner.png',
+    screenshotsFolder: 'ChaosVehicles',
+  },
+  'crystal-cavern': {
+    icon: 'CrystalCavern.png',
+    homeBanner: 'CrystalCavern-Banner.png',
+    caseStudyBanner: 'CrystalCavern-Banner.png',
+    screenshotsFolder: 'CrystalCavern',
+  },
+  'horror-game-menu': {
+    icon: 'HorrorGameMenu.png',
+    homeBanner: 'HorrorGameMenu-Banner.png',
+    caseStudyBanner: 'HorrorGameMenu-Banner.png',
+    screenshotsFolder: 'HorrorGameMenu',
+  },
+  'marble-run': {
+    icon: 'MarbleRun.png',
+    homeBanner: 'MarbleRun-Banner.png',
+    caseStudyBanner: 'MarbleRun-Banner.png',
+    screenshotsFolder: 'MarbleRun',
+  },
+  'mars-marine': {
+    icon: 'MarsMarine.png',
+    homeBanner: 'MarsMarine-Banner.png',
+    caseStudyBanner: 'MarsMarine-Banner.png',
+    screenshotsFolder: 'MarsMarine',
+  },
   chesstrix: {
     icon: 'Chesstrix.png',
     homeBanner: 'Chess Banner.png',

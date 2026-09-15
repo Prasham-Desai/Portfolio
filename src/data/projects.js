@@ -1,76 +1,313 @@
 export const projects = [
   // ── Unreal Engine Projects ──
   {
-    id: "ue5-combat-prototype",
-    title: "Combat Prototype",
-    tagline: "Third-Person Action Combat System",
-    shortDescription: "A third-person melee combat prototype built in Unreal Engine 5 with Gameplay Ability System, custom combo chains, and responsive character movement.",
-    category: "Action / Combat",
+    id: "red-hood",
+    title: "Red Hood",
+    tagline: "A 2D Pixel Art Platformer Dungeon Crawler",
+    shortDescription: "A 2D action platformer and dungeon crawler developed in Unreal Engine 5 featuring combo attacks and Behavior Tree AI.",
+    category: "2D Platformer / Dungeon Crawler",
     platform: "PC",
-    year: "2025",
+    year: "2024",
     engine: "Unreal Engine",
     featured: true,
-    coverColor: "#1a0a2e",
-    accentColor: "#c084fc",
-    tags: ["Unreal Engine", "C++", "Blueprints", "GAS"],
+    coverColor: "#1a0a00",
+    accentColor: "#dc143c",
+    tags: ["Unreal Engine", "Blueprints", "Paper2D", "Behavior Trees", "NavMesh"],
     thumbnail: null,
-    overview: "A third-person melee combat prototype exploring Unreal Engine 5's Gameplay Ability System (GAS) for combo-driven action. Features custom C++ ability tasks, montage-driven attack chains, and a responsive character controller with Enhanced Input.",
-    problem: "Building production-quality combat in UE5 requires deep integration with GAS, animation montages, and precise input buffering — challenges that test engine architecture knowledge.",
-    goal: "Implement a responsive, extensible combat system using GAS, Enhanced Input, and C++ gameplay framework classes.",
+    github: "https://github.com/Prasham-Desai/RedHood",
+    overview: "Red Hood is a 2D action platformer and dungeon crawler developed in Unreal Engine 5. Step into perilous underground dungeons filled with traps, treasures, and undead foes. Guide your hooded adventurer through the darkness, torch in hand, as you fight skeleton warriors and discover hidden vaults.",
+    problem: "Developing a 2D platformer inside a 3D engine like Unreal Engine 5 requires careful handling of Paper2D components and single-plane movement.",
+    goal: "Create a true side-scrolling experience built inside the Unreal Engine 3D viewport with fluid 2D flipbook animations.",
     systems: [
-      { name: "Gameplay Ability System", description: "Custom GameplayAbilities for light attacks, heavy attacks, dodges, and blocking with attribute-driven damage calculation." },
-      { name: "Combo Chain System", description: "Input-buffered combo system using Gameplay Tags and ability activation policies for fluid multi-hit chains." },
-      { name: "Character Movement", description: "Extended UCharacterMovementComponent with custom movement modes for dodge rolls, lunges, and root motion integration." },
-      { name: "Enhanced Input", description: "Full Enhanced Input setup with context-sensitive input mapping and action bindings." }
+      { name: "Combo Attack System", description: "3-hit combo chain where each successive strike deals escalating damage, rewarding aggressive play and precise timing." },
+      { name: "Enemy AI", description: "Built using Unreal's AI Controller, Behavior Tree, and Blackboard system for structured, state-driven enemy logic (Patrol, Chase, Attack)." },
+      { name: "Tileset-Based Map Design", description: "Dungeon levels are built using tileset maps in Paper2D, enabling modular and expandable level design." }
     ],
     techStack: [
-      { category: "Engine", items: ["Unreal Engine 5.4", "C++", "Blueprints"] },
-      { category: "Systems", items: ["Gameplay Ability System", "Enhanced Input"] },
-      { category: "Animation", items: ["Animation Montages", "Anim Notify States"] }
+      { category: "Engine", items: ["Unreal Engine 5.6", "Blueprints"] },
+      { category: "2D Framework", items: ["Paper2D", "Flipbooks"] },
+      { category: "AI", items: ["Behavior Trees", "Blackboards", "NavMesh"] }
     ],
     challenges: [
-      { challenge: "Input buffering during attack animations", solution: "Implemented a custom input buffer using Gameplay Tags that queues the next ability during active montages and activates on the correct Anim Notify window." },
-      { challenge: "GAS attribute initialization and replication", solution: "Used UAttributeSet subclasses with proper initialization via Data Tables and ensured attribute changes replicate correctly for future multiplayer support." }
+      { challenge: "2D Pathfinding", solution: "All enemy pathfinding is driven by Unreal's Navigation Mesh, ensuring smooth and obstacle-aware movement within the 2D plane." }
     ],
-    features: ["GAS-driven combat", "Combo input buffering", "Dodge & block mechanics", "Custom movement modes", "Montage-driven animations", "Gameplay Tag system"],
-    outcome: "Successfully implemented a responsive combat prototype demonstrating deep Unreal Engine C++ architecture knowledge and GAS proficiency.",
-    learnings: "GAS is a powerful but complex system. Building this prototype taught me how to architect extensible ability systems, manage Gameplay Tags effectively, and integrate C++ with Blueprint workflows."
+    features: ["Combo attack system", "State-driven Enemy AI", "Tileset maps", "Pixel art flipbook animations", "Single-plane 2D gameplay"],
+    outcome: "Successfully built a classic dungeon-crawler look and feel using handcrafted pixel art sprites within modern UE5 systems.",
+    learnings: "Working with Paper2D and Behavior Trees taught me how to adapt 3D AI and navigation concepts to a strict 2D gameplay plane."
   },
   {
-    id: "ue5-ai-dungeon",
-    title: "AI Dungeon Crawler",
-    tagline: "Procedural Levels with Intelligent Enemies",
-    shortDescription: "A procedural dungeon crawler with Behavior Tree-driven AI enemies, EQS-based tactical positioning, and Chaos Physics destruction.",
-    category: "Action RPG / Procedural",
-    platform: "PC",
-    year: "2025",
+    id: "jetpack-journey",
+    title: "Jetpack Journey",
+    tagline: "A 3D Platformer with dynamic jetpack movement",
+    shortDescription: "A 3D platformer featuring fuel-based flight mechanics, and a fully drivable Chaos Vehicle with on-foot to vehicle transitions.",
+    category: "3D Platformer",
+    platform: "Windows",
+    year: "2024",
     engine: "Unreal Engine",
     featured: true,
-    coverColor: "#0a1a0a",
-    accentColor: "#34d399",
-    tags: ["Unreal Engine", "C++", "Behavior Trees", "Chaos Physics"],
+    coverColor: "#05101a", 
+    accentColor: "#00d4ff",
+    tags: ["Unreal Engine", "Blueprints", "Chaos Physics", "Enhanced Input"],
     thumbnail: null,
-    overview: "A dungeon crawler prototype featuring procedurally generated levels, intelligent AI enemies using Behavior Trees and Environment Query System (EQS), and destructible environments powered by Chaos Physics.",
-    problem: "Creating believable AI that adapts to procedurally generated environments requires deep integration between navigation, perception, and decision-making systems.",
-    goal: "Build an AI-driven dungeon experience using UE5's Behavior Trees, EQS, AI Perception, and procedural generation tools.",
+    github: "https://github.com/Prasham-Desai/JetpackJourney",
+    overview: "Jetpack Journey is a 3D platformer where the player navigates through complex levels using a mix of traditional walking and a dynamic jetpack thruster system. The game focuses on precise platforming, strategic fuel management, and interacting with dynamic level elements.",
+    problem: "Managing the transition between character movement and vehicle simulation without breaking the player experience or causing physics glitches.",
+    goal: "Implement a smooth, dynamic character controller with fuel-based jetpack flight and seamless transition to a fully functional Chaos Vehicle.",
     systems: [
-      { name: "Behavior Tree AI", description: "Multi-layered Behavior Trees with custom C++ tasks and decorators for patrol, investigate, chase, and attack behaviors." },
-      { name: "Environment Query System", description: "EQS queries for tactical positioning — flanking, cover seeking, and retreat point evaluation based on threat assessment." },
-      { name: "Procedural Generation", description: "Room-based dungeon generation using modular tile sets with runtime NavMesh generation for AI pathfinding." },
-      { name: "Chaos Destruction", description: "Destructible environment props using Chaos Physics with gameplay implications — destroyed cover forces AI repositioning." }
+      { name: "Character Movement", description: "Versatile component blending walking mode (velocity-aligned rotation) and flying mode (camera-aligned rotation for aiming mid-air)." },
+      { name: "Fuel System", description: "Flight resource management where holding thruster drains fuel, requiring players to collect pickups across the level." },
+      { name: "Chaos Vehicle System", description: "Fully configured 4-wheel AWD automatic vehicle built from scratch using the Chaos Vehicles Plugin." },
+      { name: "Possession & Camera Blending", description: "Seamless control handoff between player pawn and vehicle pawn with smooth camera interpolation." }
     ],
     techStack: [
-      { category: "Engine", items: ["Unreal Engine 5.4", "C++", "Blueprints"] },
-      { category: "AI", items: ["Behavior Trees", "EQS", "AI Perception"] },
-      { category: "Physics", items: ["Chaos Physics", "Geometry Collections"] }
+      { category: "Engine", items: ["Unreal Engine 5.6", "Blueprints"] },
+      { category: "Physics", items: ["Chaos Vehicles Plugin"] },
+      { category: "Input", items: ["Enhanced Input", "RawInput"] }
     ],
     challenges: [
-      { challenge: "NavMesh on procedurally generated geometry", solution: "Used Runtime NavMesh Generation with custom nav modifiers on tile boundaries to ensure seamless AI pathfinding across dynamically assembled rooms." },
-      { challenge: "AI adaptation to destroyed cover", solution: "Implemented an AI Perception stimulus for destruction events that triggers EQS re-evaluation, forcing enemies to find new tactical positions." }
+      { challenge: "Seamless Vehicle Boarding", solution: "Managed collision disabling, character hiding, and Enhanced Input mapping context swaps on possession handoffs." },
+      { challenge: "Skeletal Mesh Setup", solution: "Created the vehicle's skeletal mesh entirely within the Unreal Editor, painting skin weights and setting up bones manually." }
     ],
-    features: ["Behavior Tree AI", "EQS tactical positioning", "Procedural dungeons", "Chaos Physics destruction", "Runtime NavMesh", "AI Perception system"],
-    outcome: "Demonstrated advanced AI architecture and procedural systems in UE5, with enemies that dynamically adapt to changing environments.",
-    learnings: "Integrating EQS with Behavior Trees taught me how to build truly intelligent AI that responds to environmental changes, not just player proximity."
+    features: ["Dynamic jetpack movement", "Resource management", "Interactive platforming elements", "Drivable Chaos Vehicle", "Seamless possession transitions"],
+    outcome: "Delivered a fluid platforming experience combined with robust vehicle mechanics in a single level design.",
+    learnings: "Mastered UE5's possession system, input mapping context switching, and the Chaos Vehicle physics setup entirely through Blueprints."
+  },
+  {
+    id: "shooter-game-ui",
+    title: "ShooterGameUI",
+    tagline: "A Polished Main Menu & Settings System",
+    shortDescription: "A standalone project showcasing a production-ready main menu and settings system with 3D sci-fi environments and UMG widgets.",
+    category: "UI / Menu System",
+    platform: "Windows",
+    year: "2024",
+    engine: "Unreal Engine",
+    featured: true,
+    coverColor: "#0a121e",
+    accentColor: "#34d399",
+    tags: ["Unreal Engine", "UMG", "Blueprints", "UI/UX"],
+    thumbnail: null,
+    github: "https://github.com/Prasham-Desai/ShooterGameUI",
+    overview: "ShooterGameUI is a standalone Unreal Engine 5.6 project focused on delivering a high-quality, production-ready main menu and settings system. It showcases UI/UX design, environment art direction, and polished front-end systems.",
+    problem: "Creating an engaging first impression before a game starts requires blending 3D environments, character animations, and responsive 2D UI elements seamlessly.",
+    goal: "Build a cinematic menu experience with interactive UMG widgets, audio feedback, sliding transitions, and functional graphics settings.",
+    systems: [
+      { name: "UMG Main Menu", description: "Animated menu transitions, hover/click audio feedback, and custom typography using the Coalition v2 and Michroma fonts." },
+      { name: "Graphics Settings", description: "Fully functional quality settings (Low to Ultra) applying real Scalability Group changes at runtime, plus gamma adjustment." },
+      { name: "3D Environment Backdrop", description: "A living background assembled from modular sci-fi structures with an animated Paragon Twinblast character." },
+      { name: "Blueprint Interface System", description: "Clean BPI_UI interface for decoupled communication between UI widgets and game logic." }
+    ],
+    techStack: [
+      { category: "Engine", items: ["Unreal Engine 5.6", "Blueprints"] },
+      { category: "UI/UX", items: ["UMG", "Enhanced Input"] },
+      { category: "Rendering", items: ["Lumen GI", "Virtual Shadow Maps", "DirectX 12"] }
+    ],
+    challenges: [
+      { challenge: "Scalability Integration", solution: "Hooked up UI dropdowns and sliders directly to UE5's internal scalability settings and console variables." }
+    ],
+    features: ["Cinematic 3D backdrop", "Animated UI transitions", "Functional graphics presets", "Blueprint Interface decoupling", "Touch & Desktop input"],
+    outcome: "Created a triple-A quality menu that serves as a highly reusable template for future shooter projects.",
+    learnings: "Gained deep understanding of UMG widget animations, scalability settings application, and blending 2D UI with a rendering-heavy 3D background."
+  },
+  {
+    id: "badbot",
+    title: "BadBot",
+    tagline: "An Action-Packed Unreal Engine 5 Experience",
+    shortDescription: "A dynamic, fast-paced action game featuring multi-level progression, a floating pawn movement system, and a final boss fight.",
+    category: "Action",
+    platform: "PC",
+    year: "2024",
+    engine: "Unreal Engine",
+    featured: false,
+    coverColor: "#120505",
+    accentColor: "#fb923c",
+    tags: ["Unreal Engine", "Blueprints", "Action", "Enhanced Input"],
+    thumbnail: null,
+    github: "https://github.com/Prasham-Desai/BadBot",
+    overview: "BadBot is a dynamic, fast-paced action game developed in Unreal Engine 5. Futuristic bots have taken up an ancient village, and a bad bot gone rogue is defending the village against them. It features multi-level progression culminating in an epic boss fight.",
+    problem: "Providing the player with complete 3D mobility while maintaining tight combat controls in a complex environment.",
+    goal: "Leverage Unreal Engine 5's Lumen and Nanite systems to create rich environments combined with a unique floating pawn movement system.",
+    systems: [
+      { name: "Floating Pawn Movement", description: "Allows for omnidirectional movement giving the player full 3D mobility." },
+      { name: "Combat & Progression", description: "Multi-level progression logic leading to a tailored final boss encounter." },
+      { name: "Environment Rendering", description: "Utilizes Lumen Global Illumination & Reflections alongside Virtual Shadow Maps for hyper-realistic lighting." }
+    ],
+    techStack: [
+      { category: "Engine", items: ["Unreal Engine 5.6", "Blueprints"] },
+      { category: "Input", items: ["Enhanced Input Subsystem"] }
+    ],
+    challenges: [
+      { challenge: "Omnidirectional Controls", solution: "Implemented a custom controller logic using Enhanced Input to map 3D movement and aiming seamlessly to mouse and keyboard." }
+    ],
+    features: ["Multi-Level Progression", "Next-Gen Graphics with Lumen", "Unique Floating Movement", "Blueprint-Driven Logic"],
+    outcome: "Successfully crafted an engaging action game showcasing high-fidelity environments and responsive custom movement.",
+    learnings: "Learned to effectively use floating pawn components and design multi-stage levels within the UE5 framework."
+  },
+  {
+    id: "chaos-vehicles",
+    title: "Chaos Vehicles",
+    tagline: "A fully configured 4-wheel AWD vehicle",
+    shortDescription: "A fully configured 4-wheel AWD automatic vehicle built from scratch in Unreal Engine 5.6 using the Chaos Vehicles Plugin.",
+    category: "Simulation",
+    platform: "Windows",
+    year: "2024",
+    engine: "Unreal Engine",
+    featured: false,
+    coverColor: "#1a1525",
+    accentColor: "#c084fc",
+    tags: ["Unreal Engine", "Blueprints", "Chaos Physics"],
+    thumbnail: null,
+    github: "https://github.com/Prasham-Desai/ChaosVehicles",
+    overview: "Chaos Vehicles is a blueprint-only project demonstrating how to set up a fully functional 4-wheel All-Wheel-Drive (AWD) automatic transmission vehicle using the Chaos Vehicles Plugin, built completely from the ground up.",
+    problem: "Properly rigging and configuring a vehicle in Unreal Engine 5 from a static mesh without relying on external DCC tools.",
+    goal: "Manually generate a skeletal mesh, weight wheel bones, and tune physics using the Chaos Vehicle system entirely inside the editor.",
+    systems: [
+      { name: "Skeletal Mesh Pipeline", description: "Generated from a static mesh, hand-painted skin weights, and created custom bone hierarchies for wheels." },
+      { name: "Chaos Vehicle Setup", description: "Main vehicle pawn with custom Front/Rear Wheel blueprints for suspension stiffness, friction, and steering." },
+      { name: "Physics & Torque", description: "Custom physics asset for collision bodies and a float curve asset defining engine torque across the RPM range." }
+    ],
+    techStack: [
+      { category: "Engine", items: ["Unreal Engine 5.6", "Blueprints"] },
+      { category: "Plugins", items: ["Chaos Vehicles Plugin", "ModelingToolsEditorMode"] }
+    ],
+    challenges: [
+      { challenge: "In-Editor Rigging", solution: "Used the ModelingToolsEditorMode to manually rig the static vehicle mesh, assign wheel bones, and configure skin weights successfully." }
+    ],
+    features: ["AWD Drivetrain", "Custom Torque Curves", "In-Editor Skeletal Rigging", "Enhanced Input integration"],
+    outcome: "Produced a production-ready vehicle template that can be dropped into any UE5 project.",
+    learnings: "Gained significant expertise in the UE5 modeling mode, skeletal mesh generation, and Chaos vehicle tuning parameters."
+  },
+  {
+    id: "crystal-cavern",
+    title: "CrystalCavern",
+    tagline: "A challenging vehicle controller game",
+    shortDescription: "A physics-driven vehicle control and navigation experience through intricate cavernous environments.",
+    category: "Racing / Physics",
+    platform: "Windows",
+    year: "2024",
+    engine: "Unreal Engine",
+    featured: false,
+    coverColor: "#051515",
+    accentColor: "#00fff2",
+    tags: ["Unreal Engine", "Blueprints", "Chaos Physics"],
+    thumbnail: null,
+    github: "https://github.com/Prasham-Desai/CrystalCavern",
+    overview: "CrystalCavern is a physics-driven vehicle control and navigation experience where you must maneuver through intricate environments. Master your vehicle's handling to explore the cavernous terrain, overcome difficult obstacles, and reach your destination safely.",
+    problem: "Creating challenging, tight terrain navigation using physics-based vehicles.",
+    goal: "Design intricate cavern levels that test driving skill and spatial awareness using UE5's vehicle systems and Lumen rendering.",
+    systems: [
+      { name: "Vehicle Simulation", description: "Leveraging realistic suspension, friction, and tire modeling via Chaos Vehicles." },
+      { name: "Dynamic Follow Cam", description: "Custom camera logic that adjusts to the vehicle's speed and orientation to give a strong sense of scale and momentum." }
+    ],
+    techStack: [
+      { category: "Engine", items: ["Unreal Engine 5", "Blueprints"] },
+      { category: "Rendering", items: ["Lumen"] }
+    ],
+    challenges: [
+      { challenge: "Camera Clipping in Tight Caverns", solution: "Tuned the spring arm's collision probes and camera blending to maintain visibility inside narrow tunnels." }
+    ],
+    features: ["High-fidelity cavern meshes", "Physics-driven navigation", "Lumen dynamic lighting", "Enhanced input vehicle controls"],
+    outcome: "A fun and challenging prototype showcasing environmental interaction with physics vehicles.",
+    learnings: "Improved skills in level design for vehicle navigation and camera tuning in enclosed spaces."
+  },
+  {
+    id: "horror-game-menu",
+    title: "HorrorGameMenu",
+    tagline: "Cinematic, AAA-quality interactive menu",
+    shortDescription: "A fully interactive, cinematic main menu screen with looping video backgrounds and multi-layered audio feedback.",
+    category: "UI / Menu System",
+    platform: "Windows",
+    year: "2024",
+    engine: "Unreal Engine",
+    featured: false,
+    coverColor: "#150505",
+    accentColor: "#ff5263",
+    tags: ["Unreal Engine", "UMG", "Blueprints", "UI/UX"],
+    thumbnail: null,
+    github: "https://github.com/Prasham-Desai/HorrorGameMenu",
+    overview: "Horror Game Menu (Buried Beneath) is a fully interactive, cinematic main menu screen built in Unreal Engine 5.6. It features a looping video background, dynamic fade-in animations, multi-layered audio feedback, and a quit confirmation dialog wrapped in a dark, atmospheric horror aesthetic.",
+    problem: "Setting a compelling, eerie atmosphere before the player even starts the game.",
+    goal: "Create a reusable, highly polished horror menu template with flawless UI/UX state management.",
+    systems: [
+      { name: "Video Background Widget", description: "Dedicated material (MP_BG_Video) driving a cinematic, dark-atmosphere video seamlessly behind the menu." },
+      { name: "Reusable Button Blueprint", description: "A self-contained button widget (WBP_Button) handling all visual states (Normal, Hovered, Pressed) and audio cues." },
+      { name: "Exit Confirmation Flow", description: "Structured UI navigation handling prompt overlays to prevent accidental game exits." }
+    ],
+    techStack: [
+      { category: "Engine", items: ["Unreal Engine 5.6", "Blueprints"] },
+      { category: "UI", items: ["UMG (Unreal Motion Graphics)"] }
+    ],
+    challenges: [
+      { challenge: "Media Player UI Integration", solution: "Properly routing the Media Texture to a UI material and ensuring smooth playback loops without hitching on load." }
+    ],
+    features: ["Looping video background", "Dynamic fade-in animations", "Custom horror font", "Hover & Click SFX", "Credits screen", "Quit confirmation"],
+    outcome: "Developed a standalone, drop-in ready AAA menu system for dark-themed projects.",
+    learnings: "Refined techniques for UI animation timelines, audio mixing in UMG, and media framework usage in UI materials."
+  },
+  {
+    id: "marble-run",
+    title: "Marble Run",
+    tagline: "Physics-driven 3D maze navigation",
+    shortDescription: "A physics-driven 3D maze navigation game where players control a marble through intricate levels.",
+    category: "Puzzle / Physics",
+    platform: "Windows",
+    year: "2024",
+    engine: "Unreal Engine",
+    featured: false,
+    coverColor: "#101010",
+    accentColor: "#fb923c",
+    tags: ["Unreal Engine", "Blueprints", "Physics"],
+    thumbnail: null,
+    github: "https://github.com/Prasham-Desai/MarbleRun",
+    overview: "Marble Run is an engaging and physics-driven 3D maze navigation game built in Unreal Engine. Players take control of a marble and must carefully navigate through intricate levels filled with challenging obstacles, narrow pathways, and dynamic environmental hazards.",
+    problem: "Tuning rigid body physics for precise, predictable player control.",
+    goal: "Build a satisfying blend of reflex-based challenges and momentum-driven movement.",
+    systems: [
+      { name: "Physics Movement Control", description: "Applying torque and force to a rigid body sphere based on player input while respecting physical constraints." },
+      { name: "Environmental Hazards", description: "Dynamic traps and narrow ledges that react physically to the marble's presence." }
+    ],
+    techStack: [
+      { category: "Engine", items: ["Unreal Engine 5.6", "Blueprints"] }
+    ],
+    challenges: [
+      { challenge: "Momentum Balancing", solution: "Carefully tweaked angular damping, friction, and input force multipliers to make the marble feel heavy yet responsive." }
+    ],
+    features: ["Momentum-based gameplay", "Intricate maze levels", "Lumen rendering", "Physics-based movement"],
+    outcome: "A tight, responsive physics puzzle game prototype.",
+    learnings: "Deepened knowledge of Unreal's rigid body dynamics and collision physical materials."
+  },
+  {
+    id: "mars-marine",
+    title: "MarsMarine",
+    tagline: "Top-down infinite shooter",
+    shortDescription: "An action-packed, top-down infinite shooter with endless waves of enemies and NavMesh-driven AI.",
+    category: "Action / Shooter",
+    platform: "Windows",
+    year: "2024",
+    engine: "Unreal Engine",
+    featured: false,
+    coverColor: "#2a1010",
+    accentColor: "#ff5263",
+    tags: ["Unreal Engine", "Blueprints", "AI", "NavMesh"],
+    thumbnail: null,
+    github: "https://github.com/Prasham-Desai/MarsMarine",
+    overview: "MarsMarine is an action-packed, top-down infinite shooter where you must survive against endless waves of enemies on the Martian surface. Stay alive for as long as possible while navigating the environment and managing your resources.",
+    problem: "Managing infinite enemy spawns and AI navigation performance over long play sessions.",
+    goal: "Create a robust top-down shooter loop with scaling difficulty and responsive cursor-driven aiming.",
+    systems: [
+      { name: "Cursor Aiming Controller", description: "Custom math logic to convert screen-space mouse coordinates to world-space, allowing the character to dynamically rotate and face the cursor." },
+      { name: "Endless Spawning System", description: "Custom spawner blueprints manage the game's endless loop, dynamically instantiating enemy classes outside player view." },
+      { name: "NavMesh AI", description: "Enemies utilize AI Controllers and MoveToActor nodes to aggressively track the player across the Martian surface." }
+    ],
+    techStack: [
+      { category: "Engine", items: ["Unreal Engine 5", "Blueprints"] },
+      { category: "AI", items: ["NavMeshBoundsVolume", "AI Controller"] }
+    ],
+    challenges: [
+      { challenge: "Cursor to World Space", solution: "Used PlayerController's DeprojectScreenToWorld mapped against a mathematical plane to accurately find the aiming intersection point." }
+    ],
+    features: ["Top-down locomotion", "Cursor-based aiming", "Infinite wave spawning", "NavMesh pathfinding"],
+    outcome: "Built a solid foundation for an arcade shooter with scalable AI systems.",
+    learnings: "Mastered top-down camera setups, screen-to-world projection, and managing large numbers of basic AI actors."
   },
   // ── Unity Projects ──
   {

@@ -35,7 +35,10 @@ const TAG_COLORS = {
   'Puzzle':     '#ffbe0b',
   'Architecture':'#c084fc',
   'ScriptableObjects': '#ffbe0b',
-  'UI/UX':      '#34d399',
+  'Paper2D':    '#ff5263',
+  'UMG':        '#34d399',
+  'NavMesh':    '#00d4ff',
+  'Action':     '#fb923c',
 };
 
 const CARD_HEIGHT   = 420;   // total card height — fixed for all cards
@@ -197,7 +200,7 @@ const ProjectCard = ({ project, index }) => {
                 color: project.engine === 'Unreal Engine' ? '#c084fc' : '#00d4ff',
                 zIndex: 2,
               }}>
-                {project.engine === 'Unreal Engine' ? 'UE5 · C++' : 'UNITY · C#'}
+                {project.engine === 'Unreal Engine' ? (project.tags?.includes('C++') ? 'UE5 · C++' : 'UE5 · BP') : 'UNITY · C#'}
               </div>
             )}
 
