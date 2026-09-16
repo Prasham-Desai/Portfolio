@@ -151,13 +151,13 @@ const OrbitingBadges = ({ badges }) => {
         >
           <div style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: '0.65rem', fontWeight: 600, letterSpacing: '0.06em',
-            padding: '6px 16px', borderRadius: 20,
-            background: 'rgba(12,14,24,0.85)',
-            border: `1px solid ${badge.color}60`,
+            fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.06em',
+            padding: '8px 20px', borderRadius: 24,
+            background: 'rgba(6,8,16,0.95)',
+            border: `1.5px solid ${badge.color}90`,
             color: badge.color,
-            boxShadow: `0 0 16px ${badge.color}30, inset 0 0 8px ${badge.color}20`,
-            backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+            boxShadow: `0 0 24px ${badge.color}50, inset 0 0 12px ${badge.color}30`,
+            backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
             whiteSpace: 'nowrap', userSelect: 'none',
           }}>
             {badge.label}
@@ -202,7 +202,7 @@ const Hero = () => {
       <ParticleGalaxy />
 
       {/* Main content wrapper */}
-      <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: 1200, margin: '0 auto', padding: 'clamp(100px, 10vw, 128px) clamp(20px, 5vw, 64px) clamp(64px, 8vw, 84px)', boxSizing: 'border-box' }}>
+      <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: 1440, margin: '0 auto', padding: 'clamp(100px, 10vw, 128px) clamp(20px, 5vw, 64px) clamp(64px, 8vw, 84px)', boxSizing: 'border-box' }}>
         <div className="hero-grid">
           
           {/* LEFT: typography & stats */}
@@ -300,6 +300,10 @@ const Hero = () => {
         .home-hero .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 4vw, 64px); align-items: center; }
         .home-hero .hero-visual { display: flex; justify-content: center; }
         .home-hero .hero-button { justify-content: center; }
+        
+        @media (min-width: 1600px) {
+          .home-hero .hero-grid { gap: clamp(64px, 6vw, 120px); }
+        }
         
         @media (max-width: 1180px) {
           .home-hero .hero-grid { grid-template-columns: 1fr 1fr; gap: 28px !important; }

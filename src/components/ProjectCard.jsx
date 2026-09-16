@@ -220,7 +220,7 @@ const ProjectCard = ({ project, index }) => {
               </svg>
             </div>
 
-            {/* Accent bar at bottom — CSS hover via parent */}
+            {/* Accent bar at bottom */}
             <div
               className="project-card-accent-bar"
               style={{

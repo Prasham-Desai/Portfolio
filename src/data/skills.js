@@ -5,10 +5,11 @@ export const skillGroups = [
     icon: "⬡",
     color: "#c084fc",
     skills: [
-      { name: "Unreal Engine 5.6", level: 85, years: "1+" },
-      { name: "Blueprints Visual Scripting", level: 90, years: "1+" },
-      { name: "Chaos Vehicles", level: 75, years: "0.5+" },
-      { name: "Paper2D", level: 70, years: "0.5+" },
+      { name: "Unreal C++ & Core Architecture", level: 85, years: "1+" },
+      { name: "Blueprints Visual Scripting", level: 95, years: "1.5+" },
+      { name: "Gameplay Ability System (GAS)", level: 80, years: "1+" },
+      { name: "Network Replication", level: 75, years: "1+" },
+      { name: "UMG & Animation Blueprints", level: 85, years: "1+" },
     ]
   },
   {
@@ -17,10 +18,11 @@ export const skillGroups = [
     icon: "◆",
     color: "#00d4ff",
     skills: [
-      { name: "Unity 3D / 2D", level: 85, years: "2+" },
-      { name: "C# Game Architecture", level: 80, years: "2+" },
-      { name: "DOTS / ECS", level: 60, years: "1+" },
-      { name: "Performance Optimization", level: 75, years: "2+" },
+      { name: "C# Game Architecture", level: 90, years: "2.5+" },
+      { name: "DOTS / Entity Component System", level: 75, years: "1.5+" },
+      { name: "Addressables & Asset Management", level: 80, years: "2+" },
+      { name: "Performance Optimization", level: 85, years: "2+" },
+      { name: "Unity UI Toolkit & uGUI", level: 85, years: "2.5+" },
     ]
   },
   {
@@ -29,10 +31,11 @@ export const skillGroups = [
     icon: "◈",
     color: "#34d399",
     skills: [
-      { name: "Behavior Trees & Blackboards", level: 75, years: "1+" },
-      { name: "NavMesh Pathfinding", level: 80, years: "1+" },
-      { name: "Enhanced Input Subsystem", level: 85, years: "1+" },
-      { name: "Blueprint Interfaces", level: 85, years: "1+" },
+      { name: "Behavior Trees & Blackboards", level: 85, years: "2+" },
+      { name: "Character Locomotion & FSM", level: 90, years: "2+" },
+      { name: "Combat & Inventory Systems", level: 80, years: "1.5+" },
+      { name: "NavMesh Pathfinding", level: 85, years: "2+" },
+      { name: "Input & Camera Systems", level: 85, years: "2+" },
     ]
   },
   {
@@ -41,10 +44,11 @@ export const skillGroups = [
     icon: "◉",
     color: "#ff5263",
     skills: [
-      { name: "Multiplayer (Photon / NGO)", level: 85, years: "2+" },
-      { name: "Firebase RTDB", level: 80, years: "2+" },
-      { name: "REST APIs", level: 60, years: "2+" },
-      { name: "UE5 Replication (Learning)", level: 35, years: "0.5+" }
+      { name: "Client-Server Architecture", level: 85, years: "2+" },
+      { name: "Photon (PUN/Quantum) & NGO", level: 80, years: "2+" },
+      { name: "State Sync & Lag Compensation", level: 70, years: "1.5+" },
+      { name: "Backend API Integration (REST)", level: 80, years: "2+" },
+      { name: "Matchmaking & Lobbies", level: 75, years: "1.5+" },
     ]
   },
   {
@@ -53,10 +57,11 @@ export const skillGroups = [
     icon: "⬟",
     color: "#ffbe0b",
     skills: [
-      { name: "Firebase Suite", level: 80, years: "1+" },
-      { name: "Node.js / Express", level: 65, years: "2+" },
-      { name: "Git / GitHub / Perforce", level: 90, years: "3+" },
-      { name: "Visual Studio / Rider", level: 75, years: "2+" }
+      { name: "Git & Perforce (VCS)", level: 90, years: "3+" },
+      { name: "CI/CD & Build Pipelines", level: 75, years: "1.5+" },
+      { name: "Firebase & Cloud Services", level: 85, years: "2+" },
+      { name: "Performance Profiling Tools", level: 80, years: "2+" },
+      { name: "Agile / Jira Workflow", level: 85, years: "2+" },
     ]
   },
 ];

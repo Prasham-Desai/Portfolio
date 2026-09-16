@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 const COLORS = ['#00d4ff', '#c084fc', '#34d399', '#ffbe0b'];
-const PARTICLE_COUNT = 800;
+const PARTICLE_COUNT = 6000;
 
 export default function ParticleGalaxy() {
   const canvasRef = useRef(null);
@@ -14,7 +14,7 @@ export default function ParticleGalaxy() {
     let height = 0;
     let particles = [];
     let animationId;
-    
+
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
@@ -29,7 +29,7 @@ export default function ParticleGalaxy() {
       targetX = width / 2;
       targetY = height / 2;
     };
-    
+
     window.addEventListener('resize', resize);
     resize();
 
@@ -39,11 +39,11 @@ export default function ParticleGalaxy() {
       const maxRadius = Math.max(width, height) * 1.5;
       const radius = Math.sqrt(Math.random()) * maxRadius + 50;
       const angle = Math.random() * Math.PI * 2;
-      const speed = (Math.random() * 0.003 + 0.0005) * (Math.random() > 0.5 ? 1 : -1);
+      const speed = (Math.random() * 0.0012 + 0.0001) * (Math.random() > 0.5 ? 1 : -1);
       const color = COLORS[Math.floor(Math.random() * COLORS.length)];
       const size = Math.random() * 1.5 + 0.5;
       const z = Math.random() * 100 - 50; // Z-depth for 3D
-      
+
       particles.push({ radius, angle, speed, color, size, z, initialRadius: radius });
     }
 
@@ -52,7 +52,7 @@ export default function ParticleGalaxy() {
       mouseX = e.clientX - rect.left;
       mouseY = e.clientY - rect.top;
     };
-    
+
     window.addEventListener('mousemove', onMouseMove);
 
     const animate = () => {
@@ -86,7 +86,7 @@ export default function ParticleGalaxy() {
       // Draw particles
       particles.forEach(p => {
         p.angle += p.speed;
-        
+
         // 3D projection
         const scale = 100 / (100 + p.z);
         const x = targetX + Math.cos(p.angle) * p.radius * scale;
@@ -95,12 +95,12 @@ export default function ParticleGalaxy() {
         ctx.beginPath();
         ctx.arc(x, y, p.size * scale, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
-        
+
         // Dynamic opacity based on Z depth
         ctx.globalAlpha = Math.max(0.1, 1 - (p.z + 50) / 100);
         ctx.fill();
       });
-      
+
       ctx.globalAlpha = 1.0;
       animationId = requestAnimationFrame(animate);
     };
@@ -115,9 +115,9 @@ export default function ParticleGalaxy() {
   }, []);
 
   return (
-    <canvas 
-      ref={canvasRef} 
-      style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }} 
+    <canvas
+      ref={canvasRef}
+      style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}
     />
   );
 }

@@ -57,18 +57,7 @@ const AnimatedCounter = ({ target, duration = 1.8, delay = 0.8 }) => {
 /* ── Scanline + noise overlay ── */
 const ScanlineOverlay = () => (
   <>
-    {/* Scanline sweep */}
-    <div style={{
-      position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 10,
-      overflow: 'hidden',
-    }}>
-      <div style={{
-        position: 'absolute', left: 0, right: 0,
-        height: 2,
-        background: 'linear-gradient(90deg, transparent, rgba(0,212,255,0.15), transparent)',
-        animation: 'scanlineSweep 2.5s linear infinite',
-      }} />
-    </div>
+    {/* Removed Scanline sweep */}
     {/* Film grain */}
     <div style={{
       position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 10,

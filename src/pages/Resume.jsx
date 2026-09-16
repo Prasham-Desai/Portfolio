@@ -17,57 +17,6 @@ const Resume = () => {
         padding: '0 24px',
         position: 'relative'
       }}>
-        
-        {/* Floating Action Bar */}
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            marginBottom: 32,
-            position: 'sticky',
-            top: 80,
-            zIndex: 10
-          }}
-        >
-          <a 
-            href="/Prasham_Desai_Resume.pdf" 
-            download="Prasham_Desai_Resume.pdf"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '10px 20px',
-              background: 'rgba(0, 212, 255, 0.1)',
-              border: '1px solid rgba(0, 212, 255, 0.3)',
-              borderRadius: 8,
-              color: '#00d4ff',
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontWeight: 600,
-              textDecoration: 'none',
-              backdropFilter: 'blur(10px)',
-              boxShadow: '0 8px 32px rgba(0, 212, 255, 0.15)',
-              transition: 'all 0.2s ease',
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = 'rgba(0, 212, 255, 0.2)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = 'rgba(0, 212, 255, 0.1)';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Download PDF
-          </a>
-        </motion.div>
 
         {/* Paper-like Resume Container */}
         <motion.div 
@@ -116,6 +65,42 @@ const Resume = () => {
               <a href="mailto:prashamdesai@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>✉️ prashamdesai@gmail.com</a>
               <a href="https://linkedin.com" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>🔗 LinkedIn</a>
               <a href="https://github.com/Prasham-Desai" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>💻 GitHub</a>
+            </div>
+
+            <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center' }}>
+              <a 
+                href="/Prasham_Desai_Resume.pdf" 
+                download="Prasham_Desai_Resume.pdf"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '10px 24px',
+                  background: 'rgba(0, 212, 255, 0.1)',
+                  border: '1px solid rgba(0, 212, 255, 0.3)',
+                  borderRadius: 999,
+                  color: '#00d4ff',
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = 'rgba(0, 212, 255, 0.2)';
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 212, 255, 0.2)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = 'rgba(0, 212, 255, 0.1)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download PDF
+              </a>
             </div>
           </header>
 

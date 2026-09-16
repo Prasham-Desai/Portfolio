@@ -29,7 +29,7 @@ const ProjectsPage = () => {
     <main style={{
       minHeight: '100vh',
       background: 'var(--color-bg)',
-      paddingTop: 'clamp(200px, 24vw, 280px)',
+      paddingTop: 'clamp(100px, 10vw, 128px)',
       paddingBottom: 'var(--section-space)',
     }}>
       <div className="container">
@@ -44,35 +44,6 @@ const ProjectsPage = () => {
             <div className="section-label" style={{ fontSize: '0.8rem' }}>
               Complete Archive
             </div>
-            
-            {/* Back link */}
-            <motion.div
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <Link
-                to="/"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: '0.95rem',
-                  fontWeight: 600,
-                  color: '#94a3b8',
-                  textDecoration: 'none',
-                  transition: 'color 0.2s ease',
-                }}
-                onMouseEnter={e => e.currentTarget.style.color = '#00d4ff'}
-                onMouseLeave={e => e.currentTarget.style.color = '#94a3b8'}
-              >
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M13 7H1M7 1L1 7L7 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                Back to Home
-              </Link>
-            </motion.div>
           </div>
           <h1 style={{
             fontFamily: "'Space Grotesk', sans-serif",
@@ -184,6 +155,10 @@ const ProjectsPage = () => {
       <style>{`
         .all-projects-grid .project-card {
           min-width: 0;
+        }
+
+        .all-projects-grid .project-card:hover .project-card-accent-bar {
+          transform: scaleX(1) !important;
         }
 
         @media (max-width: 1120px) {

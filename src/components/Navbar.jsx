@@ -196,105 +196,177 @@ const Navbar = () => {
           {/* Desktop Links */}
           <div style={{ display: 'flex', gap: 24, alignItems: 'center' }} className="desktop-nav">
             {/* Scroll Links Group */}
-            <div style={{ display: 'flex', gap: isCaseStudy ? 2 : 4, alignItems: 'center' }}>
-              {navLinks.map((link) => {
-                const isActive = activeSection === link.label;
+            {(isHome || isCaseStudy) && (
+              <>
+                <div style={{ display: 'flex', gap: isCaseStudy ? 2 : 4, alignItems: 'center' }}>
+                  {navLinks.map((link) => {
+                    const isActive = activeSection === link.label;
 
-                return (
-                  <div key={link.label}>
-                    <motion.button
-                      onClick={() => handleNavClick(link.href)}
-                      whileHover={{ color: link.color, scale: 1.04 }}
-                      animate={{
-                        color: isActive ? link.color : '#e8e8f4',
-                        textShadow: isActive ? `0 0 18px ${link.color}99` : '0 0 0 rgba(0,0,0,0)',
-                      }}
-                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                      style={{
-                        position: 'relative',
-                        fontFamily: "'Space Grotesk', sans-serif",
-                        fontSize: isCaseStudy ? '0.95rem' : '1rem',
-                        fontWeight: 600,
-                        padding: isCaseStudy ? '8px 14px' : '8px 18px',
-                        borderRadius: 8,
-                        letterSpacing: '0.01em',
-                        whiteSpace: 'nowrap',
-                        background: 'transparent',
-                        border: 'none',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      {link.label}
-                    </motion.button>
-                  </div>
-                );
-              })}
-            </div>
+                    return (
+                      <div key={link.label}>
+                        <motion.button
+                          onClick={() => handleNavClick(link.href)}
+                          whileHover={{ color: link.color, scale: 1.04 }}
+                          animate={{
+                            color: isActive ? link.color : '#e8e8f4',
+                            textShadow: isActive ? `0 0 18px ${link.color}99` : '0 0 0 rgba(0,0,0,0)',
+                          }}
+                          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                          style={{
+                            position: 'relative',
+                            fontFamily: "'Space Grotesk', sans-serif",
+                            fontSize: isCaseStudy ? '0.95rem' : '1rem',
+                            fontWeight: 600,
+                            padding: isCaseStudy ? '8px 14px' : '8px 18px',
+                            borderRadius: 8,
+                            letterSpacing: '0.01em',
+                            whiteSpace: 'nowrap',
+                            background: 'transparent',
+                            border: 'none',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {link.label}
+                        </motion.button>
+                      </div>
+                    );
+                  })}
+                </div>
 
-            {/* Vertical Divider */}
-            <div style={{ width: 1, height: 24, background: 'rgba(255,255,255,0.15)' }} />
+                {/* Vertical Divider */}
+                <div style={{ width: 1, height: 24, background: 'rgba(255,255,255,0.15)' }} />
+              </>
+            )}
 
             {/* Page Links Group */}
             <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-              {/* All Projects link */}
-              {(isHome || isCaseStudy || isProjectsPage) && (
-                <Link to="/projects" style={{ textDecoration: 'none' }}>
+              <AnimatePresence mode="popLayout">
+                {/* Home link */}
+                {!isHome && (
                   <motion.div
-                    whileHover={{ scale: 1.04, boxShadow: '0 0 15px rgba(0,212,255,0.4)' }}
-                    style={{
-                      fontFamily: "'Space Grotesk', sans-serif",
-                      fontSize: '0.95rem',
-                      fontWeight: 700,
-                      padding: '8px 16px',
-                      borderRadius: 9999,
-                      letterSpacing: '0.01em',
-                      whiteSpace: 'nowrap',
-                      color: '#060610',
-                      cursor: 'pointer',
-                      background: '#00d4ff',
-                      border: 'none',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 6
-                    }}
+                    key="nav-home"
+                    initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, x: 20 }}
+                    layout
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   >
-                    Projects
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="7" y1="17" x2="17" y2="7"></line>
-                      <polyline points="7 7 17 7 17 17"></polyline>
-                    </svg>
+                    <Link to="/" style={{ textDecoration: 'none' }}>
+                      <motion.div
+                        whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(52,211,153,0.6), inset 0 2px 4px rgba(255,255,255,0.4)' }}
+                        style={{
+                          fontFamily: "'Space Grotesk', sans-serif",
+                          fontSize: '0.95rem',
+                          fontWeight: 600,
+                          padding: '8px 16px',
+                          borderRadius: 9999,
+                          letterSpacing: '0.01em',
+                          whiteSpace: 'nowrap',
+                          color: '#04040a',
+                          cursor: 'pointer',
+                          background: 'linear-gradient(135deg, #34d399 0%, #10b981 100%)',
+                          boxShadow: '0 0 15px rgba(52,211,153,0.3), inset 0 2px 4px rgba(255,255,255,0.3)',
+                          border: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 6
+                        }}
+                      >
+                        Home
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                      </motion.div>
+                    </Link>
                   </motion.div>
-                </Link>
-              )}
+                )}
 
-              {/* Resume link */}
-              <Link to="/resume" style={{ textDecoration: 'none' }}>
-                <motion.div
-                  whileHover={{ scale: 1.04, boxShadow: '0 0 15px rgba(192,132,252,0.4)' }}
-                  style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: '0.95rem',
-                    fontWeight: 700,
-                    padding: '8px 16px',
-                    borderRadius: 9999,
-                    letterSpacing: '0.01em',
-                    whiteSpace: 'nowrap',
-                    color: '#060610',
-                    cursor: 'pointer',
-                    background: '#c084fc', // Vibrant purple
-                    border: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6
-                  }}
-                >
-                  Resume
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                  </svg>
-                </motion.div>
-              </Link>
+                {/* All Projects link */}
+                {!isProjectsPage && (
+                  <motion.div
+                    key="nav-projects"
+                    initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, x: 20 }}
+                    layout
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  >
+                    <Link to="/projects" style={{ textDecoration: 'none' }}>
+                      <motion.div
+                        whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(0,212,255,0.6), inset 0 2px 4px rgba(255,255,255,0.4)' }}
+                        style={{
+                          fontFamily: "'Space Grotesk', sans-serif",
+                          fontSize: '0.95rem',
+                          fontWeight: 600,
+                          padding: '8px 16px',
+                          borderRadius: 9999,
+                          letterSpacing: '0.01em',
+                          whiteSpace: 'nowrap',
+                          color: '#04040a',
+                          cursor: 'pointer',
+                          background: 'linear-gradient(135deg, #00d4ff 0%, #00fff2 100%)',
+                          boxShadow: '0 0 15px rgba(0,212,255,0.3), inset 0 2px 4px rgba(255,255,255,0.3)',
+                          border: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 6
+                        }}
+                      >
+                        Projects
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="7" y1="17" x2="17" y2="7"></line>
+                          <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                      </motion.div>
+                    </Link>
+                  </motion.div>
+                )}
+
+                {/* Resume link */}
+                {!isResumePage && (
+                  <motion.div
+                    key="nav-resume"
+                    initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, x: 20 }}
+                    layout
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  >
+                    <Link to="/resume" style={{ textDecoration: 'none' }}>
+                      <motion.div
+                        whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(192,132,252,0.6), inset 0 2px 4px rgba(255,255,255,0.4)' }}
+                        style={{
+                          fontFamily: "'Space Grotesk', sans-serif",
+                          fontSize: '0.95rem',
+                          fontWeight: 600,
+                          padding: '8px 16px',
+                          borderRadius: 9999,
+                          letterSpacing: '0.01em',
+                          whiteSpace: 'nowrap',
+                          color: '#04040a',
+                          cursor: 'pointer',
+                          background: 'linear-gradient(135deg, #c084fc 0%, #ff7bf5 100%)',
+                          boxShadow: '0 0 15px rgba(192,132,252,0.3), inset 0 2px 4px rgba(255,255,255,0.3)',
+                          border: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 6
+                        }}
+                      >
+                        Resume
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                          <polyline points="14 2 14 8 20 8"></polyline>
+                          <line x1="16" y1="13" x2="8" y2="13"></line>
+                          <line x1="16" y1="17" x2="8" y2="17"></line>
+                          <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                      </motion.div>
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 
@@ -354,46 +426,87 @@ const Navbar = () => {
               gap: 32,
             }}
           >
-            {navLinks.map((link, i) => (
-              <motion.button
-                key={link.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08 }}
-                onClick={() => handleNavClick(link.href)}
-                style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: '2rem',
-                  fontWeight: 700,
-                  color: '#f1f5f9',
-                  background: 'transparent',
-                  border: 'none',
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                {link.label}
-              </motion.button>
-            ))}
+            {(isHome || isCaseStudy) && (
+              <>
+                {navLinks.map((link, i) => (
+                  <motion.button
+                    key={link.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.08 }}
+                    onClick={() => handleNavClick(link.href)}
+                    style={{
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontSize: '2rem',
+                      fontWeight: 700,
+                      color: '#f1f5f9',
+                      background: 'transparent',
+                      border: 'none',
+                      letterSpacing: '-0.02em',
+                    }}
+                  >
+                    {link.label}
+                  </motion.button>
+                ))}
 
-            {/* Mobile Horizontal Divider */}
-            <motion.hr
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ delay: navLinks.length * 0.08 }}
-              style={{
-                width: '40px',
-                border: 'none',
-                height: '1px',
-                background: 'rgba(255,255,255,0.15)',
-                margin: '8px 0',
-                transformOrigin: 'center'
-              }}
-            />
+                {/* Mobile Horizontal Divider */}
+                <motion.hr
+                  initial={{ opacity: 0, scaleX: 0 }}
+                  animate={{ opacity: 1, scaleX: 1 }}
+                  transition={{ delay: navLinks.length * 0.08 }}
+                  style={{
+                    width: '40px',
+                    border: 'none',
+                    height: '1px',
+                    background: 'rgba(255,255,255,0.15)',
+                    margin: '8px 0',
+                    transformOrigin: 'center'
+                  }}
+                />
+              </>
+            )}
 
             {/* Mobile Page Links Group */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'center' }}>
+              {/* Mobile Home link */}
+              {!isHome && (
+                <motion.button
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: (navLinks.length + 1) * 0.08 }}
+                  onClick={() => {
+                    setMobileOpen(false);
+                    navigate('/');
+                  }}
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: '1.05rem',
+                    fontWeight: 600,
+                    color: '#04040a',
+                    background: 'linear-gradient(135deg, #34d399 0%, #10b981 100%)',
+                    boxShadow: '0 0 14px rgba(52,211,153,0.25), inset 0 2px 4px rgba(255,255,255,0.25)',
+                    border: 'none',
+                    borderRadius: 9999,
+                    padding: '9px 20px',
+                    letterSpacing: '0.01em',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    cursor: 'pointer',
+                    textTransform: 'none'
+                  }}
+                >
+                  Home
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                </motion.button>
+              )}
+
               {/* Mobile Projects link */}
-              <motion.button
+              {!isProjectsPage && (
+                <motion.button
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: (navLinks.length + 1) * 0.08 }}
@@ -403,13 +516,16 @@ const Navbar = () => {
                 }}
                 style={{
                   fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: '1.2rem',
-                  fontWeight: 700,
-                  color: '#060610',
-                  background: '#00d4ff',
+                  fontSize: '1.1rem',
+                  fontWeight: 800,
+                  color: '#04040a',
+                  background: 'linear-gradient(135deg, #00d4ff 0%, #00fff2 100%)',
+                  boxShadow: '0 0 24px rgba(0,212,255,0.5), inset 0 2px 4px rgba(255,255,255,0.4)',
                   border: 'none',
                   borderRadius: 9999,
                   padding: '12px 32px',
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase',
                   display: 'flex',
                   alignItems: 'center',
                   gap: 8,
@@ -424,37 +540,42 @@ const Navbar = () => {
                 </svg>
               </motion.button>
 
+              )}
+
               {/* Mobile Resume link */}
-              <motion.button
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: (navLinks.length + 2) * 0.08 }}
-                onClick={() => {
-                  setMobileOpen(false);
-                  navigate('/resume');
-                }}
-                style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: '1.2rem',
-                  fontWeight: 700,
-                  color: '#060610',
-                  background: '#c084fc',
-                  border: 'none',
-                  borderRadius: 9999,
-                  padding: '12px 32px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  letterSpacing: '0.01em',
-                  cursor: 'pointer'
-                }}
-              >
-                Resume
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-              </motion.button>
+              {!isResumePage && (
+                <motion.button
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: (navLinks.length + 2) * 0.08 }}
+                  onClick={() => {
+                    setMobileOpen(false);
+                    navigate('/resume');
+                  }}
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: '1.05rem',
+                    fontWeight: 600,
+                    color: '#04040a',
+                    background: 'linear-gradient(135deg, #c084fc 0%, #ff7bf5 100%)',
+                    boxShadow: '0 0 18px rgba(192,132,252,0.3), inset 0 2px 4px rgba(255,255,255,0.3)',
+                    border: 'none',
+                    borderRadius: 9999,
+                    padding: '10px 24px',
+                    letterSpacing: '0.01em',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    cursor: 'pointer'
+                  }}
+                >
+                  Resume
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </motion.button>
+              )}
             </div>
           </motion.div>
         )}

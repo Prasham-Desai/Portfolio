@@ -111,7 +111,7 @@ const SkillBar = ({ name, level, color, inView, delay }) => (
 );
 
 const Skills = () => {
-  const [activeGroup, setActiveGroup] = useState('core');
+  const [activeGroup, setActiveGroup] = useState('unreal');
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
 
   const currentGroup = skillGroups.find(g => g.id === activeGroup) || skillGroups[0];
@@ -172,7 +172,7 @@ const Skills = () => {
                   key={group.id}
                   className="skill-node"
                   onClick={() => setActiveGroup(group.id)}
-                  whileHover={{ borderColor: `${group.color}50` }}
+                  whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.03)', borderColor: `${group.color}50` }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: Math.min(i * 0.06, 0.36) }}
@@ -185,12 +185,12 @@ const Skills = () => {
                     borderRadius: 12,
                     marginBottom: 8,
                     background: activeGroup === group.id
-                      ? `${group.color}10`
-                      : 'transparent',
+                      ? `linear-gradient(90deg, ${group.color}15 0%, transparent 100%)`
+                      : 'rgba(20, 22, 35, 0.6)',
                     border: activeGroup === group.id
-                      ? `1px solid ${group.color}30`
-                      : '1px solid rgba(255,255,255,0.04)',
-                    boxShadow: `inset 2px 0 0 ${activeGroup === group.id ? `${group.color}70` : 'rgba(255,255,255,0.08)'}`,
+                      ? `1px solid ${group.color}40`
+                      : '1px solid rgba(255,255,255,0.06)',
+                    boxShadow: `inset 3px 0 0 ${activeGroup === group.id ? group.color : 'transparent'}`,
                     cursor: 'pointer',
                     transition: 'background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease',
                     textAlign: 'left',
@@ -202,12 +202,12 @@ const Skills = () => {
                       width: 36,
                       height: 36,
                       borderRadius: 10,
-                      background: activeGroup === group.id ? `${group.color}20` : 'rgba(255,255,255,0.04)',
+                      background: activeGroup === group.id ? `${group.color}25` : 'rgba(255,255,255,0.03)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: activeGroup === group.id ? group.color : '#9a9ac0',
-                      border: `1px solid ${activeGroup === group.id ? `${group.color}40` : 'rgba(255,255,255,0.06)'}`,
+                      color: group.color,
+                      border: `1px solid ${activeGroup === group.id ? `${group.color}50` : 'rgba(255,255,255,0.05)'}`,
                       transition: 'all 0.25s ease',
                     }}>
                       <SkillGroupIcon id={group.id} />
@@ -229,20 +229,13 @@ const Skills = () => {
                   <div>
                     <div style={{
                       fontFamily: "'Space Grotesk', sans-serif",
-                      fontSize: '1rem',
+                      fontSize: '1.05rem',
                       fontWeight: 600,
-                      color: activeGroup === group.id ? group.color : '#9a9ac0',
+                      color: activeGroup === group.id ? '#ffffff' : '#94a3b8',
                       transition: 'color 0.25s ease',
                       marginBottom: 2,
                     }}>
                       {group.label}
-                    </div>
-                    <div style={{
-                      fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: '0.7rem',
-                      color: '#61618a',
-                    }}>
-                      {group.skills.length} skills
                     </div>
                   </div>
 
@@ -263,30 +256,32 @@ const Skills = () => {
             {/* Quick tech tags */}
             <div className="skills-aux-card" style={{
               padding: '20px',
-              background: 'rgba(13,13,26,0.6)',
+              background: 'rgba(20, 22, 35, 0.6)',
               borderRadius: 12,
-              border: '1px solid rgba(255,255,255,0.05)',
-              boxShadow: 'inset 2px 0 0 rgba(0,212,255,0.35)',
+              border: '1px solid rgba(255,255,255,0.06)',
+              boxShadow: 'inset 3px 0 0 rgba(0,212,255,0.5)',
             }}>
               <div style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: '0.7rem',
-                color: '#6a6a92',
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                color: '#94a3b8',
                 letterSpacing: '0.1em',
                 marginBottom: 12,
+                textTransform: 'uppercase'
               }}>
-                ALSO COMFORTABLE WITH
+                Also Comfortable With
               </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                {['C#', 'DOTS & ECS', 'C++', 'Java', 'Python', 'MERN Stack', 'DOTween', 'Figma'].map(tech => (
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {['C#', 'C++', 'Java', 'Python', 'MERN Stack', 'DOTween', 'Figma', 'Blender'].map(tech => (
                   <span key={tech} style={{
                     fontFamily: "'JetBrains Mono', monospace",
                     fontSize: '0.75rem',
-                    color: '#9090b5',
-                    padding: '5px 12px',
-                    borderRadius: 4,
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    background: 'rgba(255,255,255,0.03)',
+                    color: '#e2e8f0',
+                    padding: '6px 12px',
+                    borderRadius: 6,
+                    border: '1px solid rgba(0,212,255,0.2)',
+                    background: 'rgba(0,212,255,0.05)',
                   }}>
                     {tech}
                   </span>
