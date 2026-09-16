@@ -3,18 +3,18 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const homeNavLinks = [
-  { label: 'Work',       href: '/#projects',    targetId: 'projects',    sectionIds: ['projects'],    color: '#00d4ff' },
-  { label: 'Skills',     href: '/#skills',      targetId: 'skills',      sectionIds: ['skills'],      color: '#ffbe0b' },
-  { label: 'Experience', href: '/#experience',  targetId: 'experience',  sectionIds: ['experience'],  color: '#fb923c' },
-  { label: 'About',      href: '/#about',       targetId: 'about',       sectionIds: ['about'],       color: '#c084fc' },
-  { label: 'Contact',    href: '/#contact',     targetId: 'contact',     sectionIds: ['contact'],     color: '#00fff2' },
+  { label: 'Work', href: '/#projects', targetId: 'projects', sectionIds: ['projects'], color: '#00d4ff' },
+  { label: 'Skills', href: '/#skills', targetId: 'skills', sectionIds: ['skills'], color: '#ffbe0b' },
+  { label: 'Experience', href: '/#experience', targetId: 'experience', sectionIds: ['experience'], color: '#fb923c' },
+  { label: 'About', href: '/#about', targetId: 'about', sectionIds: ['about'], color: '#c084fc' },
+  { label: 'Contact', href: '/#contact', targetId: 'contact', sectionIds: ['contact'], color: '#00fff2' },
 ];
 
 const caseStudyNavLinks = [
-  { label: 'Vision',      href: '#overview',   targetId: 'overview',   sectionIds: ['overview', 'systems'],           color: '#00d4ff' },
-  { label: 'Engineering', href: '#tech-stack', targetId: 'tech-stack', sectionIds: ['tech-stack', 'challenges'],     color: '#c084fc' },
-  { label: 'Showcase',    href: '#features',   targetId: 'features',   sectionIds: ['features', 'gallery'],          color: '#34d399' },
-  { label: 'Results',     href: '#outcome',    targetId: 'outcome',    sectionIds: ['outcome', 'associated-with'],  color: '#ff5263' },
+  { label: 'Vision', href: '#overview', targetId: 'overview', sectionIds: ['overview', 'systems'], color: '#00d4ff' },
+  { label: 'Engineering', href: '#tech-stack', targetId: 'tech-stack', sectionIds: ['tech-stack', 'challenges'], color: '#c084fc' },
+  { label: 'Showcase', href: '#features', targetId: 'features', sectionIds: ['features', 'gallery'], color: '#34d399' },
+  { label: 'Results', href: '#outcome', targetId: 'outcome', sectionIds: ['outcome', 'associated-with'], color: '#ff5263' },
 ];
 
 const HOME_SCROLL_OFFSET = 80;
@@ -34,18 +34,18 @@ const Navbar = () => {
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
-    
+
     // Dynamically measure the navbar's actual rendered height
     const nav = document.querySelector('.site-nav');
     const navHeight = nav ? nav.getBoundingClientRect().height : 0;
-    
+
     // Dynamically measure the target element's padding-top so we scroll to the actual content
     const computedStyle = window.getComputedStyle(el);
     const paddingTop = parseFloat(computedStyle.paddingTop) || 0;
-    
-    const gap = 30; // 30px distance between navbar bottom and content top (2.5x original)
+
+    const gap = 50; // 30px distance between navbar bottom and content top (2.5x original)
     const top = el.getBoundingClientRect().top + window.scrollY - navHeight + paddingTop - gap;
-    
+
     window.scrollTo({ top, behavior: 'smooth' });
   };
 
@@ -376,7 +376,7 @@ const Navbar = () => {
             ))}
 
             {/* Mobile Horizontal Divider */}
-            <motion.hr 
+            <motion.hr
               initial={{ opacity: 0, scaleX: 0 }}
               animate={{ opacity: 1, scaleX: 1 }}
               transition={{ delay: navLinks.length * 0.08 }}
