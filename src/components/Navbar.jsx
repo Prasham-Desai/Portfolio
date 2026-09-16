@@ -43,7 +43,7 @@ const Navbar = () => {
     const computedStyle = window.getComputedStyle(el);
     const paddingTop = parseFloat(computedStyle.paddingTop) || 0;
     
-    const gap = 12; // 10-15px distance between navbar bottom and content top
+    const gap = 30; // 30px distance between navbar bottom and content top (2.5x original)
     const top = el.getBoundingClientRect().top + window.scrollY - navHeight + paddingTop - gap;
     
     window.scrollTo({ top, behavior: 'smooth' });
