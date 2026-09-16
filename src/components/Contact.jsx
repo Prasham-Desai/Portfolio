@@ -298,7 +298,7 @@ const Contact = () => {
     }
     setErrors({});
 
-    if (cooldown) return;
+    if (cooldown || status === 'sending') return;
 
     setStatus('sending');
 
@@ -510,6 +510,10 @@ const Contact = () => {
               boxShadow: 'inset 2px 0 0 rgba(0,212,255,0.35)',
               position: 'relative',
               overflow: 'hidden',
+              minHeight: 480,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
             }}>
               <AnimatePresence mode="wait">
                 {/* ── Success state ── */}
@@ -524,7 +528,6 @@ const Contact = () => {
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      minHeight: 340,
                       textAlign: 'center',
                       gap: 16,
                       position: 'relative',
@@ -607,9 +610,8 @@ const Contact = () => {
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      minHeight: 340,
                       textAlign: 'center',
-                      gap: 16,
+                      gap: 12,
                     }}
                   >
                     <motion.div

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import AvatarImg from '../assets/Avatar.jpeg';
+import ParticleGalaxy from './ParticleGalaxy';
 
 /* ──────────────────────────────────────────────
    HERO SECTION — IMMERSIVE FULL-VIEWPORT
@@ -152,11 +153,11 @@ const OrbitingBadges = ({ badges }) => {
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: '0.65rem', fontWeight: 600, letterSpacing: '0.06em',
             padding: '6px 16px', borderRadius: 20,
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            color: 'rgba(255,255,255,0.7)',
-            backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            background: 'rgba(12,14,24,0.85)',
+            border: `1px solid ${badge.color}60`,
+            color: badge.color,
+            boxShadow: `0 0 16px ${badge.color}30, inset 0 0 8px ${badge.color}20`,
+            backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
             whiteSpace: 'nowrap', userSelect: 'none',
           }}>
             {badge.label}
@@ -199,15 +200,8 @@ const Hero = () => {
   return (
     <section ref={containerRef} id="hero" className="home-hero" style={{ minHeight: '100svh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden', background: '#04040a', perspective: 1400 }}>
       
-      {/* Ambient Spotlight */}
-      <motion.div style={{
-        position: 'absolute', top: 'calc(50% - 600px)', left: 'calc(50% - 600px)',
-        width: 1200, height: 1200, borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(0,212,255,0.06) 0%, rgba(192,132,252,0.02) 40%, transparent 70%)',
-        filter: 'blur(60px)',
-        x: spotX, y: spotY,
-        pointerEvents: 'none', zIndex: 0
-      }} />
+      {/* Dynamic Galaxy Background */}
+      <ParticleGalaxy />
 
       {/* Main content wrapper */}
       <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: 1200, margin: '0 auto', padding: 'clamp(100px, 10vw, 128px) clamp(20px, 5vw, 64px) clamp(64px, 8vw, 84px)', boxSizing: 'border-box' }}>
@@ -245,12 +239,13 @@ const Hero = () => {
             </FadeUp>
 
             <FadeUp>
-              {/* Glassmorphic Stat Bar */}
+              {/* Vibrant Stat Bar */}
               <div style={{
                 display: 'flex', gap: '32px', marginBottom: 48,
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid rgba(255,255,255,0.05)',
-                backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+                background: 'rgba(6,6,16,0.6)',
+                border: '1px solid rgba(0,212,255,0.2)',
+                boxShadow: 'inset 0 0 20px rgba(0,212,255,0.05), 0 0 30px rgba(0,212,255,0.1)',
+                backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
                 borderRadius: 16, padding: '24px 32px',
                 width: 'fit-content',
                 flexWrap: 'wrap',
