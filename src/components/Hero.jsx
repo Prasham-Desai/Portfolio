@@ -1,6 +1,15 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import AvatarImg from '../assets/Avatar.jpeg';
+import WireframeTerrain from './ParticleCanvas';
+
+/* ──────────────────────────────────────────────
+   HERO SECTION — IMMERSIVE FULL-VIEWPORT
+   ─ Interactive wireframe terrain background
+   ─ Character-by-character stagger title
+   ─ 3D floating tech badges (proper orbit)
+   ─ Scroll indicator
+   ────────────────────────────────────────────── */
 
 const TAGLINES = [
   'Building gameplay systems and C++ architecture in Unreal Engine.',
@@ -8,34 +17,220 @@ const TAGLINES = [
   'Systems-first thinking. Production-tested delivery.',
 ];
 
-// Sparse dot field for parallax
-const DOT_COUNT = 40;
-const generateDots = () =>
-  Array.from({ length: DOT_COUNT }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 2.5 + 1,
-    opacity: Math.random() * 0.35 + 0.08,
-    parallax: Math.random() * 0.6 + 0.2,
-  }));
+const TECH_BADGES = [
+  { label: 'UE5', color: '#c084fc', glow: 'rgba(192,132,252,0.3)' },
+  { label: 'C++', color: '#00d4ff', glow: 'rgba(0,212,255,0.3)' },
+  { label: 'Unity', color: '#34d399', glow: 'rgba(52,211,153,0.3)' },
+  { label: 'Blueprint', color: '#ffbe0b', glow: 'rgba(255,190,11,0.3)' },
+  { label: 'C#', color: '#fb923c', glow: 'rgba(251,146,60,0.3)' },
+  { label: 'Gameplay', color: '#00d4ff', glow: 'rgba(0,212,255,0.3)' },
+  { label: 'AI/ML', color: '#c084fc', glow: 'rgba(192,132,252,0.3)' },
+  { label: 'Systems', color: '#34d399', glow: 'rgba(52,211,153,0.3)' },
+];
 
+// Fixed orbit config — consistent ellipse, widened to clear portrait
+const ORBIT_RADIUS_X = 280; // horizontal radius in px
+const ORBIT_RADIUS_Y = 210; // vertical radius in px
+const ORBIT_SPEED = 0.12;   // radians per second
+
+/* ── Character stagger title ── */
+const StaggerTitle = ({ text, delay = 0 }) => {
+  const chars = text.split('');
+  return (
+    <span style={{ display: 'inline-block' }}>
+      {chars.map((char, i) => (
+        <motion.span
+          key={`${char}-${i}`}
+          initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{
+            duration: 0.35,
+            delay: delay + i * 0.04,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          style={{
+            display: 'inline-block',
+            whiteSpace: char === ' ' ? 'pre' : 'normal',
+          }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </span>
+  );
+};
+
+/* ── Animated counter ── */
+const AnimatedCounter = ({ value, suffix = '', delay = 0 }) => {
+  const [count, setCount] = useState(0);
+  const numericValue = parseInt(value) || 0;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const duration = 1200;
+      const start = performance.now();
+
+      const tick = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(2, -10 * progress);
+        setCount(Math.round(eased * numericValue));
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [numericValue, delay]);
+
+  return `${count}${suffix}`;
+};
+
+/* ── Scroll indicator ── */
+const ScrollIndicator = () => {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY < 100);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+          transition={{ delay: 1.8, duration: 0.6 }}
+          style={{
+            position: 'absolute',
+            bottom: 40,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 8,
+            zIndex: 5,
+          }}
+        >
+          <span style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '0.6rem',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            color: '#64748b',
+          }}>
+            Scroll to explore
+          </span>
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <svg width="20" height="28" viewBox="0 0 20 28" fill="none">
+              <rect x="1" y="1" width="18" height="26" rx="9" stroke="#64748b" strokeWidth="1.5" />
+              <motion.circle
+                cx="10" cy="8"
+                r="2.5"
+                fill="#00d4ff"
+                animate={{ cy: [8, 16, 8] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            </svg>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+/* ── Orbiting badges — single shared RAF, proper elliptical orbit ── */
+const OrbitingBadges = ({ badges, mouseX, mouseY }) => {
+  const badgeRefs = useRef([]);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    const start = performance.now();
+
+    const tick = (now) => {
+      const t = (now - start) / 1000;
+
+      badges.forEach((badge, i) => {
+        const el = badgeRefs.current[i];
+        if (!el) return;
+
+        // Evenly spaced angle + slow rotation
+        const baseAngle = (i / badges.length) * Math.PI * 2;
+        const angle = baseAngle + t * ORBIT_SPEED;
+
+        // Per-badge subtle bob
+        const bobPhase = i * 0.8;
+        const bob = Math.sin(t * 1.8 + bobPhase) * 5;
+
+        const x = Math.cos(angle) * ORBIT_RADIUS_X;
+        const y = Math.sin(angle) * ORBIT_RADIUS_Y + bob;
+
+        el.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+      });
+
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [badges]);
+
+  return (
+    <>
+      {badges.map((badge, i) => (
+        <motion.div
+          key={badge.label}
+          ref={el => badgeRefs.current[i] = el}
+          initial={{ opacity: 0, scale: 0.3 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.6 + i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            zIndex: 2,
+            willChange: 'transform',
+          }}
+        >
+          <div style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '0.68rem',
+            fontWeight: 600,
+            letterSpacing: '0.06em',
+            padding: '5px 14px',
+            borderRadius: 20,
+            background: `${badge.color}10`,
+            border: `1px solid ${badge.color}30`,
+            color: badge.color,
+            whiteSpace: 'nowrap',
+            boxShadow: `0 0 16px ${badge.glow}`,
+            backdropFilter: 'blur(4px)',
+            userSelect: 'none',
+          }}>
+            {badge.label}
+          </div>
+        </motion.div>
+      ))}
+    </>
+  );
+};
+
+/* ── Main Hero ── */
 const Hero = () => {
   const [taglineIndex, setTaglineIndex] = useState(0);
   const containerRef = useRef(null);
-  const dots = useMemo(() => generateDots(), []);
 
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
 
-  const tiltX = useSpring(useTransform(my, [-1, 1], [4, -4]), { stiffness: 80, damping: 22 });
-  const tiltY = useSpring(useTransform(mx, [-1, 1], [-5, 5]), { stiffness: 80, damping: 22 });
-  const glowX = useSpring(useTransform(mx, [-1, 1], [-40, 40]), { stiffness: 50, damping: 22 });
-  const glowY = useSpring(useTransform(my, [-1, 1], [-40, 40]), { stiffness: 50, damping: 22 });
-
-  // Mouse-driven parallax values for dots
-  const dotShiftX = useSpring(useTransform(mx, [-1, 1], [-20, 20]), { stiffness: 40, damping: 30 });
-  const dotShiftY = useSpring(useTransform(my, [-1, 1], [-20, 20]), { stiffness: 40, damping: 30 });
+  const tiltX = useSpring(useTransform(my, [-1, 1], [3, -3]), { stiffness: 80, damping: 22 });
+  const tiltY = useSpring(useTransform(mx, [-1, 1], [-4, 4]), { stiffness: 80, damping: 22 });
 
   useEffect(() => {
     const id = setInterval(() => setTaglineIndex(p => (p + 1) % TAGLINES.length), 3500);
@@ -68,38 +263,20 @@ const Hero = () => {
         perspective: 1400,
       }}
     >
-      {/* Subtle grid */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        backgroundImage: 'linear-gradient(rgba(0,212,255,0.028) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.028) 1px,transparent 1px)',
-        backgroundSize: '64px 64px',
-        maskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%,black 10%,transparent 100%)',
-        WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%,black 10%,transparent 100%)',
-      }} />
+      {/* Interactive wireframe terrain */}
+      <WireframeTerrain />
 
       {/* Centre glow */}
-      <motion.div style={{
+      <div style={{
         position: 'absolute',
         top: 'calc(50% - 450px)',
         left: 'calc(50% - 450px)',
         width: 900, height: 900,
         borderRadius: '50%',
-        x: glowX, y: glowY,
-        background: 'radial-gradient(circle,rgba(0,212,255,0.07) 0%,transparent 65%)',
-        pointerEvents: 'none',
-      }} />
-
-      {/* Parallax dot field */}
-      <div className="hero-dot-field" style={{
-        position: 'absolute',
-        inset: 0,
+        background: 'radial-gradient(circle,rgba(0,212,255,0.06) 0%,transparent 65%)',
         pointerEvents: 'none',
         zIndex: 1,
-      }}>
-        {dots.map(dot => (
-          <ParallaxDot key={dot.id} dot={dot} dotShiftX={dotShiftX} dotShiftY={dotShiftY} />
-        ))}
-      </div>
+      }} />
 
       {/* ── Main content wrapper ── */}
       <div style={{
@@ -134,16 +311,22 @@ const Hero = () => {
                 color: '#f1f5f9',
                 marginBottom: 28,
               }}>
-                Prasham<br />
+                <StaggerTitle text="Prasham" delay={0.3} />
+                <br />
                 <span style={{
                   background: 'linear-gradient(135deg,#00d4ff 30%,#00fff2)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
                 }}>
-                  Desai
+                  <StaggerTitle text="Desai" delay={0.6} />
                 </span>
-                <span style={{ color: '#00d4ff' }}>.</span>
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.0, duration: 0.3 }}
+                  style={{ color: '#00d4ff' }}
+                >.</motion.span>
               </h1>
             </FadeUp>
 
@@ -177,16 +360,18 @@ const Hero = () => {
             <FadeUp>
               <div className="hero-stats" style={{ display: 'flex', flexWrap: 'wrap', gap: 36, marginBottom: 44 }}>
                 {[
-                  { v: '7+', l: 'Games Shipped' },
-                  { v: '2', l: 'Game Engines' },
-                  { v: 'C++', l: 'Primary Language' },
-                ].map(s => (
+                  { v: 7, suffix: '+', l: 'Games Shipped' },
+                  { v: 2, suffix: '', l: 'Game Engines' },
+                  { v: null, label: 'C++', l: 'Primary Language' },
+                ].map((s, i) => (
                   <motion.div className="hero-stat" key={s.l} whileHover={{ y: -2 }} transition={{ type: 'spring', stiffness: 260, damping: 20 }}>
                     <div style={{
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontSize: '1.9rem', fontWeight: 800,
                       color: '#00d4ff', letterSpacing: '-0.03em', lineHeight: 1,
-                    }}>{s.v}</div>
+                    }}>
+                      {s.v !== null ? <AnimatedCounter value={s.v} suffix={s.suffix} delay={800 + i * 200} /> : s.label}
+                    </div>
                     <div style={{
                       fontFamily: "'JetBrains Mono', monospace",
                       fontSize: '0.65rem', color: '#64748b',
@@ -212,7 +397,7 @@ const Hero = () => {
             </FadeUp>
           </motion.div>
 
-          {/* RIGHT: portrait card */}
+          {/* RIGHT: portrait + floating badges */}
           <motion.div
             className="hero-visual"
             initial={{ opacity: 0, scale: 0.92, y: 24 }}
@@ -223,12 +408,38 @@ const Hero = () => {
               rotateY: tiltY,
               transformPerspective: 1200,
               transformStyle: 'preserve-3d',
+              position: 'relative',
             }}
           >
-            <PortraitCard />
+            {/* Portrait + orbiting tech badges */}
+            <div className="hero-badges-cloud" style={{
+              position: 'relative',
+              width: '100%',
+              maxWidth: 520,
+              height: 480,
+              margin: '0 auto',
+              overflow: 'visible',
+            }}>
+              {/* Orbiting badges */}
+              <OrbitingBadges badges={TECH_BADGES} mouseX={mx} mouseY={my} />
+
+              {/* Centre portrait */}
+              <div style={{
+                position: 'absolute',
+                top: '50%', left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 'min(220px, 50%)',
+                zIndex: 3,
+              }}>
+                <PortraitFrame />
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <ScrollIndicator />
 
       <style>{`
         /* ── Grid ── */
@@ -268,6 +479,9 @@ const Hero = () => {
             gap: 22px !important;
             margin-bottom: 36px !important;
           }
+          .home-hero .hero-badges-cloud {
+            max-width: 380px !important;
+          }
         }
 
         /* ── 900px: stack vertically, text on top ── */
@@ -293,8 +507,8 @@ const Hero = () => {
             max-width: 100%;
             line-height: 1.4 !important;
           }
-          .home-hero .hero-dot-field {
-            opacity: 0.4;
+          .home-hero .hero-badges-cloud {
+            max-width: 360px !important;
           }
         }
 
@@ -331,18 +545,8 @@ const Hero = () => {
           .home-hero .hero-button {
             padding: 14px 22px !important;
           }
-          .home-hero .hero-portrait-card {
-            padding: 18px !important;
-            border-radius: 22px !important;
-          }
-          .home-hero .hero-identity-strip {
-            flex-direction: row;
-            align-items: center !important;
-            gap: 12px;
-            flex-wrap: wrap;
-          }
-          .home-hero .hero-visual {
-            max-width: 100%;
+          .home-hero .hero-badges-cloud {
+            max-width: 300px !important;
           }
         }
 
@@ -378,9 +582,8 @@ const Hero = () => {
           .home-hero .hero-stats {
             gap: 16px 24px !important;
           }
-          .home-hero .hero-portrait-card {
-            padding: 14px !important;
-            border-radius: 18px !important;
+          .home-hero .hero-badges-cloud {
+            max-width: 260px !important;
           }
         }
       `}</style>
@@ -399,111 +602,86 @@ const FadeUp = ({ children }) => (
   </motion.div>
 );
 
-const PortraitCard = () => (
-  <div className="hero-portrait-frame" style={{
+/* ── Portrait frame (hexagonal-feel rounded frame) ── */
+const PortraitFrame = () => (
+  <div style={{
     position: 'relative',
-    maxWidth: 480,
-    width: '100%',
-    margin: '0 auto',
-    transformStyle: 'preserve-3d',
+    borderRadius: 24,
+    overflow: 'hidden',
   }}>
+    {/* Glow ring */}
+    <motion.div
+      animate={{
+        boxShadow: [
+          '0 0 20px rgba(0,212,255,0.3), inset 0 0 20px rgba(0,212,255,0.1)',
+          '0 0 35px rgba(0,212,255,0.5), inset 0 0 30px rgba(0,212,255,0.15)',
+          '0 0 20px rgba(0,212,255,0.3), inset 0 0 20px rgba(0,212,255,0.1)',
+        ],
+      }}
+      transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+      style={{
+        position: 'absolute', inset: -2,
+        borderRadius: 26,
+        border: '2px solid rgba(0,212,255,0.35)',
+        pointerEvents: 'none',
+        zIndex: 2,
+      }}
+    />
+
+    {/* Avatar image */}
     <div style={{
-      position: 'absolute', inset: -40, zIndex: -1,
-      background: 'radial-gradient(ellipse 80% 80% at 50% 50%, rgba(0,212,255,0.10) 0%, transparent 60%)',
-      pointerEvents: 'none',
-      borderRadius: 40,
-    }} />
-    <div className="hero-portrait-card" style={{
-      background: 'rgba(12,14,24,0.92)',
-      border: '1px solid rgba(255,255,255,0.10)',
-      borderRadius: 28,
-      padding: 26,
-      boxShadow: '0 40px 100px rgba(0,0,0,0.75), inset 0 0 0 1px rgba(255,255,255,0.04), 0 0 44px rgba(0,212,255,0.08)',
-      transformStyle: 'preserve-3d',
+      aspectRatio: '1',
+      borderRadius: 24,
+      overflow: 'hidden',
+      background: '#0a0a14',
     }}>
-      {/* HUD top bar — clean engine telemetry */}
+      <img
+        src={AvatarImg}
+        alt="Prasham Desai"
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+      />
+      {/* Inner vignette */}
       <div style={{
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        marginBottom: 14,
-        fontFamily: "'JetBrains Mono', monospace",
-        fontSize: '0.66rem',
-        letterSpacing: '0.14em',
-        transform: 'translateZ(10px)',
-      }}>
-        <span style={{ color: '#94a3b8' }}>ENGINE: <span style={{ color: '#c084fc' }}>UE5</span> + <span style={{ color: '#00d4ff' }}>UNITY</span></span>
-        <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#34d399' }}>
-          <motion.span
-            animate={{ opacity: [1, 0.3, 1] }}
-            transition={{ duration: 1.6, repeat: Infinity }}
-            style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 8px #34d399' }}
-          />
-          READY
-        </span>
-      </div>
-
-      {/* Avatar */}
-      <div style={{
-        position: 'relative',
-        aspectRatio: '16/10',
-        borderRadius: 16,
-        overflow: 'hidden',
-        border: '1px solid rgba(0,212,255,0.18)',
-        background: '#0a0a14',
-        marginBottom: 14,
-        transform: 'translateZ(10px)',
-      }}>
-        <img
-          src={AvatarImg}
-          alt="Prasham Desai"
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-        <div style={{
-          position: 'absolute', inset: 0,
-          boxShadow: 'inset 0 0 50px rgba(0,0,0,0.6)',
-          pointerEvents: 'none',
-        }} />
-        <Bracket pos="tl" />
-        <Bracket pos="tr" />
-        <Bracket pos="bl" />
-        <Bracket pos="br" />
-      </div>
-
-      {/* Identity strip — clean, professional */}
-      <div className="hero-identity-strip" style={{
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        padding: '10px 14px',
-        background: 'rgba(0,212,255,0.04)',
-        borderRadius: 10,
-        borderLeft: '2px solid #00d4ff',
-        transform: 'translateZ(10px)',
-      }}>
-        <div>
-          <div style={{
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: '0.6rem', color: '#64748b',
-            letterSpacing: '0.12em', marginBottom: 2,
-          }}>ROLE</div>
-          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.92rem', fontWeight: 700, color: '#f1f5f9' }}>
-            Game Developer
-          </div>
-        </div>
-        <div style={{ textAlign: 'right' }}>
-          <div style={{
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: '0.6rem', color: '#64748b',
-            letterSpacing: '0.12em', marginBottom: 2,
-          }}>BASE</div>
-          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.92rem', fontWeight: 700, color: '#f1f5f9' }}>
-            Ahmedabad
-          </div>
-        </div>
-      </div>
+        position: 'absolute', inset: 0,
+        boxShadow: 'inset 0 0 40px rgba(0,0,0,0.6)',
+        pointerEvents: 'none',
+      }} />
     </div>
+
+    {/* HUD overlay — bottom bar */}
+    <div style={{
+      position: 'absolute', bottom: 0, left: 0, right: 0,
+      padding: '10px 14px',
+      background: 'linear-gradient(transparent, rgba(6,6,16,0.9))',
+      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      fontFamily: "'JetBrains Mono', monospace",
+      fontSize: '0.58rem',
+      letterSpacing: '0.1em',
+      zIndex: 3,
+    }}>
+      <span style={{ color: '#94a3b8' }}>
+        <span style={{ color: '#c084fc' }}>UE5</span> + <span style={{ color: '#00d4ff' }}>UNITY</span>
+      </span>
+      <span style={{ display: 'flex', alignItems: 'center', gap: 5, color: '#34d399' }}>
+        <motion.span
+          animate={{ opacity: [1, 0.3, 1] }}
+          transition={{ duration: 1.6, repeat: Infinity }}
+          style={{ width: 5, height: 5, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 6px #34d399', display: 'inline-block' }}
+        />
+        READY
+      </span>
+    </div>
+
+    {/* Corner brackets */}
+    <Bracket pos="tl" />
+    <Bracket pos="tr" />
+    <Bracket pos="bl" />
+    <Bracket pos="br" />
   </div>
 );
 
 const Bracket = ({ pos }) => {
-  const base = { position: 'absolute', width: 14, height: 14 };
+  const base = { position: 'absolute', width: 12, height: 12, zIndex: 4 };
   const styles = {
     tl: { ...base, top: 8, left: 8, borderTop: '2px solid #00d4ff', borderLeft: '2px solid #00d4ff' },
     tr: { ...base, top: 8, right: 8, borderTop: '2px solid #00d4ff', borderRight: '2px solid #00d4ff' },
@@ -556,28 +734,6 @@ const MagneticButton = ({ children, primary, onClick }) => {
     >
       {children}
     </motion.button>
-  );
-};
-
-const ParallaxDot = ({ dot, dotShiftX, dotShiftY }) => {
-  const x = useTransform(dotShiftX, v => v * dot.parallax);
-  const y = useTransform(dotShiftY, v => v * dot.parallax);
-  
-  return (
-    <motion.div
-      style={{
-        position: 'absolute',
-        left: `${dot.x}%`,
-        top: `${dot.y}%`,
-        width: dot.size,
-        height: dot.size,
-        borderRadius: '50%',
-        backgroundColor: '#00d4ff',
-        opacity: dot.opacity,
-        x,
-        y,
-      }}
-    />
   );
 };
 
