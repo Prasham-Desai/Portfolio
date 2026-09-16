@@ -178,8 +178,6 @@ const Hero = () => {
   const tiltX = useSpring(useTransform(my, [-1, 1], [3, -3]), { stiffness: 80, damping: 22 });
   const tiltY = useSpring(useTransform(mx, [-1, 1], [-4, 4]), { stiffness: 80, damping: 22 });
 
-  const spotX = useSpring(useTransform(mx, [-1, 1], ['-20%', '20%']), { stiffness: 20, damping: 40 });
-  const spotY = useSpring(useTransform(my, [-1, 1], ['-20%', '20%']), { stiffness: 20, damping: 40 });
 
   useEffect(() => {
     const id = setInterval(() => setTaglineIndex(p => (p + 1) % TAGLINES.length), 3500);
