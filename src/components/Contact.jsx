@@ -13,7 +13,8 @@ import emailjs from '@emailjs/browser';
 
 // ── EmailJS config — replace with your actual credentials ──
 const EMAILJS_SERVICE_ID = 'service_yiloj2l';
-const EMAILJS_TEMPLATE_ID = 'template_p7d29ke';
+const EMAILJS_INTERNAL_TEMPLATE_ID = 'template_p7d29ke';
+const EMAILJS_REPLY_TEMPLATE_ID = 'template_eh3ryid';
 const EMAILJS_PUBLIC_KEY = 'B8cSW7XNCqrznUZxc';
 
 const OPPORTUNITY_OPTIONS = [
@@ -52,7 +53,7 @@ const InputField = ({ label, type = 'text', value, onChange, placeholder, multil
   };
 
   return (
-    <div style={{ marginBottom: 20 }}>
+    <div style={{ position: 'relative', paddingBottom: 24 }}>
       <label style={{
         display: 'flex',
         alignItems: 'center',
@@ -97,10 +98,12 @@ const InputField = ({ label, type = 'text', value, onChange, placeholder, multil
             animate={{ opacity: 1, y: 0, height: 'auto' }}
             exit={{ opacity: 0, y: -4, height: 0 }}
             style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: '0.6rem',
               color: '#ff5263',
-              marginTop: 6,
               letterSpacing: '0.05em',
             }}
           >
@@ -117,7 +120,7 @@ const SelectField = ({ label, value, onChange, options, required, error }) => {
   const [focused, setFocused] = useState(false);
 
   return (
-    <div style={{ marginBottom: 20 }}>
+    <div style={{ position: 'relative', paddingBottom: 24 }}>
       <label style={{
         display: 'flex',
         alignItems: 'center',
@@ -179,10 +182,12 @@ const SelectField = ({ label, value, onChange, options, required, error }) => {
             animate={{ opacity: 1, y: 0, height: 'auto' }}
             exit={{ opacity: 0, y: -4, height: 0 }}
             style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: '0.6rem',
               color: '#ff5263',
-              marginTop: 6,
               letterSpacing: '0.05em',
             }}
           >
@@ -298,19 +303,32 @@ const Contact = () => {
     setStatus('sending');
 
     try {
+      const templateParams = {
+        name: form.name,
+        email: form.email,
+        opportunity: form.opportunity,
+        company: form.company || 'Not specified',
+        message: form.message,
+      };
+
+      // 1. Send internal notification email to Prasham
       await emailjs.send(
         EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          from_name: form.name,
-          from_email: form.email,
-          opportunity_type: form.opportunity,
-          company: form.company || 'Not specified',
-          message: form.message,
-        },
+        EMAILJS_INTERNAL_TEMPLATE_ID,
+        templateParams,
         EMAILJS_PUBLIC_KEY,
       );
+
+      // 2. Send auto-reply to the user
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_REPLY_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY,
+      );
+
       setStatus('sent');
+      setForm({ ...INITIAL_FORM }); // Reset form fields
       setCooldown(true);
       setTimeout(() => setCooldown(false), 30000);
     } catch (err) {
