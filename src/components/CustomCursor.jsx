@@ -50,13 +50,13 @@ const CustomCursor = () => {
   const rawX = useMotionValue(-100);
   const rawY = useMotionValue(-100);
 
-  // Reticle follows with tactical precision — tight but not instant
-  const reticleSpring = { damping: 32, stiffness: 450, mass: 0.08 };
+  // Reticle follows instantly to remove draggy feeling
+  const reticleSpring = { damping: 40, stiffness: 1000, mass: 0.01 };
   const cx = useSpring(rawX, reticleSpring);
   const cy = useSpring(rawY, reticleSpring);
 
-  // Outer ring (brackets) has slight lag for depth
-  const outerSpring = { damping: 24, stiffness: 280, mass: 0.15 };
+  // Outer ring (brackets) has slight lag for depth, but much snappier now
+  const outerSpring = { damping: 35, stiffness: 800, mass: 0.05 };
   const ox = useSpring(rawX, outerSpring);
   const oy = useSpring(rawY, outerSpring);
 
