@@ -35,7 +35,9 @@ export default function ParticleGalaxy() {
 
     // Initialize particles
     for (let i = 0; i < PARTICLE_COUNT; i++) {
-      const radius = Math.random() * Math.min(width, height) * 0.9;
+      // Spread particles much further out to avoid central clustering and fill edges
+      const maxRadius = Math.max(width, height) * 1.5;
+      const radius = Math.sqrt(Math.random()) * maxRadius + 50;
       const angle = Math.random() * Math.PI * 2;
       const speed = (Math.random() * 0.003 + 0.0005) * (Math.random() > 0.5 ? 1 : -1);
       const color = COLORS[Math.floor(Math.random() * COLORS.length)];
@@ -54,11 +56,21 @@ export default function ParticleGalaxy() {
     window.addEventListener('mousemove', onMouseMove);
 
     const animate = () => {
-      // Smoothly track mouse with a heavy delay for elegance
+      // Parallax tracking: Galaxy center only shifts slightly instead of following mouse to edges
+      const centerX = width / 2;
+      const centerY = height / 2;
+      let offsetX = 0;
+      let offsetY = 0;
+
       if (mouseX !== 0) {
-        targetX += (mouseX - targetX) * 0.02;
-        targetY += (mouseY - targetY) * 0.02;
+        const percentX = (mouseX / width) * 2 - 1;
+        const percentY = (mouseY / height) * 2 - 1;
+        offsetX = percentX * 200; // max shift 200px
+        offsetY = percentY * 150; // max shift 150px
       }
+
+      targetX += ((centerX + offsetX) - targetX) * 0.05;
+      targetY += ((centerY + offsetY) - targetY) * 0.05;
 
       ctx.fillStyle = '#060610';
       ctx.fillRect(0, 0, width, height);

@@ -240,19 +240,19 @@ const Navbar = () => {
               {(isHome || isCaseStudy || isProjectsPage) && (
                 <Link to="/projects" style={{ textDecoration: 'none' }}>
                   <motion.div
-                    whileHover={{ scale: 1.04, backgroundColor: 'rgba(0,212,255,0.15)' }}
+                    whileHover={{ scale: 1.04, boxShadow: '0 0 15px rgba(0,212,255,0.4)' }}
                     style={{
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontSize: '0.95rem',
-                      fontWeight: 600,
+                      fontWeight: 700,
                       padding: '8px 16px',
                       borderRadius: 9999,
                       letterSpacing: '0.01em',
                       whiteSpace: 'nowrap',
-                      color: isProjectsPage ? '#00d4ff' : '#e8e8f4',
+                      color: '#060610',
                       cursor: 'pointer',
-                      background: isProjectsPage ? 'rgba(0,212,255,0.1)' : 'rgba(255,255,255,0.03)',
-                      border: isProjectsPage ? '1px solid rgba(0,212,255,0.3)' : '1px solid rgba(255,255,255,0.1)',
+                      background: '#00d4ff',
+                      border: 'none',
                       display: 'flex',
                       alignItems: 'center',
                       gap: 6
@@ -270,19 +270,19 @@ const Navbar = () => {
               {/* Resume link */}
               <Link to="/resume" style={{ textDecoration: 'none' }}>
                 <motion.div
-                  whileHover={{ scale: 1.04, backgroundColor: 'rgba(52,211,153,0.15)' }}
+                  whileHover={{ scale: 1.04, boxShadow: '0 0 15px rgba(192,132,252,0.4)' }}
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
                     fontSize: '0.95rem',
-                    fontWeight: 600,
+                    fontWeight: 700,
                     padding: '8px 16px',
                     borderRadius: 9999,
                     letterSpacing: '0.01em',
                     whiteSpace: 'nowrap',
-                    color: isResumePage ? '#34d399' : '#e8e8f4',
+                    color: '#060610',
                     cursor: 'pointer',
-                    background: isResumePage ? 'rgba(52,211,153,0.1)' : 'rgba(255,255,255,0.03)',
-                    border: isResumePage ? '1px solid rgba(52,211,153,0.3)' : '1px solid rgba(255,255,255,0.1)',
+                    background: '#c084fc', // Vibrant purple
+                    border: 'none',
                     display: 'flex',
                     alignItems: 'center',
                     gap: 6
@@ -404,10 +404,10 @@ const Navbar = () => {
                 style={{
                   fontFamily: "'Space Grotesk', sans-serif",
                   fontSize: '1.2rem',
-                  fontWeight: 600,
-                  color: isProjectsPage ? '#00d4ff' : '#f1f5f9',
-                  background: isProjectsPage ? 'rgba(0,212,255,0.1)' : 'rgba(255,255,255,0.03)',
-                  border: isProjectsPage ? '1px solid rgba(0,212,255,0.3)' : '1px solid rgba(255,255,255,0.1)',
+                  fontWeight: 700,
+                  color: '#060610',
+                  background: '#00d4ff',
+                  border: 'none',
                   borderRadius: 9999,
                   padding: '12px 32px',
                   display: 'flex',
@@ -436,10 +436,10 @@ const Navbar = () => {
                 style={{
                   fontFamily: "'Space Grotesk', sans-serif",
                   fontSize: '1.2rem',
-                  fontWeight: 600,
-                  color: isResumePage ? '#34d399' : '#f1f5f9',
-                  background: isResumePage ? 'rgba(52,211,153,0.1)' : 'rgba(255,255,255,0.03)',
-                  border: isResumePage ? '1px solid rgba(52,211,153,0.3)' : '1px solid rgba(255,255,255,0.1)',
+                  fontWeight: 700,
+                  color: '#060610',
+                  background: '#c084fc',
+                  border: 'none',
                   borderRadius: 9999,
                   padding: '12px 32px',
                   display: 'flex',

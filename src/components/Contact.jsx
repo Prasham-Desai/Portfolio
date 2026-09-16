@@ -14,7 +14,6 @@ import emailjs from '@emailjs/browser';
 // ── EmailJS config — replace with your actual credentials ──
 const EMAILJS_SERVICE_ID = 'service_yiloj2l';
 const EMAILJS_INTERNAL_TEMPLATE_ID = 'template_p7d29ke';
-const EMAILJS_REPLY_TEMPLATE_ID = 'template_eh3ryid';
 const EMAILJS_PUBLIC_KEY = 'B8cSW7XNCqrznUZxc';
 
 const OPPORTUNITY_OPTIONS = [
@@ -311,18 +310,10 @@ const Contact = () => {
         message: form.message,
       };
 
-      // 1. Send internal notification email to Prasham
+      // 1. Send internal notification email to Prasham (which triggers auto-reply via EmailJS dashboard)
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_INTERNAL_TEMPLATE_ID,
-        templateParams,
-        EMAILJS_PUBLIC_KEY,
-      );
-
-      // 2. Send auto-reply to the user
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_REPLY_TEMPLATE_ID,
         templateParams,
         EMAILJS_PUBLIC_KEY,
       );
