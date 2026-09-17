@@ -28,6 +28,7 @@ const Navbar = () => {
   const isHome = location.pathname === '/';
   const isProjectsPage = location.pathname === '/projects';
   const isCaseStudy = location.pathname.startsWith('/project/');
+  // eslint-disable-next-line no-unused-vars
   const isResumePage = location.pathname === '/resume';
   const navLinks = isCaseStudy ? caseStudyNavLinks : homeNavLinks;
 
@@ -529,7 +530,6 @@ const Navbar = () => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 8,
-                  letterSpacing: '0.01em',
                   cursor: 'pointer'
                 }}
               >

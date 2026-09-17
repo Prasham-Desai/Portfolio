@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.5d749761.css",
-    "main.js": "/static/js/main.f8b8ff88.js",
+    "main.js": "/static/js/main.c24a9b51.js",
     "static/media/screenshot_3.png": "/static/media/screenshot_3.0e6ae29f0dafd1279dde.png",
     "static/media/screenshot_5.png": "/static/media/screenshot_5.1bc332e283c75deefe98.png",
     "static/media/screenshot_2.png": "/static/media/screenshot_2.9c3af3ed3ef9b3addaf1.png",
@@ -80,10 +80,10 @@
     "static/media/Sudoku Banner.png": "/static/media/Sudoku Banner.88d25b7b82157d30b916.png",
     "index.html": "/index.html",
     "main.5d749761.css.map": "/static/css/main.5d749761.css.map",
-    "main.f8b8ff88.js.map": "/static/js/main.f8b8ff88.js.map"
+    "main.c24a9b51.js.map": "/static/js/main.c24a9b51.js.map"
   },
   "entrypoints": [
     "static/css/main.5d749761.css",
-    "static/js/main.f8b8ff88.js"
+    "static/js/main.c24a9b51.js"
   ]
 }
