@@ -566,7 +566,7 @@ const Contact = () => {
                       Message Transmitted!
                     </div>
                     <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.85rem', color: '#8888aa', zIndex: 2 }}>
-                      I'll get back to you within 24 hours.
+                      I'll get back to you soon.
                     </div>
                     <motion.button
                       whileHover={{ scale: 1.03 }}
