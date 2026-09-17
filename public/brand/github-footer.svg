@@ -8,23 +8,44 @@
       <stop offset="0%" stopColor="#00d4ff" />
       <stop offset="100%" stopColor="#c084fc" />
     </linearGradient>
+    <pattern id="dotGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="1.5" fill="rgba(255,255,255,0.05)" />
+    </pattern>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;family=JetBrains+Mono:wght@500&amp;display=swap');
-      .title { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 700; fill: #ffffff; text-anchor: middle; letter-spacing: -1px; }
-      .link { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 500; fill: #00d4ff; text-anchor: middle; letter-spacing: 1px; }
-      .highlight { fill: url(#accentGrad); }
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap');
+      .logo { font-family: 'Space Grotesk', sans-serif; font-size: 72px; font-weight: 700; fill: #ffffff; letter-spacing: -2px; dominant-baseline: central; }
+      .tagline { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 700; fill: #ffffff; letter-spacing: -1px; dominant-baseline: central; }
+      .subtext { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 400; fill: #94a3b8; dominant-baseline: central; }
+      .btn-text { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; fill: #ffffff; dominant-baseline: central; text-anchor: middle; letter-spacing: 1px;}
     </style>
   </defs>
   
-  <rect width="1200" height="200" rx="16" fill="url(#bgGrad)" />
+  <rect x="1" y="1" width="1198" height="198" rx="16" fill="url(#bgGrad)" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+  <rect x="1" y="1" width="1198" height="198" rx="16" fill="url(#dotGrid)" />
   
-  <path d="M 0 100 Q 300 0 600 100 T 1200 100" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="2" />
-  <path d="M 0 120 Q 300 20 600 120 T 1200 120" fill="none" stroke="rgba(0,212,255,0.05)" stroke-width="2" />
+  <!-- Glowing edge at the top -->
+  <rect x="200" y="0" width="800" height="4" fill="url(#accentGrad)" />
+  
+  <ellipse cx="600" cy="0" rx="400" ry="80" fill="rgba(0,212,255,0.1)" filter="blur(40px)" />
 
-  <g transform="translate(600, 90)">
-    <text class="title" x="0" y="0">Explore the Full Portfolio</text>
-    <text class="link" x="0" y="45">portfolio.prasham-dde.workers.dev</text>
+  <!-- Content Group -->
+  <g transform="translate(80, 100)">
+    <text class="logo" x="0" y="0">PD<tspan fill="#00d4ff">.</tspan></text>
+    
+    <!-- Vertical Divider -->
+    <rect x="140" y="-40" width="2" height="80" rx="1" fill="rgba(255,255,255,0.1)" />
+    
+    <text class="tagline" x="180" y="-12">Explore the Full Portfolio</text>
+    <text class="subtext" x="180" y="24">Dive deeper into architectures &amp; interactive experiences.</text>
   </g>
-  
-  <rect x="450" y="0" width="300" height="4" fill="url(#accentGrad)" />
+
+  <!-- Glowing CTA Button on Right -->
+  <g transform="translate(780, 70)">
+    <!-- Inner Dark Button -->
+    <rect width="360" height="60" rx="30" fill="#0f1123" stroke="rgba(0,212,255,0.3)" stroke-width="2" />
+    <!-- Gradient accent line inside button -->
+    <rect x="100" y="58" width="160" height="2" fill="url(#accentGrad)" />
+    <!-- Text -->
+    <text class="btn-text" x="180" y="30">portfolio.prasham-dde.workers.dev</text>
+  </g>
 </svg>
