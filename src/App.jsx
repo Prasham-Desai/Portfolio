@@ -61,7 +61,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <CustomCursor />
-      {!loaded && <LoadingScreen onComplete={() => setLoaded(true)} />}
+      <LoadingScreen onComplete={() => setLoaded(true)} />
       {/* Key forces complete remount after loading screen, so IntersectionObserver
           triggers cleanly on first visit (fixes whileInView / useInView not firing). */}
       {loaded && <AppContent key="app-loaded" />}

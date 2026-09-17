@@ -110,7 +110,7 @@ const LoadingScreen = ({ onComplete }) => {
 
   const handleComplete = useCallback(() => {
     setDone(true);
-    setTimeout(onComplete, 800);
+    onComplete();
   }, [onComplete]);
 
   useEffect(() => {
