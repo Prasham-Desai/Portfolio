@@ -2,20 +2,17 @@
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;family=Inter:wght@400;500&amp;display=swap');
-      .name { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; fill: #f1f5f9; dominant-baseline: central; }
-      .title { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; fill: #94a3b8; dominant-baseline: central; }
-      .contact { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400; fill: #64748b; dominant-baseline: central; }
-      .logo { font-family: 'Space Grotesk', sans-serif; font-size: 56px; font-weight: 700; fill: #ffffff; letter-spacing: -3px; dominant-baseline: central; }
+      .name { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; fill: #00d4ff; dominant-baseline: central; }
+      .title { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; fill: #c084fc; dominant-baseline: central; }
+      .contact { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400; fill: #94a3b8; dominant-baseline: central; }
+      .logo { font-family: 'Space Grotesk', sans-serif; font-size: 56px; font-weight: 700; fill: #00d4ff; letter-spacing: -3px; dominant-baseline: central; }
     </style>
   </defs>
   
-  <!-- Anchored precisely at x=20 -->
-  <text class="logo" x="20" y="60">PD<tspan fill="#00d4ff">.</tspan></text>
+  <text class="logo" x="20" y="60">PD<tspan fill="#c084fc">.</tspan></text>
   
-  <!-- Vertical Divider precisely at x=120 -->
-  <rect x="120" y="25" width="2" height="70" rx="1" fill="rgba(255,255,255,0.1)" />
+  <rect x="120" y="25" width="2" height="70" rx="1" fill="rgba(0,212,255,0.25)" />
   
-  <!-- Info Block rigidly anchored at x=140 -->
   <text class="name" x="140" y="40">Prasham Desai</text>
   <text class="title" x="140" y="62">Gameplay &amp; Systems Developer</text>
   <text class="contact" x="140" y="84">github.com/Prasham-Desai  •  prashamdesai9114@gmail.com</text>

@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
   <defs>
     <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stopColor="#00d4ff" />
-      <stop offset="100%" stopColor="#c084fc" />
+      <stop offset="0%" stopColor="#c084fc" />
+      <stop offset="100%" stopColor="#ff7bf5" />
     </linearGradient>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap');
-      .title { font-family: 'Space Grotesk', sans-serif; font-size: 72px; font-weight: 700; fill: #f1f5f9; text-anchor: middle; dominant-baseline: central; letter-spacing: -2px; }
+      .title { font-family: 'Space Grotesk', sans-serif; font-size: 72px; font-weight: 700; fill: #00d4ff; text-anchor: middle; dominant-baseline: central; letter-spacing: -2px; }
       .highlight { fill: url(#textGrad); }
       .subtitle { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 500; fill: #94a3b8; text-anchor: middle; dominant-baseline: central; letter-spacing: 1px; }
       .bottom-text { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; fill: #64748b; dominant-baseline: central; }
-      .bottom-link { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; fill: #00d4ff; text-anchor: end; dominant-baseline: central; }
-      .logo { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 700; fill: #ffffff; letter-spacing: -2px; dominant-baseline: central; }
+      .bottom-link { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; fill: #c084fc; text-anchor: end; dominant-baseline: central; }
+      .logo { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 700; fill: #00d4ff; letter-spacing: -2px; dominant-baseline: central; }
     </style>
   </defs>
   
@@ -25,11 +25,11 @@
   <text class="subtitle" x="600" y="200">OPEN FOR STUDIO ROLES, FREELANCE &amp; COLLABORATIONS</text>
   
   <!-- Divider -->
-  <rect x="100" y="280" width="1000" height="1" fill="rgba(255,255,255,0.1)" />
-  <rect x="100" y="280" width="300" height="1" fill="url(#textGrad)" />
+  <rect x="100" y="280" width="1000" height="1" fill="rgba(0,212,255,0.15)" />
+  <rect x="100" y="280" width="300" height="1" fill="#00d4ff" />
   
   <!-- Bottom Bar rigorously anchored at x=100 and x=1100 -->
-  <text class="logo" x="100" y="340">PD<tspan fill="#00d4ff">.</tspan></text>
+  <text class="logo" x="100" y="340">PD<tspan fill="#c084fc">.</tspan></text>
   <text class="bottom-text" x="180" y="340">© 2026 Prasham Desai. All rights reserved.</text>
   
   <text class="bottom-link" x="1100" y="340">portfolio.prasham-dde.workers.dev</text>
