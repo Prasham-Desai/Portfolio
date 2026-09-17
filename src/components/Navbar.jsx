@@ -143,7 +143,7 @@ const Navbar = () => {
       if (isHome) {
         scrollToSection(id);
       } else {
-        window.location.href = href;
+        navigate(href);
       }
     }
   };

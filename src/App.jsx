@@ -34,10 +34,25 @@ const PageTransition = ({ children }) => {
 const AppContent = () => {
   const location = useLocation();
 
-  // Scroll to top on route change
+  // Handle scroll on route or hash change
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  }, [location.pathname]);
+    if (location.hash) {
+      const id = location.hash.slice(1);
+      // Wait for AnimatePresence mode="wait" (duration: 0.55s) to unmount old page and mount new page
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          const nav = document.querySelector('.site-nav');
+          const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+          const paddingTop = parseFloat(window.getComputedStyle(el).paddingTop) || 0;
+          const top = el.getBoundingClientRect().top + window.scrollY - navHeight + paddingTop - 50;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }, 600);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, [location.pathname, location.hash]);
 
   return (
     <>
