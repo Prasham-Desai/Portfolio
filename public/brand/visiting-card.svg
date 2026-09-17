@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 600" width="1050" height="600">
+  <defs>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#080914" />
+      <stop offset="100%" stopColor="#121524" />
+    </linearGradient>
+    <linearGradient id="leftGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#00d4ff" />
+      <stop offset="100%" stopColor="#c084fc" />
+    </linearGradient>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#00d4ff" />
+      <stop offset="100%" stopColor="#c084fc" />
+    </linearGradient>
+    <pattern id="dotGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="rgba(255,255,255,0.06)" />
+    </pattern>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap');
+      .name { font-family: 'Space Grotesk', sans-serif; font-size: 64px; font-weight: 700; fill: #ffffff; letter-spacing: -1px; }
+      .role { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 500; fill: #00d4ff; letter-spacing: 2px; text-transform: uppercase; }
+      .contact-icon { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 500; fill: #c084fc; letter-spacing: 2px; }
+      .contact-text { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 400; fill: #cbd5e1; }
+      .bg-text { font-family: 'Space Grotesk', sans-serif; font-size: 180px; font-weight: 700; fill: rgba(255,255,255,0.03); letter-spacing: -5px; }
+    </style>
+  </defs>
+  
+  <rect width="1050" height="600" rx="32" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+  <rect width="1050" height="600" rx="32" fill="url(#dotGrid)" />
+  
+  <!-- Left Column Accent -->
+  <path d="M 0 32 Q 0 0 32 0 L 350 0 L 250 600 L 32 600 Q 0 600 0 568 Z" fill="rgba(192,132,252,0.05)" />
+  <path d="M 350 0 L 250 600" stroke="url(#leftGrad)" stroke-width="4" opacity="0.5" />
+  
+  <!-- Huge Watermark Logo -->
+  <g transform="translate(-50, 100) scale(3.5)" opacity="0.04">
+    <path d="M 20 80 V 20 H 50 C 65 20 65 50 50 50 H 20" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M 45 20 H 70 C 90 20 90 80 70 80 H 45" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+  
+  <!-- Primary Logo -->
+  <g transform="translate(100, 100) scale(1.2)">
+    <path d="M 20 80 V 20 H 50 C 65 20 65 50 50 50 H 20" stroke="url(#logoGrad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M 45 20 H 70 C 90 20 90 80 70 80 H 45" stroke="url(#logoGrad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+  
+  <!-- Main Info -->
+  <g transform="translate(380, 200)">
+    <text class="name" x="0" y="0">Prasham Desai</text>
+    <text class="role" x="0" y="45">Gameplay &amp; Systems Developer</text>
+    
+    <rect x="0" y="90" width="80" height="4" rx="2" fill="url(#logoGrad)" />
+    
+    <!-- Contact Grid -->
+    <g transform="translate(0, 160)">
+      <text class="contact-icon" x="0" y="0">WEB</text>
+      <text class="contact-text" x="80" y="0">portfolio.prasham-dde.workers.dev</text>
+      
+      <text class="contact-icon" x="0" y="50">GH</text>
+      <text class="contact-text" x="80" y="50">github.com/Prasham-Desai</text>
+      
+      <text class="contact-icon" x="0" y="100">MAIL</text>
+      <text class="contact-text" x="80" y="100">prashamdesai9114@gmail.com</text>
+    </g>
+  </g>
+</svg>

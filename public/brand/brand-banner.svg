@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 500" width="1500" height="500">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#04050a" />
+      <stop offset="100%" stopColor="#0f1123" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#00d4ff" />
+      <stop offset="100%" stopColor="#c084fc" />
+    </linearGradient>
+    <pattern id="hexGrid" width="60" height="103.923" patternUnits="userSpaceOnUse" patternTransform="scale(0.5)">
+      <path d="M30 0 L60 17.32 L60 51.96 L30 69.28 L0 51.96 L0 17.32 Z" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+      <path d="M30 103.92 L60 86.6 L60 51.96 L30 34.64 L0 51.96 L0 86.6 Z" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@800&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@700&amp;display=swap');
+      .name { font-family: 'Space Grotesk', sans-serif; font-size: 96px; font-weight: 800; fill: #ffffff; letter-spacing: -3px; }
+      .role { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; fill: #00d4ff; letter-spacing: 6px; text-transform: uppercase; }
+      .desc { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 400; fill: #94a3b8; }
+    </style>
+  </defs>
+  
+  <rect width="1500" height="500" fill="url(#bgGrad)" />
+  <rect width="1500" height="500" fill="url(#hexGrid)" />
+  
+  <!-- Deep Glows -->
+  <ellipse cx="200" cy="500" rx="600" ry="300" fill="rgba(0,212,255,0.08)" filter="blur(100px)" />
+  <ellipse cx="1300" cy="0" rx="600" ry="300" fill="rgba(192,132,252,0.08)" filter="blur(100px)" />
+  
+  <!-- Diagonal aesthetic lines -->
+  <path d="M 0 500 L 1500 100" stroke="rgba(255,255,255,0.02)" stroke-width="2" />
+  <path d="M 0 450 L 1500 50" stroke="rgba(255,255,255,0.02)" stroke-width="2" />
+  
+  <!-- Logo massive watermark -->
+  <g transform="translate(1000, -100) scale(6)" opacity="0.03">
+    <path d="M 20 80 V 20 H 50 C 65 20 65 50 50 50 H 20" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M 45 20 H 70 C 90 20 90 80 70 80 H 45" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Content -->
+  <g transform="translate(150, 220)">
+    <text class="role" x="0" y="0">ENGINEER &amp; CREATOR</text>
+    <text class="name" x="0" y="90">Prasham Desai</text>
+    <text class="desc" x="0" y="150">Crafting robust systems and immersive gameplay</text>
+    
+    <rect x="0" y="190" width="100" height="6" rx="3" fill="url(#accentGrad)" />
+  </g>
+</svg>

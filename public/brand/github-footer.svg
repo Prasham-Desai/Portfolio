@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" width="1200" height="200">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#04050a" />
+      <stop offset="100%" stopColor="#0d1021" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="#00d4ff" />
+      <stop offset="100%" stopColor="#c084fc" />
+    </linearGradient>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;family=JetBrains+Mono:wght@500&amp;display=swap');
+      .title { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 700; fill: #ffffff; text-anchor: middle; letter-spacing: -1px; }
+      .link { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 500; fill: #00d4ff; text-anchor: middle; letter-spacing: 1px; }
+      .highlight { fill: url(#accentGrad); }
+    </style>
+  </defs>
+  
+  <rect width="1200" height="200" rx="16" fill="url(#bgGrad)" />
+  
+  <path d="M 0 100 Q 300 0 600 100 T 1200 100" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="2" />
+  <path d="M 0 120 Q 300 20 600 120 T 1200 120" fill="none" stroke="rgba(0,212,255,0.05)" stroke-width="2" />
+
+  <g transform="translate(600, 90)">
+    <text class="title" x="0" y="0">Explore the Full Portfolio</text>
+    <text class="link" x="0" y="45">portfolio.prasham-dde.workers.dev</text>
+  </g>
+  
+  <rect x="450" y="0" width="300" height="4" fill="url(#accentGrad)" />
+</svg>

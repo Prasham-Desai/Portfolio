@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <defs>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="#00d4ff" />
+      <stop offset="100%" stopColor="#c084fc" />
+    </linearGradient>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#00d4ff" />
+      <stop offset="100%" stopColor="#c084fc" />
+    </linearGradient>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap');
+      .title { font-family: 'Space Grotesk', sans-serif; font-size: 72px; font-weight: 700; fill: #f1f5f9; text-anchor: middle; letter-spacing: -2px; }
+      .highlight { fill: url(#textGrad); }
+      .subtitle { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 500; fill: #94a3b8; text-anchor: middle; letter-spacing: 1px; }
+      .bottom-text { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; fill: #64748b; }
+      .bottom-link { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; fill: #00d4ff; text-anchor: end; }
+    </style>
+  </defs>
+  
+  <rect width="1200" height="400" fill="transparent" />
+  
+  <!-- Ambient background glow -->
+  <circle cx="600" cy="200" r="400" fill="rgba(0,212,255,0.02)" filter="blur(80px)" />
+  
+  <!-- CTA Section -->
+  <g transform="translate(600, 160)">
+    <text class="title" x="0" y="0">Let's Build <tspan class="highlight">Something Legendary</tspan></text>
+    <text class="subtitle" x="0" y="45">OPEN FOR STUDIO ROLES, FREELANCE &amp; COLLABORATIONS</text>
+  </g>
+  
+  <!-- Divider -->
+  <rect x="100" y="280" width="1000" height="1" fill="rgba(255,255,255,0.1)" />
+  <rect x="100" y="280" width="300" height="1" fill="url(#textGrad)" />
+  
+  <!-- Bottom Bar -->
+  <g transform="translate(100, 340)">
+    <g transform="scale(0.35) translate(0, -50)">
+      <path d="M 20 80 V 20 H 50 C 65 20 65 50 50 50 H 20" stroke="url(#logoGrad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M 45 20 H 70 C 90 20 90 80 70 80 H 45" stroke="url(#logoGrad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </g>
+    <text class="bottom-text" x="60" y="0">© 2026 Prasham Desai. All rights reserved.</text>
+  </g>
+  
+  <text class="bottom-link" x="1100" y="340">portfolio.prasham-dde.workers.dev</text>
+</svg>

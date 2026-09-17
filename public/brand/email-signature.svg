@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" width="500" height="120">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#00d4ff" />
+      <stop offset="100%" stopColor="#c084fc" />
+    </linearGradient>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;family=Inter:wght@400;500&amp;display=swap');
+      .name { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; fill: #f1f5f9; }
+      .title { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; fill: #94a3b8; }
+      .contact { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400; fill: #64748b; }
+      .highlight { fill: #00d4ff; }
+    </style>
+  </defs>
+  
+  <!-- Logo -->
+  <g transform="translate(10, 30) scale(0.6)">
+    <path d="M 20 80 V 20 H 50 C 65 20 65 50 50 50 H 20" stroke="url(#logoGrad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M 45 20 H 70 C 90 20 90 80 70 80 H 45" stroke="url(#logoGrad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+  
+  <!-- Vertical Divider -->
+  <rect x="90" y="30" width="2" height="60" rx="1" fill="rgba(255,255,255,0.1)" />
+  
+  <!-- Info -->
+  <g transform="translate(110, 45)">
+    <text class="name" x="0" y="0">Prasham Desai</text>
+    <text class="title" x="0" y="20">Gameplay &amp; Systems Developer</text>
+    <text class="contact" x="0" y="42">github.com/Prasham-Desai  •  prashamdesai9114@gmail.com</text>
+  </g>
+</svg>

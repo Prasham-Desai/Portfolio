@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#04050a" />
+      <stop offset="100%" stopColor="#0d1021" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="#00d4ff" />
+      <stop offset="100%" stopColor="#c084fc" />
+    </linearGradient>
+    <pattern id="dotGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="1.5" fill="rgba(255,255,255,0.05)" />
+    </pattern>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap');
+      .title { font-family: 'Space Grotesk', sans-serif; font-size: 72px; font-weight: 700; fill: #ffffff; letter-spacing: -2px; }
+      .role { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; fill: #00d4ff; letter-spacing: 4px; text-transform: uppercase; }
+      .desc { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 400; fill: #94a3b8; line-height: 1.6; }
+      .code { font-family: 'JetBrains Mono', monospace; font-size: 14px; fill: rgba(255,255,255,0.2); }
+      .highlight { fill: url(#accentGrad); }
+    </style>
+  </defs>
+  
+  <rect width="1200" height="400" rx="16" fill="url(#bgGrad)" />
+  <rect width="1200" height="400" rx="16" fill="url(#dotGrid)" />
+  
+  <!-- Glowing orbs -->
+  <circle cx="200" cy="200" r="200" fill="rgba(0,212,255,0.08)" filter="blur(80px)" />
+  <circle cx="1000" cy="200" r="200" fill="rgba(192,132,252,0.08)" filter="blur(80px)" />
+
+  <!-- Decorative Tech Elements -->
+  <path d="M 50 50 L 150 50 L 180 80 L 1150 80" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2" />
+  <path d="M 50 350 L 150 350 L 180 320 L 1150 320" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2" />
+  <circle cx="50" cy="50" r="4" fill="#00d4ff" />
+  <circle cx="50" cy="350" r="4" fill="#c084fc" />
+
+  <!-- Logo -->
+  <g transform="translate(100, 130) scale(1.5)">
+    <path d="M 20 80 V 20 H 50 C 65 20 65 50 50 50 H 20" stroke="url(#accentGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M 45 20 H 70 C 90 20 90 80 70 80 H 45" stroke="url(#accentGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Text -->
+  <g transform="translate(280, 180)">
+    <text class="role" x="0" y="-30">&gt;_ DEVELOPER PROFILE</text>
+    <text class="title" x="0" y="30">Prasham Desai<tspan class="highlight">.</tspan></text>
+    <text class="desc" x="0" y="80">Gameplay &amp; Systems Developer specializing in</text>
+    <text class="desc" x="0" y="110">immersive interactive experiences.</text>
+  </g>
+
+  <!-- Fake Code Snippet on the Right -->
+  <g transform="translate(900, 150)">
+    <rect width="240" height="120" rx="8" fill="rgba(0,0,0,0.3)" stroke="rgba(255,255,255,0.05)" />
+    <text class="code" x="20" y="30">const dev = {</text>
+    <text class="code" x="40" y="55">skills: ['Unreal', </text>
+    <text class="code" x="190" y="55" fill="#00d4ff">'Unity'</text><text class="code" x="245" y="55">],</text>
+    <text class="code" x="40" y="80">passion: 'Systems',</text>
+    <text class="code" x="20" y="105">};</text>
+  </g>
+</svg>
