@@ -536,6 +536,7 @@ const Footer = () => {
             Navigation
           </div>
           <div
+            className="footer-link-list"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -543,26 +544,27 @@ const Footer = () => {
             }}
           >
             {quickLinks.map((link) => (
-              <motion.button
-                key={link.label}
-                onClick={() => handleQuickLink(link.sectionId, link.href)}
-                whileHover={{ color: '#00d4ff', x: 4 }}
-                transition={{ duration: 0.2 }}
-                style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: '0.92rem',
-                  fontWeight: 500,
-                  color: '#94a3b8',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  padding: 0,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                }}
-              >
+                <motion.button
+                  key={link.label}
+                  onClick={() => handleQuickLink(link.sectionId, link.href)}
+                  whileHover={{ color: '#00d4ff', x: 4 }}
+                  transition={{ duration: 0.2 }}
+                  className="footer-link-item"
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: '0.92rem',
+                    fontWeight: 500,
+                    color: '#94a3b8',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    padding: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                  }}
+                >
                 <span
                   style={{
                     width: 12,
@@ -590,13 +592,13 @@ const Footer = () => {
               <motion.div key={link.label} whileHover={{ x: 4 }}>
                 <Link
                   to={link.to}
+                  className="footer-link-item"
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: '0.92rem',
-                    fontWeight: 500,
+                    fontSize: '0.9rem',
                     color: '#94a3b8',
                     textDecoration: 'none',
-                    display: 'inline-flex',
+                    display: 'flex',
                     alignItems: 'center',
                     gap: 8,
                     transition: 'color 0.2s',
@@ -639,6 +641,7 @@ const Footer = () => {
             Connect
           </div>
           <div
+            className="footer-link-list"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -653,13 +656,15 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 whileHover={{ x: 4, color }}
                 transition={{ duration: 0.2 }}
+                className="footer-link-item"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: 12,
                   textDecoration: 'none',
                   color: '#94a3b8',
-                  padding: '8px 0',
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: '0.9rem',
                 }}
               >
                 <div
@@ -818,6 +823,13 @@ const Footer = () => {
             gap: 36px !important;
             padding-top: 40px !important;
             padding-bottom: 40px !important;
+            text-align: center !important;
+          }
+
+          .footer-grid > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
           }
 
           .footer-cta-banner {
@@ -825,11 +837,20 @@ const Footer = () => {
             border-radius: 16px !important;
           }
 
+          .footer-link-list {
+            align-items: center !important;
+          }
+
+          .footer-link-item {
+            justify-content: center !important;
+          }
+
           .footer-bottom-bar {
             flex-direction: column !important;
-            align-items: flex-start !important;
+            align-items: center !important;
             gap: 8px !important;
             padding-bottom: 24px !important;
+            text-align: center;
           }
         }
       `}</style>

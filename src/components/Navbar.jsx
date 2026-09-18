@@ -371,37 +371,30 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Premium Mobile Menu Button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="mobile-menu-btn"
             style={{
               display: 'none',
               flexDirection: 'column',
-              gap: 5,
+              gap: 6,
               padding: 8,
               background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              zIndex: 1001,
             }}
             aria-label="Toggle menu"
           >
-            {[0, 1, 2].map(i => (
-              <motion.span
-                key={i}
-                animate={{
-                  rotate: mobileOpen && i === 0 ? 45 : mobileOpen && i === 2 ? -45 : 0,
-                  y: mobileOpen && i === 0 ? 7 : mobileOpen && i === 2 ? -7 : 0,
-                  opacity: mobileOpen && i === 1 ? 0 : 1,
-                }}
-                style={{
-                  display: 'block',
-                  width: 22,
-                  height: 1.5,
-                  background: '#f1f5f9',
-                  borderRadius: 1,
-                  transformOrigin: 'center',
-                }}
-              />
-            ))}
+            <motion.span
+              animate={{ rotate: mobileOpen ? 45 : 0, y: mobileOpen ? 4 : 0 }}
+              style={{ display: 'block', width: 24, height: 2, background: '#f1f5f9', borderRadius: 1 }}
+            />
+            <motion.span
+              animate={{ rotate: mobileOpen ? -45 : 0, y: mobileOpen ? -4 : 0 }}
+              style={{ display: 'block', width: mobileOpen ? 24 : 16, height: 2, background: '#f1f5f9', borderRadius: 1, alignSelf: 'flex-end' }}
+            />
           </button>
         </div>
       </motion.nav>
@@ -411,15 +404,17 @@ const Navbar = () => {
         {mobileOpen && (
           <motion.div
             className="mobile-menu-panel"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             style={{
               position: 'fixed',
               inset: 0,
               zIndex: 999,
-              background: 'rgba(6,6,16,0.97)',
+              background: 'rgba(6,6,16,0.85)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',

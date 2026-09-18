@@ -210,6 +210,11 @@ const Projects = () => {
           #projects .projects-grid {
             grid-template-columns: repeat(2, 1fr) !important;
           }
+          #projects .project-card:last-child:nth-child(odd) {
+            grid-column: 1 / -1;
+            max-width: 600px;
+            justify-self: center;
+          }
         }
 
         @media (max-width: 720px) {

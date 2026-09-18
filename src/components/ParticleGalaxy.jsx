@@ -62,6 +62,11 @@ export default function ParticleGalaxy() {
       let offsetX = 0;
       let offsetY = 0;
 
+      if (width === 0 || height === 0) {
+        requestAnimationFrame(animate);
+        return;
+      }
+
       if (mouseX !== 0) {
         const percentX = (mouseX / width) * 2 - 1;
         const percentY = (mouseY / height) * 2 - 1;

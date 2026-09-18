@@ -61,8 +61,8 @@ export const projectAssets = {
   },
   'xo-quest': {
     icon: 'XOQuest.png',
-    homeBanner: 'XOQuest Banner.png',
-    caseStudyBanner: 'XOQuest-Banne.png',
+    homeBanner: 'XOQuest-Banner.png',
+    caseStudyBanner: 'XOQuest-Banner.png',
     screenshotsFolder: 'XO Quest',
   },
   'think-sudoku': {

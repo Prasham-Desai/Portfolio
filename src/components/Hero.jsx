@@ -28,9 +28,9 @@ const TECH_BADGES = [
   { label: 'Systems', color: '#34d399' },
 ];
 
-const ORBIT_RADIUS_X = 260; 
-const ORBIT_RADIUS_Y = 200; 
-const ORBIT_SPEED = 0.12;   
+const ORBIT_RADIUS_X = 260;
+const ORBIT_RADIUS_Y = 200;
+const ORBIT_SPEED = 0.12;
 
 /* ── Character stagger title ── */
 const StaggerTitle = ({ text, delay = 0 }) => {
@@ -128,8 +128,12 @@ const OrbitingBadges = ({ badges }) => {
         const baseAngle = (i / badges.length) * Math.PI * 2;
         const angle = baseAngle + t * ORBIT_SPEED;
         const bob = Math.sin(t * 1.8 + i * 0.8) * 5;
-        const x = Math.cos(angle) * ORBIT_RADIUS_X;
-        const y = Math.sin(angle) * ORBIT_RADIUS_Y + bob;
+        const isMobile = window.innerWidth < 768;
+        const isTablet = window.innerWidth < 1180;
+        const rx = isMobile ? 130 : isTablet ? 180 : ORBIT_RADIUS_X;
+        const ry = isMobile ? 90 : isTablet ? 140 : ORBIT_RADIUS_Y;
+        const x = Math.cos(angle) * rx;
+        const y = Math.sin(angle) * ry + bob;
         el.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
       });
       rafRef.current = requestAnimationFrame(tick);
@@ -197,14 +201,14 @@ const Hero = () => {
 
   return (
     <section ref={containerRef} id="hero" className="home-hero" style={{ minHeight: '100svh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden', background: '#04040a', perspective: 1400 }}>
-      
+
       {/* Dynamic Galaxy Background */}
       <ParticleGalaxy />
 
       {/* Main content wrapper */}
       <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: 1440, margin: '0 auto', padding: 'clamp(100px, 10vw, 128px) clamp(20px, 5vw, 64px) clamp(64px, 8vw, 84px)', boxSizing: 'border-box' }}>
         <div className="hero-grid">
-          
+
           {/* LEFT: typography & stats */}
           <motion.div className="hero-copy" initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.10, delayChildren: 0.1 } } }}>
             <FadeUp>
@@ -238,7 +242,7 @@ const Hero = () => {
 
             <FadeUp>
               {/* Vibrant Stat Bar */}
-              <div style={{
+              <div className="hero-stats-bar" style={{
                 display: 'flex', gap: '32px', marginBottom: 48,
                 background: 'rgba(6,6,16,0.6)',
                 border: '1px solid rgba(0,212,255,0.2)',
@@ -250,8 +254,8 @@ const Hero = () => {
               }}>
                 {[
                   { v: 7, suffix: '+', l: 'Games Shipped' },
-                  { v: 2, suffix: '', l: 'Game Engines' },
-                  { v: null, label: 'C++', l: 'Primary Language' },
+                  { v: null, label: 'UE5', l: 'Primary Engine' },
+                  { v: null, label: 'Blueprints', l: 'Core Development' },
                 ].map((s, i) => (
                   <div key={s.l} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                     <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '1.6rem', fontWeight: 800, color: '#f1f5f9', letterSpacing: '-0.02em', lineHeight: 1 }}>
@@ -286,7 +290,7 @@ const Hero = () => {
           >
             <div className="hero-badges-cloud" style={{ position: 'relative', width: '100%', maxWidth: 520, height: 480, margin: '0 auto', overflow: 'visible' }}>
               <OrbitingBadges badges={TECH_BADGES} />
-              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 'min(220px, 50%)', zIndex: 3 }}>
+              <div className="hero-portrait-container" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 3 }}>
                 <PortraitFrame />
               </div>
             </div>
@@ -299,6 +303,7 @@ const Hero = () => {
       <style>{`
         .home-hero .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 4vw, 64px); align-items: center; }
         .home-hero .hero-visual { display: flex; justify-content: center; }
+        .home-hero .hero-portrait-container { width: 220px; }
         .home-hero .hero-button { justify-content: center; }
         
         @media (min-width: 1600px) {
@@ -309,11 +314,12 @@ const Hero = () => {
           .home-hero .hero-grid { grid-template-columns: 1fr 1fr; gap: 28px !important; }
           .home-hero .hero-tagline-wrap { min-height: 64px !important; margin-bottom: 30px !important; }
           .home-hero .hero-tagline { white-space: normal !important; max-width: min(38ch, 100%); line-height: 1.4 !important; }
+          .home-hero .hero-portrait-container { width: 170px; }
         }
         
         @media (max-width: 900px) {
           .home-hero .hero-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
-          .home-hero .hero-copy { text-align: left; display: flex; flexDirection: column; alignItems: flex-start; }
+          .home-hero .hero-copy { text-align: left; display: flex; flex-direction: column; align-items: flex-start; }
           .home-hero .hero-visual { max-width: min(480px, 100%); width: 100%; margin: 0 auto; justify-content: center !important; }
           .home-hero .hero-tagline { white-space: normal !important; max-width: 100%; line-height: 1.4 !important; }
         }
@@ -325,6 +331,15 @@ const Hero = () => {
           .home-hero .hero-actions { flex-wrap: wrap; width: 100%; }
           .home-hero .hero-actions > * { flex: 1 1 auto; min-width: 140px; }
           .home-hero .hero-button { padding: 14px 22px !important; }
+          .home-hero .hero-badges-cloud { height: 320px !important; max-width: 100vw !important; overflow: hidden !important; }
+          .home-hero .hero-portrait-container { width: 140px; }
+          .home-hero .hero-stats-bar { 
+            display: grid !important; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px !important; 
+            padding: 20px !important; 
+            width: 100% !important;
+          }
         }
       `}</style>
     </section>
