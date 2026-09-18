@@ -62,18 +62,18 @@ const Experience = () => {
     const isCurrent = group.isCurrent;
     const companyPeriod = isCurrent ? 'May 2026 - Present' : 'May 2025 - Apr 2026';
     const summary = isCurrent
-      ? 'Focused on Unreal Engine C++ and Blueprints — building gameplay prototypes, exploring GAS architecture, and developing production-minded systems.'
+      ? 'Focused on Unreal Engine C++ and Blueprints building gameplay prototypes, exploring GAS architecture, and developing production-minded systems.'
       : 'Built and shipped mobile game features across production builds, from gameplay systems to backend-connected delivery and optimization.';
 
     const highlights = isCurrent
       ? [
-          { label: 'Focus', value: 'Unreal prototypes' },
-          { label: 'Stack', value: 'Blueprints + C++' },
-        ]
+        { label: 'Focus', value: 'Unreal prototypes' },
+        { label: 'Stack', value: 'Blueprints + C++' },
+      ]
       : [
-          { label: 'Focus', value: 'Mobile gameplay systems' },
-          { label: 'Impact', value: 'Stable shipped builds' },
-        ];
+        { label: 'Focus', value: 'Mobile gameplay systems' },
+        { label: 'Impact', value: 'Stable shipped builds' },
+      ];
 
     return {
       ...group,
@@ -174,6 +174,8 @@ const Experience = () => {
             {companyCards.map((card, index) => (
               <motion.div
                 key={card.company}
+                key={card.company}
+                className="experience-card"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
@@ -311,8 +313,8 @@ const Experience = () => {
               <motion.div
                 className="experience-card"
                 key={`${item.role}-${item.period}`}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.36), ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ borderColor: `${item.color}35`, y: -2 }}
@@ -482,18 +484,12 @@ const Experience = () => {
 
         @media (max-width: 720px) {
           #experience .experience-timeline {
-            padding-left: 22px !important;
+            padding-left: 0 !important;
           }
 
-          #experience .experience-line {
-            left: 0 !important;
-          }
-
+          #experience .experience-line,
           #experience .experience-dot {
-            left: -22px !important;
-            top: 26px !important;
-            width: 14px !important;
-            height: 14px !important;
+            display: none !important;
           }
 
           #experience .experience-card > div:first-child {

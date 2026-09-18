@@ -51,6 +51,8 @@
 html {
   scroll-behavior: smooth;
   min-height: 100%;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -60,7 +62,9 @@ body {
   font-size: 16px;
   line-height: 1.6;
   min-height: 100vh;
-  overflow-x: clip;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -76,8 +80,9 @@ button {
   font-family: inherit;
 }
 
-img {
+img, video, canvas {
   max-width: 100%;
+  height: auto;
   display: block;
 }
 

@@ -32,7 +32,7 @@ const timelineItems = [
   {
     year: 'Now',
     title: 'Looking Forward',
-    body: 'Fully transitioned to Unreal Engine 5, focusing on independent development. Mastering Blueprint visual scripting to build robust systems like Chaos Vehicles, UMG UI architectures, Paper2D platforming, and dynamic NavMesh AI.',
+    body: 'Transitioning to Unreal Engine 5, building hands-on gameplay prototypes and systems. Exploring Blueprint scripting, Unreal C++, AI, UMG, Chaos Vehicles, Paper2D, animation, and engine architecture through independent projects.',
     color: '#00d4ff',
     icon: '◈',
   },
@@ -119,7 +119,7 @@ const About = () => {
                 lineHeight: 1.85,
                 marginBottom: 20,
               }}>
-                Game developer with hands-on experience building and deploying mobile games. I specialize in Unity (2D & 3D), gameplay systems, performance optimization, and backend-connected features.
+                Game Developer with professional Unity experience and a growing specialization in Unreal Engine. I build gameplay systems, multiplayer features, AI, UI, and interactive experiences with a focus on clean architecture and performance.
               </p>
               <p style={{
                 fontFamily: "'Inter', sans-serif",
@@ -128,16 +128,14 @@ const About = () => {
                 lineHeight: 1.7,
                 marginBottom: 20,
               }}>
-                Currently on a professional development career break (May 2026 – Present) to learn Unreal Engine, with a focus on Blueprints, Unreal C++, and gameplay prototype development.
-              </p>
+                With a professional background in Unity, I’m now expanding into Unreal Engine through hands-on development with Blueprints, C++, gameplay systems, and engine architecture.              </p>
               <p style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.97rem',
                 color: '#8888aa',
                 lineHeight: 1.85,
               }}>
-                My approach: every system should be performant, every interaction should feel intentional, and every game should respect the player's time. Right now I’m building Unreal prototypes, studying engine architecture, and translating everything I learned in Unity into a broader studio workflow.
-              </p>
+                I build with purpose - performant systems, responsive gameplay, and interactions that feel intentional.              </p>
             </motion.div>
 
             {/* Credential cards */}
@@ -219,7 +217,7 @@ const About = () => {
                       top: 16, /* Center of current dot */
                       bottom: -48, /* Crosses 32px gap + arrives exactly at 16px center of next dot */
                       width: 1,
-                      background: `linear-gradient(to bottom, ${item.color}80, ${timelineItems[i+1].color}80)`,
+                      background: `linear-gradient(to bottom, ${item.color}80, ${timelineItems[i + 1].color}80)`,
                       zIndex: 0,
                     }} />
                   )}

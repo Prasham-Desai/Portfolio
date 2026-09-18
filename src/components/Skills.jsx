@@ -59,7 +59,7 @@ const SkillGroupIcon = ({ id }) => {
 };
 
 const SkillBar = ({ name, level, color, inView, delay }) => (
-  <motion.div 
+  <motion.div
     whileHover={{ x: 4, scale: 1.01 }}
     transition={{ duration: 0.2 }}
     style={{ marginBottom: 16, padding: '4px 0', cursor: 'default' }}
@@ -67,11 +67,13 @@ const SkillBar = ({ name, level, color, inView, delay }) => (
     <div style={{
       display: 'flex',
       justifyContent: 'space-between',
+      alignItems: 'center',
+      gap: 12,
       marginBottom: 8,
       fontFamily: "'Space Grotesk', sans-serif",
       fontSize: '0.97rem',
     }}>
-      <span style={{ color: '#e2e8f0', fontWeight: 600 }}>{name}</span>
+      <span style={{ color: '#e2e8f0', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
       <span style={{ color: color, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textShadow: `0 0 8px ${color}88` }}>
         {level}%
       </span>
@@ -245,7 +247,7 @@ const Skills = () => {
                       style={{ marginLeft: 'auto' }}
                     >
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M3 8H13M8 3L13 8L8 13" stroke={group.color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M3 8H13M8 3L13 8L8 13" stroke={group.color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </motion.div>
                   )}
@@ -273,7 +275,16 @@ const Skills = () => {
                 Also Comfortable With
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                {['C#', 'C++', 'Java', 'Python', 'MERN Stack', 'DOTween', 'Figma', 'Blender'].map(tech => (
+                {[
+                  "C# / .NET",
+                  "C++",
+                  "Java",
+                  "Python",
+                  "MERN Stack",
+                  "DOTween",
+                  "Figma",
+                  "Blender",
+                ].map(tech => (
                   <span key={tech} style={{
                     fontFamily: "'JetBrains Mono', monospace",
                     fontSize: '0.75rem',
@@ -311,6 +322,8 @@ const Skills = () => {
                   borderRadius: 16,
                   padding: '32px 32px',
                   boxShadow: `inset 2px 0 0 ${currentGroup.color}55`,
+                  minWidth: 0,
+                  overflow: 'hidden',
                 }}
               >
                 {/* Group header */}

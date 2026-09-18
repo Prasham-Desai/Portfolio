@@ -460,6 +460,7 @@ const Contact = () => {
                     color: '#e5e5f2',
                     fontWeight: 600,
                     letterSpacing: '-0.01em',
+                    wordBreak: 'break-word',
                   }}>
                     {item.value}
                   </div>
