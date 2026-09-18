@@ -479,6 +479,7 @@ const Experience = () => {
             </div>
           ))}
         </div>
+      </div>
       <style>{`
         @media (max-width: 980px) {
           #experience .company-group {

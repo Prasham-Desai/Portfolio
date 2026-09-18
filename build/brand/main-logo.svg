@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;display=swap');
+      .logo { font-family: 'Space Grotesk', sans-serif; font-size: 180px; font-weight: 700; fill: #ffffff; letter-spacing: -8px; text-anchor: middle; dominant-baseline: central; }
+    </style>
+  </defs>
+  <!-- Absolute mathematical centering using dominant-baseline -->
+  <text class="logo" x="200" y="200">PD<tspan fill="#00d4ff">.</tspan></text>
+</svg>
