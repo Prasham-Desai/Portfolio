@@ -164,6 +164,7 @@ const Skills = () => {
         }}>
           {/* Left: Category selector — node map style */}
           <motion.div
+            className="skills-left-col"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-40px' }}
@@ -258,7 +259,8 @@ const Skills = () => {
             </div>
 
             {/* Quick tech tags */}
-            <div className="skills-aux-card" style={{
+            <div className="skills-aux-card-wrapper" style={{ minWidth: 0, marginTop: 16 }}>
+              <div className="skills-aux-card" style={{
               padding: '20px',
               background: 'rgba(20, 22, 35, 0.6)',
               borderRadius: 12,
@@ -301,10 +303,12 @@ const Skills = () => {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
+        </motion.div>
 
           {/* Right: Skill bars */}
           <motion.div
+            className="skills-right-col"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-40px' }}
@@ -410,30 +414,19 @@ const Skills = () => {
       <style>{`
         @media (max-width: 980px) {
           #skills .skills-layout {
-            grid-template-columns: 1fr !important;
+            display: flex !important;
+            flex-direction: column;
+            gap: 32px !important;
           }
+          .skills-left-col { 
+            display: contents; 
+          }
+          .skills-node-list { order: 1; width: 100%; }
+          .skills-right-col { order: 2; width: 100%; }
+          .skills-aux-card-wrapper { order: 3; width: 100%; }
         }
 
         @media (max-width: 720px) {
-          #skills .skills-node-list {
-            display: flex;
-            overflow-x: auto;
-            gap: 8px;
-            padding-bottom: 8px;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-          }
-          #skills .skills-node-list::-webkit-scrollbar {
-            display: none;
-          }
-
-          #skills .skill-node {
-            margin-bottom: 0 !important;
-            padding: 12px 16px !important;
-            flex-shrink: 0;
-            min-width: 150px;
-          }
-
           #skills .skills-panel {
             padding: 22px 18px !important;
           }

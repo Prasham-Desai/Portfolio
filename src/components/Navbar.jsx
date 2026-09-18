@@ -427,6 +427,7 @@ const Navbar = () => {
                 {navLinks.map((link, i) => (
                   <motion.button
                     key={link.label}
+                    className="mobile-nav-link"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.08 }}
@@ -476,14 +477,14 @@ const Navbar = () => {
                   }}
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: '1.05rem',
+                    fontSize: '1rem',
                     fontWeight: 600,
                     color: '#04040a',
                     background: 'linear-gradient(135deg, #34d399 0%, #10b981 100%)',
                     boxShadow: '0 0 14px rgba(52,211,153,0.25), inset 0 2px 4px rgba(255,255,255,0.25)',
                     border: 'none',
                     borderRadius: 9999,
-                    padding: '9px 20px',
+                    padding: '10px 20px',
                     letterSpacing: '0.01em',
                     display: 'flex',
                     alignItems: 'center',
@@ -512,14 +513,14 @@ const Navbar = () => {
                   }}
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: '1.1rem',
-                    fontWeight: 800,
+                    fontSize: '1rem',
+                    fontWeight: 600,
                     color: '#04040a',
                     background: 'linear-gradient(135deg, #00d4ff 0%, #00fff2 100%)',
                     boxShadow: '0 0 24px rgba(0,212,255,0.5), inset 0 2px 4px rgba(255,255,255,0.4)',
                     border: 'none',
                     borderRadius: 9999,
-                    padding: '12px 32px',
+                    padding: '10px 20px',
                     letterSpacing: '0.05em',
                     textTransform: 'uppercase',
                     display: 'flex',
@@ -549,14 +550,14 @@ const Navbar = () => {
                   }}
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: '1.05rem',
+                    fontSize: '1rem',
                     fontWeight: 600,
                     color: '#04040a',
                     background: 'linear-gradient(135deg, #c084fc 0%, #ff7bf5 100%)',
                     boxShadow: '0 0 18px rgba(192,132,252,0.3), inset 0 2px 4px rgba(255,255,255,0.3)',
                     border: 'none',
                     borderRadius: 9999,
-                    padding: '10px 24px',
+                    padding: '10px 20px',
                     letterSpacing: '0.01em',
                     display: 'flex',
                     alignItems: 'center',
@@ -605,7 +606,7 @@ const Navbar = () => {
             gap: 22px !important;
           }
 
-          .mobile-menu-panel button {
+          .mobile-menu-panel .mobile-nav-link {
             font-size: clamp(1.4rem, 7vw, 1.8rem) !important;
           }
         }
@@ -625,7 +626,7 @@ const Navbar = () => {
             gap: 18px !important;
           }
 
-          .mobile-menu-panel button {
+          .mobile-menu-panel .mobile-nav-link {
             font-size: clamp(1.2rem, 6vw, 1.5rem) !important;
           }
         }

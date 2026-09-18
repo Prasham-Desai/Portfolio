@@ -82,7 +82,7 @@ const StickyLabel = ({ children, color }) => (
 );
 
 const SectionDivider = ({ color }) => (
-  <div style={{
+  <div className="project-detail-divider" style={{
     height: 1,
     background: `linear-gradient(90deg, ${color || 'rgba(0,212,255,0.2)'}, transparent)`,
     margin: '80px 0',
@@ -180,9 +180,35 @@ const ProjectDetail = () => {
           overflow: 'hidden',
           display: 'flex',
           alignItems: 'flex-end',
-          background: caseStudyBanner ? `linear-gradient(to bottom, rgba(11,11,22,0.2) 0%, rgba(11,11,22,0.98) 100%), url(${caseStudyBanner}) center/cover no-repeat` : project.coverColor,
+          background: project.coverColor,
         }}
       >
+        {/* Desktop Banner (caseStudyBanner) */}
+        {caseStudyBanner && (
+          <div 
+            className="project-detail-banner-img desktop-banner"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: `linear-gradient(to bottom, rgba(11,11,22,0.2) 0%, rgba(11,11,22,0.98) 100%), url(${caseStudyBanner}) center/cover no-repeat`,
+              zIndex: 0
+            }}
+          />
+        )}
+        
+        {/* Mobile Banner (heroImage or image) */}
+        {(project.heroImage || project.image) && (
+          <div 
+            className="project-detail-banner-img mobile-banner"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: `linear-gradient(to bottom, rgba(11,11,22,0.5) 0%, rgba(11,11,22,0.98) 100%), url(${project.heroImage || project.image}) center/cover no-repeat`,
+              zIndex: 0
+            }}
+          />
+        )}
+
         {/* Parallax grid */}
         <motion.div
           style={{ y: heroY, position: 'absolute', inset: -50 }}
@@ -226,33 +252,62 @@ const ProjectDetail = () => {
         <motion.div
           style={{ opacity: heroOpacity, position: 'relative', zIndex: 2, width: '100%' }}
         >
-          <div className="container project-detail-hero-content" style={{ padding: '0 24px 64px' }}>
-            {/* Back button */}
+          <div className="container project-detail-hero-content" style={{ padding: '0 24px 64px', paddingTop: 120, position: 'relative' }}>
+
+            {/* Colored Back Button */}
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
+              className="detail-back-btn-wrapper"
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              style={{ marginBottom: 40, paddingTop: 120 }}
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                marginBottom: 24,
+                zIndex: 20,
+              }}
             >
               <Link
-                to="/"
+                to="/projects"
+                className="icon-btn-mobile"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: 8,
+                  padding: '12px 24px',
+                  borderRadius: 8,
+                  background: 'rgba(10,12,20,0.8)',
+                  border: `1px solid ${project.accentColor}50`,
+                  color: project.accentColor,
                   fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: '0.92rem',
-                  fontWeight: 500,
-                  color: 'rgba(255,255,255,0.4)',
-                  transition: 'color 0.2s ease',
+                  fontWeight: 600,
+                  fontSize: '0.95rem',
+                  textDecoration: 'none',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
+                  boxShadow: `0 6px 16px rgba(0,0,0,0.4)`,
+                  transition: 'all 0.25s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = `rgba(16,20,32,0.95)`;
+                  e.currentTarget.style.borderColor = project.accentColor;
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = `0 8px 20px rgba(0,0,0,0.5), 0 0 12px ${project.accentColor}20`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(10,12,20,0.8)';
+                  e.currentTarget.style.borderColor = `${project.accentColor}50`;
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = `0 6px 16px rgba(0,0,0,0.4)`;
                 }}
               >
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M13 7H1M7 13L1 7L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                All Projects
+                <span className="btn-text">All Projects</span>
               </Link>
             </motion.div>
+
 
             {/* Category + Platform */}
             <motion.div
@@ -269,8 +324,11 @@ const ProjectDetail = () => {
                   padding: '6px 14px',
                   border: `1px solid ${project.accentColor}40`,
                   borderRadius: 4,
-                  background: `${project.accentColor}10`,
+                  background: 'rgba(10,10,20,0.75)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
                   letterSpacing: '0.05em',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
                 }}>
                   {tag}
                 </span>
@@ -286,26 +344,56 @@ const ProjectDetail = () => {
               gap: 20,
               marginBottom: 20,
             }}>
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.7 }}
-                style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: 'clamp(4rem, 9vw, 7.5rem)',
-                  fontWeight: 800,
-                  letterSpacing: '-0.045em',
-                  lineHeight: 0.96,
-                  background: `linear-gradient(135deg, ${project.accentColor} 0%, #f0f0f8 55%, ${project.accentColor}cc 100%)`,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  marginBottom: 0,
-                  filter: `drop-shadow(0 4px 24px ${project.accentColor}33)`,
-                }}
-              >
-                {project.title}
-              </motion.h1>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+                <motion.h1
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.7 }}
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: 'clamp(4rem, 9vw, 7.5rem)',
+                    fontWeight: 800,
+                    letterSpacing: '-0.045em',
+                    lineHeight: 0.96,
+                    background: `linear-gradient(135deg, ${project.accentColor} 0%, #f0f0f8 55%, ${project.accentColor}cc 100%)`,
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    marginBottom: 0,
+                    filter: `drop-shadow(0 4px 24px ${project.accentColor}33)`,
+                  }}
+                >
+                  {project.title}
+                </motion.h1>
+
+                {/* Mobile inline GitHub button */}
+                {project.github && (
+                  <motion.a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="github-btn-mobile-inline"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4 }}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: 44,
+                      height: 44,
+                      borderRadius: 8,
+                      background: `linear-gradient(135deg, ${project.accentColor}cc, ${project.accentColor})`,
+                      color: '#fff',
+                      boxShadow: `0 4px 12px ${project.accentColor}40`,
+                    }}
+                  >
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                  </motion.a>
+                )}
+              </div>
 
               {projectIcon && (
                 <motion.div
@@ -354,6 +442,52 @@ const ProjectDetail = () => {
             >
               {project.tagline}
             </motion.p>
+
+            {/* GitHub Repo Button */}
+            {project.github && (
+              <motion.div
+                initial={{ opacity: 0, y: 28 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                style={{ marginTop: 32 }}
+                className="github-btn-desktop"
+              >
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="icon-btn-mobile"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 12,
+                    padding: '14px 28px',
+                    borderRadius: 8,
+                    background: `linear-gradient(135deg, ${project.accentColor}cc, ${project.accentColor})`,
+                    color: '#fff',
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontWeight: 600,
+                    fontSize: '1.05rem',
+                    textDecoration: 'none',
+                    boxShadow: `0 8px 24px ${project.accentColor}40`,
+                    transition: 'all 0.3s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = `0 12px 28px ${project.accentColor}60`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = `0 8px 24px ${project.accentColor}40`;
+                  }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                  </svg>
+                  <span className="btn-text">View Repository</span>
+                </a>
+              </motion.div>
+            )}
           </div>
         </motion.div>
 
@@ -1003,6 +1137,16 @@ const ProjectDetail = () => {
             margin-bottom: 0 !important;
           }
 
+          .project-detail-content {
+            padding-top: 60px !important;
+          }
+          
+          .mobile-banner { display: none !important; }
+
+          @media (min-width: 768px) {
+            .github-btn-mobile-inline { display: none !important; }
+          }
+
           .project-detail-hero-content {
             padding-bottom: 56px !important;
           }
@@ -1074,6 +1218,19 @@ const ProjectDetail = () => {
           .project-detail-features-grid > div {
             width: 100%;
           }
+          
+          .detail-back-btn-wrapper {
+            justify-content: flex-start !important;
+            margin-bottom: 16px !important;
+          }
+
+          .icon-btn-mobile .btn-text { display: none; }
+          .icon-btn-mobile { 
+            padding: 12px 14px !important; 
+            border-radius: 12px !important; 
+            gap: 0 !important; 
+          }
+          .icon-btn-mobile svg { margin: 0 !important; }
 
           .project-detail-shot.landscape,
           .project-detail-shot.portrait {
@@ -1084,20 +1241,39 @@ const ProjectDetail = () => {
             flex-direction: column;
             align-items: flex-start !important;
           }
+
+          .project-detail-hero {
+            min-height: auto !important;
+            align-items: flex-start !important;
+            padding-top: 72px !important;
+          }
+          .project-detail-hero-content {
+            padding-top: 24px !important;
+          }
+          .desktop-banner {
+            display: none !important;
+          }
+          .mobile-banner {
+            display: block !important;
+          }
+          .github-btn-desktop {
+            display: none !important;
+          }
         }
 
         @media (max-width: 480px) {
-          .project-detail-hero {
-            min-height: 55vh !important;
-          }
 
           .project-detail-content {
-            padding-top: 40px !important;
-            padding-bottom: 64px !important;
+            padding-top: 24px !important;
+            padding-bottom: 40px !important;
           }
 
           .project-detail-section {
-            margin-bottom: 48px !important;
+            margin-bottom: 32px !important;
+          }
+
+          .project-detail-divider {
+            margin: 32px 0 !important;
           }
 
           .project-detail-hero-icon {

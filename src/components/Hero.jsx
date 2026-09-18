@@ -75,43 +75,7 @@ const AnimatedCounter = ({ value, suffix = '', delay = 0 }) => {
   return `${count}${suffix}`;
 };
 
-/* ── Scroll indicator ── */
-const ScrollIndicator = () => {
-  const [visible, setVisible] = useState(true);
 
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY < 100);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-          transition={{ delay: 1.8, duration: 0.6 }}
-          style={{
-            position: 'absolute', bottom: 40, left: '50%', transform: 'translateX(-50%)',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, zIndex: 5,
-          }}
-        >
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#64748b' }}>
-            Scroll to explore
-          </span>
-          <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
-            <svg width="20" height="28" viewBox="0 0 20 28" fill="none">
-              <rect x="1" y="1" width="18" height="26" rx="9" stroke="#64748b" strokeWidth="1.5" />
-              <motion.circle cx="10" initial={{ cy: 8 }} animate={{ cy: [8, 16, 8] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }} r="2.5" fill="#00d4ff" />
-            </svg>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
 
 /* ── Orbiting badges (Glassmorphic) ── */
 const OrbitingBadges = ({ badges }) => {
@@ -130,8 +94,8 @@ const OrbitingBadges = ({ badges }) => {
         const bob = Math.sin(t * 1.8 + i * 0.8) * 5;
         const isMobile = window.innerWidth < 768;
         const isTablet = window.innerWidth < 1180;
-        const rx = isMobile ? 130 : isTablet ? 180 : ORBIT_RADIUS_X;
-        const ry = isMobile ? 90 : isTablet ? 140 : ORBIT_RADIUS_Y;
+        const rx = isMobile ? 150 : isTablet ? 180 : ORBIT_RADIUS_X;
+        const ry = isMobile ? 120 : isTablet ? 140 : ORBIT_RADIUS_Y;
         const x = Math.cos(angle) * rx;
         const y = Math.sin(angle) * ry + bob;
         el.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
@@ -206,7 +170,7 @@ const Hero = () => {
       <ParticleGalaxy />
 
       {/* Main content wrapper */}
-      <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: 1440, margin: '0 auto', padding: 'clamp(100px, 10vw, 128px) clamp(20px, 5vw, 64px) clamp(64px, 8vw, 84px)', boxSizing: 'border-box' }}>
+      <div className="hero-content-wrapper" style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: 1440, margin: '0 auto', padding: 'clamp(100px, 10vw, 128px) clamp(20px, 5vw, 64px) clamp(64px, 8vw, 84px)', boxSizing: 'border-box' }}>
         <div className="hero-grid">
 
           {/* LEFT: typography & stats */}
@@ -216,12 +180,25 @@ const Hero = () => {
             </FadeUp>
 
             <FadeUp>
-              <h1 className="hero-title" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(3.2rem, 6vw, 5.5rem)', fontWeight: 800, letterSpacing: '-0.045em', lineHeight: 0.95, color: '#f1f5f9', margin: '0 0 24px 0' }}>
-                <StaggerTitle text="Prasham" delay={0.3} /><br />
-                <span style={{ background: 'linear-gradient(135deg,#00d4ff 30%,#00fff2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                  <StaggerTitle text="Desai" delay={0.6} />
-                </span>
-                <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0, duration: 0.3 }} style={{ color: '#00d4ff' }}>.</motion.span>
+              <h1 className="hero-title" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(3.2rem, 6vw, 5.5rem)', fontWeight: 800, letterSpacing: '-0.045em', lineHeight: 0.95, color: '#f1f5f9', margin: '0 0 24px 0', width: '100%' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', flexWrap: 'nowrap', width: '100%' }}>
+                  <div>
+                    <StaggerTitle text="Prasham" delay={0.3} /><br />
+                    <span style={{ background: 'linear-gradient(135deg,#00d4ff 30%,#00fff2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                      <StaggerTitle text="Desai" delay={0.6} />
+                    </span>
+                    <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0, duration: 0.3 }} style={{ color: '#00d4ff' }}>.</motion.span>
+                  </div>
+                  
+                  <motion.div 
+                    className="hero-mobile-avatar"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.8, duration: 0.5 }}
+                  >
+                    <img src={AvatarImg} alt="Prasham Desai" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </motion.div>
+                </div>
               </h1>
             </FadeUp>
 
@@ -298,13 +275,12 @@ const Hero = () => {
         </div>
       </div>
 
-      <ScrollIndicator />
-
       <style>{`
         .home-hero .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 4vw, 64px); align-items: center; }
         .home-hero .hero-visual { display: flex; justify-content: center; }
         .home-hero .hero-portrait-container { width: 220px; }
         .home-hero .hero-button { justify-content: center; }
+        .home-hero .hero-mobile-avatar { display: none; }
         
         @media (min-width: 1600px) {
           .home-hero .hero-grid { gap: clamp(64px, 6vw, 120px); }
@@ -318,20 +294,36 @@ const Hero = () => {
         }
         
         @media (max-width: 900px) {
+          .home-hero { min-height: auto !important; }
+          .hero-content-wrapper { padding: 140px 24px 60px !important; }
           .home-hero .hero-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
-          .home-hero .hero-copy { text-align: left; display: flex; flex-direction: column; align-items: flex-start; }
-          .home-hero .hero-visual { max-width: min(480px, 100%); width: 100%; margin: 0 auto; justify-content: center !important; }
+          .home-hero .hero-copy { text-align: left; display: flex; flex-direction: column; align-items: flex-start; width: 100%; }
+          .home-hero .hero-copy > div { width: 100%; }
+          .home-hero .hero-visual { display: none !important; }
           .home-hero .hero-tagline { white-space: normal !important; max-width: 100%; line-height: 1.4 !important; }
+          
+          .home-hero .hero-mobile-avatar {
+            display: block;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            box-shadow: 0 0 16px rgba(0,212,255,0.2);
+            flex-shrink: 0;
+            margin: 0 auto;
+          }
         }
         
         @media (max-width: 767px) {
+          .hero-content-wrapper { padding: 120px 20px 40px !important; }
           .home-hero .hero-title { font-size: clamp(2.6rem, 11vw, 3.4rem) !important; line-height: 0.95 !important; margin-bottom: 18px !important; }
           .home-hero .hero-tagline-wrap { min-height: 48px !important; margin-bottom: 24px !important; }
           .home-hero .hero-tagline { font-size: 0.95rem !important; position: relative !important; }
           .home-hero .hero-actions { flex-wrap: wrap; width: 100%; }
           .home-hero .hero-actions > * { flex: 1 1 auto; min-width: 140px; }
           .home-hero .hero-button { padding: 14px 22px !important; }
-          .home-hero .hero-badges-cloud { height: 320px !important; max-width: 100vw !important; overflow: hidden !important; }
+          .home-hero .hero-badges-cloud { height: 380px !important; max-width: 100vw !important; overflow: hidden !important; }
           .home-hero .hero-portrait-container { width: 140px; }
           .home-hero .hero-stats-bar { 
             display: grid !important; 

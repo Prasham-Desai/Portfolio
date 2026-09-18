@@ -161,7 +161,7 @@ const Experience = () => {
           </p>
         </motion.div>
 
-                <div
+        <div
           className="experience-layout"
           style={{
             display: 'flex',
@@ -307,10 +307,13 @@ const Experience = () => {
                     position: 'absolute',
                     left: 8,
                     top: 40,
-                    bottom: 40,
+                    bottom: groupIndex === companyCards.length - 1 ? 40 : -104,
                     width: 1,
-                    background: 'linear-gradient(to bottom, rgba(0,212,255,0.24), rgba(180,79,255,0.24))',
+                    background: groupIndex === companyCards.length - 1 
+                      ? `linear-gradient(to bottom, ${card.accentColor}44 85%, transparent)`
+                      : `linear-gradient(to bottom, ${card.accentColor}44, ${companyCards[groupIndex + 1].accentColor}44)`,
                     pointerEvents: 'none',
+                    zIndex: 0,
                   }}
                 />
                 {card.roles.map((item, index) => (
@@ -321,7 +324,7 @@ const Experience = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-40px' }}
                     transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.36), ease: [0.22, 1, 0.36, 1] }}
-                    whileHover={{ borderColor: `${item.color}35`, y: -2 }}
+                    whileHover={{ borderColor: `${card.accentColor}35`, y: -2 }}
                     style={{
                       position: 'relative',
                       background: 'rgba(13,13,26,0.72)',
@@ -341,8 +344,8 @@ const Experience = () => {
                         height: 16,
                         borderRadius: '50%',
                         background: 'var(--color-bg)',
-                        border: `2px solid ${item.color}`,
-                        boxShadow: `0 0 0 4px ${item.color}14`,
+                        border: `2px solid ${card.accentColor}`,
+                        boxShadow: `0 0 0 4px ${card.accentColor}14`,
                       }}
                     />
                     <div
@@ -375,12 +378,12 @@ const Experience = () => {
                             marginBottom: 8,
                           }}
                         >
-                          <div style={{ width: 22, height: 1, background: `${item.color}55` }} />
+                          <div style={{ width: 22, height: 1, background: `${card.accentColor}55` }} />
                           <div
                             style={{
                               fontFamily: "'JetBrains Mono', monospace",
                               fontSize: '0.62rem',
-                              color: item.color,
+                              color: card.accentColor,
                               letterSpacing: '0.14em',
                               textTransform: 'uppercase',
                             }}
@@ -404,7 +407,7 @@ const Experience = () => {
                           style={{
                             fontFamily: "'JetBrains Mono', monospace",
                             fontSize: '0.72rem',
-                            color: item.color,
+                            color: card.accentColor,
                             letterSpacing: '0.12em',
                             textTransform: 'uppercase',
                             marginBottom: 6,
@@ -419,14 +422,14 @@ const Experience = () => {
                             gap: 8,
                             padding: '6px 12px',
                             borderRadius: 999,
-                            background: `${item.color}10`,
-                            border: `1px solid ${item.color}24`,
+                            background: `${card.accentColor}10`,
+                            border: `1px solid ${card.accentColor}24`,
                             fontFamily: "'JetBrains Mono', monospace",
                             fontSize: '0.7rem',
                             color: '#cfcfe2',
                           }}
                         >
-                          <span style={{ width: 6, height: 6, borderRadius: '50%', background: item.color }} />
+                          <span style={{ width: 6, height: 6, borderRadius: '50%', background: card.accentColor }} />
                           {item.duration}
                         </div>
                       </div>
@@ -455,7 +458,7 @@ const Experience = () => {
                               width: 8,
                               height: 8,
                               borderRadius: '50%',
-                              background: item.color,
+                              background: card.accentColor,
                               marginTop: 8,
                               flexShrink: 0,
                             }}

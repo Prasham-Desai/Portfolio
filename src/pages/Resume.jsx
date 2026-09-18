@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Resume = () => {
   return (
@@ -18,91 +19,162 @@ const Resume = () => {
         position: 'relative'
       }}>
 
+        {/* Page Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+          style={{ marginBottom: 48 }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+            <div>
+              <div className="section-label" style={{ fontSize: '0.8rem', marginBottom: 18 }}>
+                Professional Profile
+              </div>
+              <h1 style={{ 
+                fontFamily: "'Space Grotesk', sans-serif", 
+                fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', 
+                fontWeight: 800, 
+                color: '#fff',
+                letterSpacing: '-0.03em',
+                lineHeight: 1.05,
+                margin: 0
+              }}>
+                Prasham{' '}
+                <span style={{
+                  background: 'linear-gradient(135deg,#c084fc,#ff007f)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}>
+                  Desai
+                </span>
+              </h1>
+            </div>
+
+            <motion.div
+              className="resume-back-btn-wrapper"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <Link
+                to="/"
+                className="icon-btn-mobile"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '10px 20px',
+                  borderRadius: 8,
+                  background: 'rgba(10,12,20,0.8)',
+                  border: '1px solid #c084fc50',
+                  color: '#c084fc',
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontWeight: 600,
+                  fontSize: '0.95rem',
+                  textDecoration: 'none',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
+                  boxShadow: '0 6px 16px rgba(0,0,0,0.4)',
+                  transition: 'all 0.25s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(16,20,32,0.95)';
+                  e.currentTarget.style.borderColor = '#c084fc';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.5), 0 0 12px #c084fc20';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(10,12,20,0.8)';
+                  e.currentTarget.style.borderColor = '#c084fc50';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.4)';
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19L5 12L12 5"/></svg>
+                <span className="btn-text">Home</span>
+              </Link>
+            </motion.div>
+          </div>
+
+          <p style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '1.02rem',
+            color: '#94a3b8',
+            maxWidth: 560,
+            lineHeight: 1.7,
+            margin: '0 0 24px 0',
+          }}>
+            Game Developer | Unreal Engine | Gameplay Programming
+          </p>
+
+          <div className="resume-contact-info" style={{ 
+            display: 'flex', 
+            flexWrap: 'wrap', 
+            justifyContent: 'flex-start', 
+            gap: '12px 24px',
+            fontSize: '0.9rem',
+            color: '#94a3b8'
+          }}>
+            <span>📍 Ahmedabad, India</span>
+            <a href="tel:+919726733369" style={{ color: 'inherit', textDecoration: 'none' }}>📞 +91-9726733369</a>
+            <a href="mailto:prashamdesai@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>✉️ prashamdesai@gmail.com</a>
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>🔗 LinkedIn</a>
+            <a href="https://github.com/Prasham-Desai" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>💻 GitHub</a>
+          </div>
+
+          <div className="resume-download-btn-wrapper" style={{ marginTop: 24, display: 'flex', justifyContent: 'flex-start' }}>
+            <a 
+              href="/Prasham_Desai_Resume.pdf" 
+              download="Prasham_Desai_Resume.pdf"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '10px 24px',
+                background: 'rgba(192, 132, 252, 0.1)',
+                border: '1px solid rgba(192, 132, 252, 0.3)',
+                borderRadius: 999,
+                color: '#c084fc',
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontWeight: 600,
+                textDecoration: 'none',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = 'rgba(192, 132, 252, 0.2)';
+                e.currentTarget.style.boxShadow = '0 4px 16px rgba(192, 132, 252, 0.2)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'rgba(192, 132, 252, 0.1)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download PDF
+            </a>
+          </div>
+        </motion.div>
+
         {/* Paper-like Resume Container */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
           style={{
             background: 'rgba(20, 22, 35, 0.6)',
             border: '1px solid rgba(255, 255, 255, 0.05)',
             borderRadius: 16,
             padding: '48px clamp(24px, 5vw, 64px)',
             boxShadow: '0 24px 64px rgba(0,0,0,0.4)',
+            position: 'relative',
           }}
         >
-          
-          {/* Header */}
-          <header style={{ textAlign: 'center', marginBottom: 40 }}>
-            <h1 style={{ 
-              fontFamily: "'Space Grotesk', sans-serif", 
-              fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', 
-              fontWeight: 800, 
-              color: '#fff',
-              letterSpacing: '-0.03em',
-              marginBottom: 8 
-            }}>
-              Prasham Desai
-            </h1>
-            <h2 style={{ 
-              fontSize: '1.2rem', 
-              color: '#00d4ff', 
-              fontWeight: 500,
-              marginBottom: 20
-            }}>
-              Game Developer | Unreal Engine | Gameplay Programming
-            </h2>
-            <div style={{ 
-              display: 'flex', 
-              flexWrap: 'wrap', 
-              justifyContent: 'center', 
-              gap: '12px 24px',
-              fontSize: '0.9rem',
-              color: '#94a3b8'
-            }}>
-              <span>📍 Ahmedabad, India</span>
-              <a href="tel:+919726733369" style={{ color: 'inherit', textDecoration: 'none' }}>📞 +91-9726733369</a>
-              <a href="mailto:prashamdesai@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>✉️ prashamdesai@gmail.com</a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>🔗 LinkedIn</a>
-              <a href="https://github.com/Prasham-Desai" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>💻 GitHub</a>
-            </div>
-
-            <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center' }}>
-              <a 
-                href="/Prasham_Desai_Resume.pdf" 
-                download="Prasham_Desai_Resume.pdf"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  padding: '10px 24px',
-                  background: 'rgba(0, 212, 255, 0.1)',
-                  border: '1px solid rgba(0, 212, 255, 0.3)',
-                  borderRadius: 999,
-                  color: '#00d4ff',
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  transition: 'all 0.2s ease',
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.background = 'rgba(0, 212, 255, 0.2)';
-                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 212, 255, 0.2)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.background = 'rgba(0, 212, 255, 0.1)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                Download PDF
-              </a>
-            </div>
-          </header>
 
           <Section title="SUMMARY">
             <p style={{ lineHeight: 1.6, color: '#cbd5e1' }}>
@@ -213,6 +285,24 @@ const Resume = () => {
         }
         .resume-page li::marker {
           color: #00d4ff;
+        }
+        @media (max-width: 767px) {
+          .resume-header {
+            text-align: left !important;
+          }
+          .resume-contact-info {
+            justify-content: flex-start !important;
+          }
+          .resume-download-btn-wrapper {
+            justify-content: flex-start !important;
+          }
+          .icon-btn-mobile .btn-text { display: none; }
+          .icon-btn-mobile { 
+            padding: 12px 14px !important; 
+            border-radius: 12px !important; 
+            gap: 0 !important; 
+          }
+          .icon-btn-mobile svg { margin: 0 !important; }
         }
       `}</style>
     </div>
