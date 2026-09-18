@@ -161,25 +161,31 @@ const Experience = () => {
           </p>
         </motion.div>
 
-        <div
+                <div
           className="experience-layout"
           style={{
-            display: 'grid',
-            gridTemplateColumns: '0.9fr 1.4fr',
-            gap: 44,
-            alignItems: 'start',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 64,
           }}
         >
-          <div style={{ display: 'grid', gap: 16 }}>
-            {companyCards.map((card, index) => (
+          {companyCards.map((card, groupIndex) => (
+            <div
+              key={card.company}
+              className="company-group"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '0.9fr 1.4fr',
+                gap: 44,
+                alignItems: 'start',
+              }}
+            >
               <motion.div
-                key={card.company}
-                key={card.company}
                 className="experience-card"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.36), ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5, delay: Math.min(groupIndex * 0.06, 0.36), ease: [0.22, 1, 0.36, 1] }}
                 style={{
                   background: 'rgba(17,17,32,0.7)',
                   border: `1px solid ${card.accentColor}22`,
@@ -293,192 +299,191 @@ const Experience = () => {
                   ))}
                 </div>
               </motion.div>
-            ))}
-          </div>
 
-          <div className="experience-timeline" style={{ position: 'relative', paddingLeft: 32 }}>
-            <div
-              className="experience-line"
-              style={{
-                position: 'absolute',
-                left: 8,
-                top: 40,
-                bottom: 40,
-                width: 1,
-                background: 'linear-gradient(to bottom, rgba(0,212,255,0.24), rgba(180,79,255,0.24))',
-                pointerEvents: 'none',
-              }}
-            />
-            {experienceItems.map((item, index) => (
-              <motion.div
-                className="experience-card"
-                key={`${item.role}-${item.period}`}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.36), ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ borderColor: `${item.color}35`, y: -2 }}
-                style={{
-                  position: 'relative',
-                  background: 'rgba(13,13,26,0.72)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  borderRadius: 18,
-                  padding: 28,
-                  marginBottom: 18,
-                }}
-              >
+              <div className="experience-timeline" style={{ position: 'relative', paddingLeft: 32 }}>
                 <div
-                  className="experience-dot"
+                  className="experience-line"
                   style={{
                     position: 'absolute',
-                    left: -32,
-                    top: 32,
-                    width: 16,
-                    height: 16,
-                    borderRadius: '50%',
-                    background: 'var(--color-bg)',
-                    border: `2px solid ${item.color}`,
-                    boxShadow: `0 0 0 4px ${item.color}14`,
+                    left: 8,
+                    top: 40,
+                    bottom: 40,
+                    width: 1,
+                    background: 'linear-gradient(to bottom, rgba(0,212,255,0.24), rgba(180,79,255,0.24))',
+                    pointerEvents: 'none',
                   }}
                 />
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-start',
-                    gap: 18,
-                    marginBottom: 18,
-                    flexWrap: 'wrap',
-                  }}
-                >
-                  <div>
+                {card.roles.map((item, index) => (
+                  <motion.div
+                    className="experience-card"
+                    key={`${item.role}-${item.period}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-40px' }}
+                    transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.36), ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ borderColor: `${item.color}35`, y: -2 }}
+                    style={{
+                      position: 'relative',
+                      background: 'rgba(13,13,26,0.72)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      borderRadius: 18,
+                      padding: 28,
+                      marginBottom: 18,
+                    }}
+                  >
                     <div
+                      className="experience-dot"
                       style={{
-                        fontFamily: "'Space Grotesk', sans-serif",
-                        fontSize: '1.3rem',
-                        fontWeight: 700,
-                        color: '#f0f0f8',
-                        marginBottom: 6,
+                        position: 'absolute',
+                        left: -32,
+                        top: 32,
+                        width: 16,
+                        height: 16,
+                        borderRadius: '50%',
+                        background: 'var(--color-bg)',
+                        border: `2px solid ${item.color}`,
+                        boxShadow: `0 0 0 4px ${item.color}14`,
                       }}
-                    >
-                      {item.role}
-                    </div>
+                    />
                     <div
                       style={{
                         display: 'flex',
-                        alignItems: 'center',
-                        gap: 10,
-                        marginBottom: 8,
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-start',
+                        gap: 18,
+                        marginBottom: 18,
+                        flexWrap: 'wrap',
                       }}
                     >
-                      <div style={{ width: 22, height: 1, background: `${item.color}55` }} />
-                      <div
-                        style={{
-                          fontFamily: "'JetBrains Mono', monospace",
-                          fontSize: '0.62rem',
-                          color: item.color,
-                          letterSpacing: '0.14em',
-                          textTransform: 'uppercase',
-                        }}
-                      >
-                        {experienceItems.filter((entry) => entry.company === item.company).length > 1 ? 'Associated Role' : 'Role Track'}
+                      <div>
+                        <div
+                          style={{
+                            fontFamily: "'Space Grotesk', sans-serif",
+                            fontSize: '1.3rem',
+                            fontWeight: 700,
+                            color: '#f0f0f8',
+                            marginBottom: 6,
+                          }}
+                        >
+                          {item.role}
+                        </div>
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 10,
+                            marginBottom: 8,
+                          }}
+                        >
+                          <div style={{ width: 22, height: 1, background: `${item.color}55` }} />
+                          <div
+                            style={{
+                              fontFamily: "'JetBrains Mono', monospace",
+                              fontSize: '0.62rem',
+                              color: item.color,
+                              letterSpacing: '0.14em',
+                              textTransform: 'uppercase',
+                            }}
+                          >
+                            {card.roles.length > 1 ? 'Associated Role' : 'Role Track'}
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            fontFamily: "'Inter', sans-serif",
+                            fontSize: '0.96rem',
+                            color: '#b4b4cb',
+                          }}
+                        >
+                          {item.company}
+                        </div>
+                      </div>
+
+                      <div style={{ textAlign: 'right' }}>
+                        <div
+                          style={{
+                            fontFamily: "'JetBrains Mono', monospace",
+                            fontSize: '0.72rem',
+                            color: item.color,
+                            letterSpacing: '0.12em',
+                            textTransform: 'uppercase',
+                            marginBottom: 6,
+                          }}
+                        >
+                          {item.period}
+                        </div>
+                        <div
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 8,
+                            padding: '6px 12px',
+                            borderRadius: 999,
+                            background: `${item.color}10`,
+                            border: `1px solid ${item.color}24`,
+                            fontFamily: "'JetBrains Mono', monospace",
+                            fontSize: '0.7rem',
+                            color: '#cfcfe2',
+                          }}
+                        >
+                          <span style={{ width: 6, height: 6, borderRadius: '50%', background: item.color }} />
+                          {item.duration}
+                        </div>
                       </div>
                     </div>
-                    <div
-                      style={{
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: '0.96rem',
-                        color: '#b4b4cb',
-                      }}
-                    >
-                      {item.company}
-                    </div>
-                  </div>
 
-                  <div style={{ textAlign: 'right' }}>
                     <div
                       style={{
-                        fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: '0.72rem',
-                        color: item.color,
-                        letterSpacing: '0.12em',
-                        textTransform: 'uppercase',
-                        marginBottom: 6,
+                        display: 'grid',
+                        gap: 10,
                       }}
                     >
-                      {item.period}
+                      {item.responsibilities.map((responsibility) => (
+                        <div
+                          key={responsibility}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            gap: 12,
+                            padding: '12px 14px',
+                            borderRadius: 12,
+                            background: 'rgba(255,255,255,0.02)',
+                          }}
+                        >
+                          <span
+                            style={{
+                              width: 8,
+                              height: 8,
+                              borderRadius: '50%',
+                              background: item.color,
+                              marginTop: 8,
+                              flexShrink: 0,
+                            }}
+                          />
+                          <p
+                            style={{
+                              fontFamily: "'Inter', sans-serif",
+                              fontSize: '0.94rem',
+                              color: '#aeb0c8',
+                              lineHeight: 1.75,
+                            }}
+                          >
+                            {responsibility}
+                          </p>
+                        </div>
+                      ))}
                     </div>
-                    <div
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: 8,
-                        padding: '6px 12px',
-                        borderRadius: 999,
-                        background: `${item.color}10`,
-                        border: `1px solid ${item.color}24`,
-                        fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: '0.7rem',
-                        color: '#cfcfe2',
-                      }}
-                    >
-                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: item.color }} />
-                      {item.duration}
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  style={{
-                    display: 'grid',
-                    gap: 10,
-                  }}
-                >
-                  {item.responsibilities.map((responsibility) => (
-                    <div
-                      key={responsibility}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: 12,
-                        padding: '12px 14px',
-                        borderRadius: 12,
-                        background: 'rgba(255,255,255,0.02)',
-                      }}
-                    >
-                      <span
-                        style={{
-                          width: 8,
-                          height: 8,
-                          borderRadius: '50%',
-                          background: item.color,
-                          marginTop: 8,
-                          flexShrink: 0,
-                        }}
-                      />
-                      <p
-                        style={{
-                          fontFamily: "'Inter', sans-serif",
-                          fontSize: '0.94rem',
-                          color: '#aeb0c8',
-                          lineHeight: 1.75,
-                        }}
-                      >
-                        {responsibility}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-
       <style>{`
         @media (max-width: 980px) {
-          #experience .experience-layout {
+          #experience .company-group {
             grid-template-columns: 1fr !important;
+            gap: 24px !important;
           }
         }
 

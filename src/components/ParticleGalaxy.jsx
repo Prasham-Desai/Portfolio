@@ -67,12 +67,16 @@ export default function ParticleGalaxy() {
         return;
       }
 
-      if (mouseX !== 0) {
+      if (mouseX !== 0 && width > 0 && height > 0) {
         const percentX = (mouseX / width) * 2 - 1;
         const percentY = (mouseY / height) * 2 - 1;
         offsetX = percentX * 200; // max shift 200px
         offsetY = percentY * 150; // max shift 150px
       }
+
+      // Safeguard against NaN
+      if (!isFinite(targetX)) targetX = centerX;
+      if (!isFinite(targetY)) targetY = centerY;
 
       targetX += ((centerX + offsetX) - targetX) * 0.05;
       targetY += ((centerY + offsetY) - targetY) * 0.05;
@@ -81,7 +85,8 @@ export default function ParticleGalaxy() {
       ctx.fillRect(0, 0, width, height);
 
       // Draw galaxy center glow
-      const glow = ctx.createRadialGradient(targetX, targetY, 0, targetX, targetY, Math.min(width, height) * 0.6);
+      const radiusGlow = Math.max(1, Math.min(width, height) * 0.6);
+      const glow = ctx.createRadialGradient(targetX, targetY, 0, targetX, targetY, radiusGlow);
       glow.addColorStop(0, 'rgba(0, 212, 255, 0.08)');
       glow.addColorStop(0.4, 'rgba(192, 132, 252, 0.03)');
       glow.addColorStop(1, 'transparent');

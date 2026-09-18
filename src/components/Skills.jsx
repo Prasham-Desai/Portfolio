@@ -72,9 +72,10 @@ const SkillBar = ({ name, level, color, inView, delay }) => (
       marginBottom: 8,
       fontFamily: "'Space Grotesk', sans-serif",
       fontSize: '0.97rem',
+      minWidth: 0,
     }}>
-      <span style={{ color: '#e2e8f0', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
-      <span style={{ color: color, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textShadow: `0 0 8px ${color}88` }}>
+      <span style={{ color: '#e2e8f0', fontWeight: 600, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
+      <span style={{ color: `${color}cc`, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', flexShrink: 0 }}>
         {level}%
       </span>
     </div>
@@ -167,8 +168,9 @@ const Skills = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            style={{ minWidth: 0 }}
           >
-            <div className="skills-node-list" style={{ marginBottom: 24 }}>
+            <div className="skills-node-list" style={{ marginBottom: 24, width: '100%', maxWidth: '100%' }}>
               {skillGroups.map((group, i) => (
                 <motion.button
                   key={group.id}
@@ -307,6 +309,7 @@ const Skills = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            style={{ minWidth: 0 }}
           >
             <AnimatePresence mode="wait">
               <motion.div
