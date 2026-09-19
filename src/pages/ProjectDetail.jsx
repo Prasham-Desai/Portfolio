@@ -25,6 +25,13 @@ try {
   caseStudyBannerContext = null;
 }
 
+let homeBannerContext = null;
+try {
+  homeBannerContext = require.context('../assets/home-banners', false, /\.(png|jpe?g|webp)$/i);
+} catch {
+  homeBannerContext = null;
+}
+
 const getProjectScreenshots = (project) => {
   if (!screenshotContext || !project) return [];
 
@@ -62,6 +69,18 @@ const getCaseStudyBanner = (project) => {
   if (!caseStudyBannerContext.keys().includes(targetKey)) return null;
 
   return caseStudyBannerContext(targetKey);
+};
+
+const getHomeBanner = (project) => {
+  if (!homeBannerContext || !project) return null;
+
+  const assets = getProjectAssets(project.id);
+  if (!assets?.homeBanner) return null;
+
+  const targetKey = `./${assets.homeBanner}`;
+  if (!homeBannerContext.keys().includes(targetKey)) return null;
+
+  return homeBannerContext(targetKey);
 };
 
 const StickyLabel = ({ children, color }) => (
@@ -118,6 +137,8 @@ const ProjectDetail = () => {
   const projectScreenshots = useMemo(() => getProjectScreenshots(project), [project]);
   const projectIcon = useMemo(() => getProjectIcon(project), [project]);
   const caseStudyBanner = useMemo(() => getCaseStudyBanner(project), [project]);
+  const homeBanner = useMemo(() => getHomeBanner(project), [project]);
+  const finalBanner = caseStudyBanner || homeBanner;
 
   const scrollCarousel = (direction) => {
     if (!carouselRef.current) return;
@@ -169,6 +190,22 @@ const ProjectDetail = () => {
 
   return (
     <div className="project-detail-page" style={{ background: 'var(--color-bg)', minHeight: '100vh' }}>
+      <style>{`
+        .mobile-only { display: none !important; }
+        .desktop-only { display: flex !important; }
+        
+        @media (max-width: 767px) {
+          .mobile-only { display: flex !important; }
+          .desktop-only { display: none !important; }
+          .icon-btn-mobile .btn-text { display: none; }
+          .icon-btn-mobile { 
+            padding: 12px 14px !important; 
+            border-radius: 12px !important; 
+            gap: 0 !important; 
+          }
+          .icon-btn-mobile svg { margin: 0 !important; }
+        }
+      `}</style>
       {/* Hero Section */}
       <section
         id="hero"
@@ -183,27 +220,14 @@ const ProjectDetail = () => {
           background: project.coverColor,
         }}
       >
-        {/* Desktop Banner (caseStudyBanner) */}
-        {caseStudyBanner && (
-          <div 
-            className="project-detail-banner-img desktop-banner"
+        {/* Project Banner */}
+        {finalBanner && (
+          <div
+            className="project-detail-banner-img"
             style={{
               position: 'absolute',
               inset: 0,
-              background: `linear-gradient(to bottom, rgba(11,11,22,0.2) 0%, rgba(11,11,22,0.98) 100%), url(${caseStudyBanner}) center/cover no-repeat`,
-              zIndex: 0
-            }}
-          />
-        )}
-        
-        {/* Mobile Banner (heroImage or image) */}
-        {(project.heroImage || project.image) && (
-          <div 
-            className="project-detail-banner-img mobile-banner"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: `linear-gradient(to bottom, rgba(11,11,22,0.5) 0%, rgba(11,11,22,0.98) 100%), url(${project.heroImage || project.image}) center/cover no-repeat`,
+              background: `linear-gradient(to bottom, rgba(11,11,22,0.25) 0%, rgba(11,11,22,0.98) 100%), url(${finalBanner}) center/cover no-repeat`,
               zIndex: 0
             }}
           />
@@ -222,7 +246,7 @@ const ProjectDetail = () => {
         </motion.div>
 
         {/* Large background title fallback (only when no hero image) */}
-        {!caseStudyBanner && (
+        {!finalBanner && (
           <motion.div
             style={{
               position: 'absolute',
@@ -254,97 +278,95 @@ const ProjectDetail = () => {
         >
           <div className="container project-detail-hero-content" style={{ padding: '0 24px 64px', paddingTop: 120, position: 'relative' }}>
 
-            {/* Colored Back Button */}
-            <motion.div
-              className="detail-back-btn-wrapper"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                marginBottom: 24,
-                zIndex: 20,
-              }}
-            >
-              <Link
-                to="/projects"
-                className="icon-btn-mobile"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  padding: '12px 24px',
-                  borderRadius: 8,
-                  background: 'rgba(10,12,20,0.8)',
-                  border: `1px solid ${project.accentColor}50`,
-                  color: project.accentColor,
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontWeight: 600,
-                  fontSize: '0.95rem',
-                  textDecoration: 'none',
-                  backdropFilter: 'blur(12px)',
-                  WebkitBackdropFilter: 'blur(12px)',
-                  boxShadow: `0 6px 16px rgba(0,0,0,0.4)`,
-                  transition: 'all 0.25s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = `rgba(16,20,32,0.95)`;
-                  e.currentTarget.style.borderColor = project.accentColor;
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = `0 8px 20px rgba(0,0,0,0.5), 0 0 12px ${project.accentColor}20`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(10,12,20,0.8)';
-                  e.currentTarget.style.borderColor = `${project.accentColor}50`;
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = `0 6px 16px rgba(0,0,0,0.4)`;
-                }}
+            {/* TOP HEADER: Left side (Category + Platform) and Right side (Back Button) */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+              <div style={{ flex: 1, paddingRight: 16 }}>
+                {/* Category + Platform */}
+                <motion.div
+                  initial={{ opacity: 0, y: 28 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}
+                >
+                  {[project.category, project.platform, project.year].map(tag => (
+                    <span key={tag} style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: '0.75rem',
+                      color: project.accentColor,
+                      padding: '6px 14px',
+                      border: `1px solid ${project.accentColor}40`,
+                      borderRadius: 4,
+                      background: 'rgba(10,10,20,0.75)',
+                      backdropFilter: 'blur(8px)',
+                      WebkitBackdropFilter: 'blur(8px)',
+                      letterSpacing: '0.05em',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                    }}>
+                      {tag}
+                    </span>
+                  ))}
+                </motion.div>
+              </div>
+
+              {/* Colored Back Button */}
+              <motion.div
+                className="detail-back-btn-wrapper"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                style={{ zIndex: 20 }}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span className="btn-text">All Projects</span>
-              </Link>
-            </motion.div>
+                <Link
+                  to="/projects"
+                  className="icon-btn-mobile"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '12px 24px',
+                    borderRadius: 8,
+                    background: 'rgba(10,12,20,0.8)',
+                    border: `1px solid ${project.accentColor}50`,
+                    color: project.accentColor,
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontWeight: 600,
+                    fontSize: '0.95rem',
+                    textDecoration: 'none',
+                    backdropFilter: 'blur(12px)',
+                    WebkitBackdropFilter: 'blur(12px)',
+                    boxShadow: `0 6px 16px rgba(0,0,0,0.4)`,
+                    transition: 'all 0.25s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = `rgba(16,20,32,0.95)`;
+                    e.currentTarget.style.borderColor = project.accentColor;
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = `0 8px 20px rgba(0,0,0,0.5), 0 0 12px ${project.accentColor}20`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(10,12,20,0.8)';
+                    e.currentTarget.style.borderColor = `${project.accentColor}50`;
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = `0 6px 16px rgba(0,0,0,0.4)`;
+                  }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span className="btn-text">All Projects</span>
+                </Link>
+              </motion.div>
+            </div>
 
-
-            {/* Category + Platform */}
-            <motion.div
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}
-            >
-              {[project.category, project.platform, project.year].map(tag => (
-                <span key={tag} style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: '0.75rem',
-                  color: project.accentColor,
-                  padding: '6px 14px',
-                  border: `1px solid ${project.accentColor}40`,
-                  borderRadius: 4,
-                  background: 'rgba(10,10,20,0.75)',
-                  backdropFilter: 'blur(8px)',
-                  WebkitBackdropFilter: 'blur(8px)',
-                  letterSpacing: '0.05em',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-                }}>
-                  {tag}
-                </span>
-              ))}
-            </motion.div>
-
-            {/* Title + icon */}
-            <div className="project-detail-hero-head" style={{
-              display: 'flex',
-              alignItems: 'center',
+            {/* Desktop Hero Head */}
+            <div className="project-detail-hero-head desktop-only" style={{
+              alignItems: 'flex-start',
               justifyContent: 'space-between',
-              flexWrap: 'wrap',
               gap: 20,
               marginBottom: 20,
+              marginTop: 12,
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16, flex: 1, paddingRight: 32 }}>
                 <motion.h1
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -366,67 +388,172 @@ const ProjectDetail = () => {
                   {project.title}
                 </motion.h1>
 
-                {/* Mobile inline GitHub button */}
+                {/* Tagline */}
+                <motion.p
+                  initial={{ opacity: 0, y: 28 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: 'clamp(1.35rem, 3.1vw, 2rem)',
+                    color: 'rgba(255,255,255,0.62)',
+                    fontWeight: 400,
+                    letterSpacing: '-0.01em',
+                    maxWidth: 720,
+                    marginTop: 8,
+                  }}
+                >
+                  {project.tagline}
+                </motion.p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24, flexShrink: 0, marginRight: 'clamp(24px, 4.2vw, 88px)' }}>
+                {projectIcon && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ delay: 0.48, duration: 0.5 }}
+                    className="project-detail-hero-icon"
+                    style={{
+                      width: 'clamp(198px, 21vw, 264px)',
+                      height: 'clamp(198px, 21vw, 264px)',
+                      borderRadius: 'clamp(34px, 3.8vw, 52px)',
+                      border: `1px solid ${project.accentColor}55`,
+                      background: `linear-gradient(135deg, ${project.accentColor}18, rgba(13,13,26,0.9))`,
+                      boxShadow: `0 16px 36px rgba(0,0,0,0.35), 0 0 0 1px ${project.accentColor}1f`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      overflow: 'hidden',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <img
+                      src={projectIcon}
+                      alt={`${project.title} icon`}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </motion.div>
+                )}
+
+                {/* GitHub Repo Button (Desktop) */}
+                {project.github && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 28 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    style={{ width: '100%' }}
+                  >
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="icon-btn-mobile"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 12,
+                        padding: '14px 28px',
+                        borderRadius: 8,
+                        background: `linear-gradient(135deg, ${project.accentColor}cc, ${project.accentColor})`,
+                        color: '#fff',
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontWeight: 600,
+                        fontSize: '1.05rem',
+                        textDecoration: 'none',
+                        boxShadow: `0 8px 24px ${project.accentColor}40`,
+                        transition: 'all 0.3s ease',
+                        width: '100%',
+                        justifyContent: 'center',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = `0 12px 28px ${project.accentColor}60`;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = `0 8px 24px ${project.accentColor}40`;
+                      }}
+                    >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                      </svg>
+                      <span className="btn-text">View Repository</span>
+                    </a>
+                  </motion.div>
+                )}
+              </div>
+            </div>
+
+            {/* Mobile Hero Head */}
+            <div className="mobile-only" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: 12, gap: 20 }}>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: 'clamp(2.5rem, 9vw, 4rem)',
+                  fontWeight: 800,
+                  letterSpacing: '-0.04em',
+                  lineHeight: 1.05,
+                  background: `linear-gradient(135deg, ${project.accentColor} 0%, #f0f0f8 55%, ${project.accentColor}cc 100%)`,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  marginBottom: 16,
+                  flex: 1,
+                }}
+              >
+                {project.title}
+              </motion.h1>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 16, flexShrink: 0 }}>
+                {projectIcon && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.45 }}
+                    style={{
+                      width: 128, height: 128,
+                      borderRadius: 24, border: `1px solid ${project.accentColor}55`,
+                      overflow: 'hidden',
+                      boxShadow: `0 8px 24px rgba(0,0,0,0.3)`
+                    }}
+                  >
+                    <img src={projectIcon} alt="icon" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </motion.div>
+                )}
                 {project.github && (
                   <motion.a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="github-btn-mobile-inline"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4 }}
+                    transition={{ delay: 0.5 }}
                     style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: 44,
-                      height: 44,
-                      borderRadius: 8,
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                      padding: '12px 18px', borderRadius: 8,
                       background: `linear-gradient(135deg, ${project.accentColor}cc, ${project.accentColor})`,
-                      color: '#fff',
+                      color: '#fff', textDecoration: 'none', fontWeight: 600,
+                      fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.9rem',
                       boxShadow: `0 4px 12px ${project.accentColor}40`,
+                      width: '100%',
                     }}
                   >
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
                     </svg>
+                    Repo
                   </motion.a>
                 )}
               </div>
-
-              {projectIcon && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ delay: 0.48, duration: 0.5 }}
-                  className="project-detail-hero-icon"
-                  style={{
-                    width: 'clamp(198px, 21vw, 264px)',
-                    height: 'clamp(198px, 21vw, 264px)',
-                    borderRadius: 'clamp(34px, 3.8vw, 52px)',
-                    border: `1px solid ${project.accentColor}55`,
-                    background: `linear-gradient(135deg, ${project.accentColor}18, rgba(13,13,26,0.9))`,
-                    boxShadow: `0 16px 36px rgba(0,0,0,0.35), 0 0 0 1px ${project.accentColor}1f`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    overflow: 'hidden',
-                    flexShrink: 0,
-                    marginRight: 'clamp(24px, 4.2vw, 88px)',
-                  }}
-                >
-                  <img
-                    src={projectIcon}
-                    alt={`${project.title} icon`}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                </motion.div>
-              )}
             </div>
 
-            {/* Tagline */}
+            {/* Tagline (Mobile) */}
             <motion.p
+              className="mobile-only"
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
@@ -442,52 +569,6 @@ const ProjectDetail = () => {
             >
               {project.tagline}
             </motion.p>
-
-            {/* GitHub Repo Button */}
-            {project.github && (
-              <motion.div
-                initial={{ opacity: 0, y: 28 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                style={{ marginTop: 32 }}
-                className="github-btn-desktop"
-              >
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="icon-btn-mobile"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 12,
-                    padding: '14px 28px',
-                    borderRadius: 8,
-                    background: `linear-gradient(135deg, ${project.accentColor}cc, ${project.accentColor})`,
-                    color: '#fff',
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontWeight: 600,
-                    fontSize: '1.05rem',
-                    textDecoration: 'none',
-                    boxShadow: `0 8px 24px ${project.accentColor}40`,
-                    transition: 'all 0.3s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = `0 12px 28px ${project.accentColor}60`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = `0 8px 24px ${project.accentColor}40`;
-                  }}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                  </svg>
-                  <span className="btn-text">View Repository</span>
-                </a>
-              </motion.div>
-            )}
           </div>
         </motion.div>
 
