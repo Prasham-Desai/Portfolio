@@ -541,9 +541,10 @@ const ProjectDetail = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                     style={{
-                      width: 224, height: 224,
-                      borderRadius: 36,
+                      width: 128, height: 128,
+                      borderRadius: 24,
                       border: `1px solid ${project.accentColor}55`,
+                      flexShrink: 0,
                       overflow: 'hidden',
                       boxShadow: `0 8px 24px rgba(0,0,0,0.3)`
                     }}
