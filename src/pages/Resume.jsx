@@ -118,7 +118,7 @@ const Resume = () => {
             color: '#94a3b8'
           }}>
             <span>📍 Ahmedabad, India</span>
-            <a href="tel:+919726733369" style={{ color: 'inherit', textDecoration: 'none' }}>📞 +91-9726733369</a>
+
             <a href="mailto:prashamdesai@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>✉️ prashamdesai@gmail.com</a>
             <a href="https://linkedin.com" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>🔗 LinkedIn</a>
             <a href="https://github.com/Prasham-Desai" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>💻 GitHub</a>

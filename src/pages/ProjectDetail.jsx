@@ -278,8 +278,8 @@ const ProjectDetail = () => {
         >
           <div className="container project-detail-hero-content" style={{ padding: '0 24px 64px', paddingTop: 120, position: 'relative' }}>
 
-            {/* TOP HEADER: Left side (Category + Platform) and Right side (Back Button) */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+            {/* TOP HEADER (Desktop Only): Left side (Category + Platform) and Right side (Back Button) */}
+            <div className="desktop-only" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
               <div style={{ flex: 1, paddingRight: 16 }}>
                 {/* Category + Platform */}
                 <motion.div
@@ -314,7 +314,7 @@ const ProjectDetail = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                style={{ zIndex: 20 }}
+                style={{ zIndex: 20, marginRight: -72, marginTop: -100 }}
               >
                 <Link
                   to="/projects"
@@ -485,38 +485,65 @@ const ProjectDetail = () => {
               </div>
             </div>
 
-            {/* Mobile Hero Head */}
-            <div className="mobile-only" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: 12, gap: 20 }}>
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: 'clamp(2.5rem, 9vw, 4rem)',
-                  fontWeight: 800,
-                  letterSpacing: '-0.04em',
-                  lineHeight: 1.05,
-                  background: `linear-gradient(135deg, ${project.accentColor} 0%, #f0f0f8 55%, ${project.accentColor}cc 100%)`,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  marginBottom: 16,
-                  flex: 1,
-                }}
-              >
-                {project.title}
-              </motion.h1>
+            {/* Mobile Hero Complete Refactor */}
+            <div className="mobile-only" style={{ flexDirection: 'column', width: '100%' }}>
+              
+              {/* Top Bar: Back Button */}
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 24, width: '100%' }}>
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  style={{ zIndex: 20 }}
+                >
+                  <Link
+                    to="/projects"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      padding: '10px 16px',
+                      borderRadius: 8,
+                      background: 'rgba(10,12,20,0.8)',
+                      border: `1px solid ${project.accentColor}50`,
+                      color: project.accentColor,
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontWeight: 600,
+                      fontSize: '0.9rem',
+                      textDecoration: 'none',
+                      backdropFilter: 'blur(12px)',
+                      WebkitBackdropFilter: 'blur(12px)',
+                      boxShadow: `0 6px 16px rgba(0,0,0,0.4)`,
+                      transition: 'all 0.25s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = `rgba(16,20,32,0.95)`;
+                      e.currentTarget.style.borderColor = project.accentColor;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgba(10,12,20,0.8)';
+                      e.currentTarget.style.borderColor = `${project.accentColor}50`;
+                    }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <span>Projects</span>
+                  </Link>
+                </motion.div>
+              </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 16, flexShrink: 0 }}>
+              {/* Title & Icon Header */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 24, marginBottom: 20, width: '100%' }}>
                 {projectIcon && (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.45 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
                     style={{
-                      width: 128, height: 128,
-                      borderRadius: 24, border: `1px solid ${project.accentColor}55`,
+                      width: 224, height: 224,
+                      borderRadius: 36,
+                      border: `1px solid ${project.accentColor}55`,
                       overflow: 'hidden',
                       boxShadow: `0 8px 24px rgba(0,0,0,0.3)`
                     }}
@@ -524,51 +551,103 @@ const ProjectDetail = () => {
                     <img src={projectIcon} alt="icon" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </motion.div>
                 )}
-                {project.github && (
-                  <motion.a
+                
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.6 }}
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: 'clamp(2.5rem, 11vw, 4rem)',
+                    fontWeight: 800,
+                    letterSpacing: '-0.04em',
+                    lineHeight: 1.05,
+                    background: `linear-gradient(135deg, ${project.accentColor} 0%, #f0f0f8 55%, ${project.accentColor}cc 100%)`,
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    margin: 0,
+                    textAlign: 'center',
+                  }}
+                >
+                  {project.title}
+                </motion.h1>
+              </div>
+
+              {/* Metadata Tags */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                style={{ display: 'flex', justifyContent: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}
+              >
+                {[project.category, project.platform, project.year].map(tag => (
+                  <span key={tag} style={{
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.75rem',
+                    color: project.accentColor,
+                    padding: '6px 12px',
+                    border: `1px solid ${project.accentColor}40`,
+                    borderRadius: 4,
+                    background: 'rgba(10,10,20,0.75)',
+                    backdropFilter: 'blur(8px)',
+                    WebkitBackdropFilter: 'blur(8px)',
+                    letterSpacing: '0.05em',
+                  }}>
+                    {tag}
+                  </span>
+                ))}
+              </motion.div>
+
+              {/* Tagline */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '1.1rem',
+                  color: 'rgba(255,255,255,0.75)',
+                  fontWeight: 400,
+                  lineHeight: 1.6,
+                  marginBottom: 32,
+                  marginTop: 0,
+                  textAlign: 'center',
+                }}
+              >
+                {project.tagline}
+              </motion.p>
+
+              {/* CTA / Repo Button */}
+              {project.github && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 }}
+                  style={{ width: '100%' }}
+                >
+                  <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.5 }}
                     style={{
-                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                      padding: '12px 18px', borderRadius: 8,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                      padding: '16px 24px', borderRadius: 12,
                       background: `linear-gradient(135deg, ${project.accentColor}cc, ${project.accentColor})`,
                       color: '#fff', textDecoration: 'none', fontWeight: 600,
-                      fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.9rem',
-                      boxShadow: `0 4px 12px ${project.accentColor}40`,
+                      fontFamily: "'Space Grotesk', sans-serif", fontSize: '1.05rem',
+                      boxShadow: `0 8px 24px ${project.accentColor}40`,
                       width: '100%',
                     }}
                   >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                       <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
                     </svg>
-                    Repo
-                  </motion.a>
-                )}
-              </div>
+                    View Repository
+                  </a>
+                </motion.div>
+              )}
             </div>
-
-            {/* Tagline (Mobile) */}
-            <motion.p
-              className="mobile-only"
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: 'clamp(1.35rem, 3.1vw, 2rem)',
-                color: 'rgba(255,255,255,0.62)',
-                fontWeight: 400,
-                letterSpacing: '-0.01em',
-                maxWidth: 720,
-                marginTop: 18,
-              }}
-            >
-              {project.tagline}
-            </motion.p>
           </div>
         </motion.div>
 

@@ -114,7 +114,7 @@ const SkillBar = ({ name, level, color, inView, delay }) => (
 );
 
 const Skills = () => {
-  const [activeGroup, setActiveGroup] = useState('unreal');
+  const [activeGroup, setActiveGroup] = useState(skillGroups[0].id);
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
 
   const currentGroup = skillGroups.find(g => g.id === activeGroup) || skillGroups[0];
@@ -177,7 +177,7 @@ const Skills = () => {
                   key={group.id}
                   className="skill-node"
                   onClick={() => setActiveGroup(group.id)}
-                  whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.03)', borderColor: `${group.color}50` }}
+                  whileHover={{ scale: 1.02 }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: Math.min(i * 0.06, 0.36) }}
