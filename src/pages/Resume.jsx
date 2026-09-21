@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom';
 
 const Resume = () => {
   return (
-    <div className="resume-page" style={{ 
-      minHeight: '100vh', 
-      paddingTop: 120, 
+    <div className="resume-page" style={{
+      minHeight: '100vh',
+      paddingTop: 120,
       paddingBottom: 80,
       background: 'radial-gradient(ellipse at top, #111424, #060610 80%)',
       color: '#e2e8f0',
       fontFamily: "'Inter', sans-serif"
     }}>
-      <div className="container" style={{ 
-        maxWidth: 1100, 
-        margin: '0 auto', 
+      <div className="container" style={{
+        maxWidth: 1100,
+        margin: '0 auto',
         padding: '0 24px',
         position: 'relative'
       }}>
@@ -31,10 +31,10 @@ const Resume = () => {
               <div className="section-label" style={{ fontSize: '0.8rem', marginBottom: 18 }}>
                 Professional Profile
               </div>
-              <h1 style={{ 
-                fontFamily: "'Space Grotesk', sans-serif", 
-                fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', 
-                fontWeight: 800, 
+              <h1 style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+                fontWeight: 800,
                 color: '#fff',
                 letterSpacing: '-0.03em',
                 lineHeight: 1.05,
@@ -92,7 +92,7 @@ const Resume = () => {
                   e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.4)';
                 }}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19L5 12L12 5"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19L5 12L12 5" /></svg>
                 <span className="btn-text">Home</span>
               </Link>
             </motion.div>
@@ -109,10 +109,10 @@ const Resume = () => {
             Game Developer | Unreal Engine | Gameplay Programming
           </p>
 
-          <div className="resume-contact-info" style={{ 
-            display: 'flex', 
-            flexWrap: 'wrap', 
-            justifyContent: 'flex-start', 
+          <div className="resume-contact-info" style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'flex-start',
             gap: '12px 24px',
             fontSize: '0.9rem',
             color: '#94a3b8'
@@ -120,13 +120,13 @@ const Resume = () => {
             <span>📍 Ahmedabad, India</span>
 
             <a href="mailto:prashamdesai@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>✉️ prashamdesai@gmail.com</a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>🔗 LinkedIn</a>
+            <a href="https://linkedin.com/in/prasham-desai-602094269" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>🔗 LinkedIn</a>
             <a href="https://github.com/Prasham-Desai" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>💻 GitHub</a>
           </div>
 
           <div className="resume-download-btn-wrapper" style={{ marginTop: 24, display: 'flex', justifyContent: 'flex-start' }}>
-            <a 
-              href="/Prasham_Desai_Resume.pdf" 
+            <a
+              href="/Prasham_Desai_Resume.pdf"
               download="Prasham_Desai_Resume.pdf"
               style={{
                 display: 'inline-flex',
@@ -162,7 +162,7 @@ const Resume = () => {
         </motion.div>
 
         {/* Paper-like Resume Container */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
@@ -183,30 +183,30 @@ const Resume = () => {
           </Section>
 
           <Section title="TECHNICAL SKILLS">
-            <SkillItem 
-              category="Unreal Engine" 
-              skills="Unreal Engine 5.6, Blueprint Visual Scripting, UMG, Enhanced Input, Blueprint Interfaces, Animation Blueprints, Behavior Trees, Blackboards, NavMesh, Chaos Vehicles, Paper2D" 
+            <SkillItem
+              category="Unreal Engine"
+              skills="Unreal Engine 5.6, Blueprint Visual Scripting, UMG, Enhanced Input, Blueprint Interfaces, Animation Blueprints, Behavior Trees, Blackboards, NavMesh, Chaos Vehicles, Paper2D"
             />
-            <SkillItem 
-              category="Gameplay Systems" 
-              skills="Character Movement, Vehicle Systems, AI & Navigation, Combat Systems, Interaction Systems, UI/UX, Camera Systems, Level Design, Game State Management" 
+            <SkillItem
+              category="Gameplay Systems"
+              skills="Character Movement, Vehicle Systems, AI & Navigation, Combat Systems, Interaction Systems, UI/UX, Camera Systems, Level Design, Game State Management"
             />
-            <SkillItem 
-              category="Unity & Game Development" 
-              skills="Unity 2D/3D, C#, Gameplay Systems, Multiplayer Networking, Unity DOTS, Performance Optimization, Mobile Deployment, Firebase, Photon" 
+            <SkillItem
+              category="Unity & Game Development"
+              skills="Unity 2D/3D, C#, Gameplay Systems, Multiplayer Networking, Unity DOTS, Performance Optimization, Mobile Deployment, Firebase, Photon"
             />
-            <SkillItem 
-              category="Networking & Backend" 
-              skills="Photon Multiplayer, Firebase, REST API Integration, MERN Stack" 
+            <SkillItem
+              category="Networking & Backend"
+              skills="Photon Multiplayer, Firebase, REST API Integration, MERN Stack"
             />
-            <SkillItem 
-              category="Deployment & Tools" 
-              skills="Android, iOS, Google Play Store, Xcode, Git, GitHub, GitLab, Visual Studio, VS Code" 
+            <SkillItem
+              category="Deployment & Tools"
+              skills="Android, iOS, Google Play Store, Xcode, Git, GitHub, GitLab, Visual Studio, VS Code"
             />
           </Section>
 
           <Section title="WORK EXPERIENCE">
-            <ExperienceItem 
+            <ExperienceItem
               title="Unity 3D Programmer"
               company="IndiaNIC Infotech LTD."
               date="May 2025 – April 2026"
@@ -222,9 +222,9 @@ const Resume = () => {
             </ExperienceItem>
           </Section>
 
-          <Section title="SELECTED UNREAL ENGINE PROJECTS">
-            <ExperienceItem 
-              title="Jetpack Journey"
+          <Section title="UNREAL ENGINE PROJECTS">
+            <ExperienceItem
+              title={<a href="https://github.com/Prasham-Desai/JetpackJourney" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>Jetpack Journey</a>}
               company="UE 5.6, Blueprints, Chaos Vehicles, Enhanced Input"
               date=""
               location=""
@@ -235,9 +235,9 @@ const Resume = () => {
                 <li>Implemented seamless on-foot/vehicle transitions using possession switching, input mapping contexts, Blueprint Interfaces, camera blending, skeletal vehicle animation, and custom physics assets.</li>
               </ul>
             </ExperienceItem>
-            
-            <ExperienceItem 
-              title="ShooterGameUI"
+
+            <ExperienceItem
+              title={<a href="https://github.com/Prasham-Desai/ShooterGameUI" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>ShooterGameUI</a>}
               company="UE 5.6, UMG, Blueprints, Enhanced Input"
               date=""
               location=""
@@ -248,8 +248,8 @@ const Resume = () => {
               </ul>
             </ExperienceItem>
 
-            <ExperienceItem 
-              title="Red Hood"
+            <ExperienceItem
+              title={<a href="https://github.com/Prasham-Desai/Redhood" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>Red Hood</a>}
               company="UE 5.6, Blueprints, Paper2D, AI"
               date=""
               location=""
@@ -262,7 +262,7 @@ const Resume = () => {
           </Section>
 
           <Section title="EDUCATION">
-            <ExperienceItem 
+            <ExperienceItem
               title="Bachelor of Engineering – Computer Science"
               company="LJ Institute of Engineering and Technology"
               date="November 2022 – August 2026"
@@ -336,10 +336,10 @@ const SkillItem = ({ category, skills }) => (
 const ExperienceItem = ({ title, company, date, location, children }) => (
   <div style={{ marginBottom: 24 }}>
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: 8 }}>
-      <h4 style={{ 
+      <h4 style={{
         fontFamily: "'Space Grotesk', sans-serif",
-        fontSize: '1.1rem', 
-        fontWeight: 700, 
+        fontSize: '1.1rem',
+        fontWeight: 700,
         color: '#fff',
         margin: 0
       }}>
